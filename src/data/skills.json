@@ -8,13 +8,8 @@
                 "library": "react-icons/tb"
             },
             {
-                "name": "R",
-                "icon": "TbBrandR",
-                "library": "react-icons/tb"
-            },
-            {
                 "name": "C",
-                "icon": "TbBrandCPlusPlus",
+                "icon": "TbBrandCpp",
                 "library": "react-icons/tb"
             },
             {
@@ -44,8 +39,8 @@
             },
             {
                 "name": "Excel",
-                "icon": "SiMicrosoftexcel",
-                "library": "react-icons/si"
+                "icon": "TbFileSpreadsheet",
+                "library": "react-icons/tb"
             }
         ]
     },
@@ -129,8 +124,8 @@
             },
             {
                 "name": "Power BI",
-                "icon": "SiPowerbi",
-                "library": "react-icons/si"
+                "icon": "TbChartBar",
+                "library": "react-icons/tb"
             }
         ]
     }

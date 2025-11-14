@@ -4,7 +4,14 @@ import { siteConfig } from "@/config/site";
 import { motion } from "framer-motion";
 
 const Skills = ({ day }: { day: boolean }) => {
-    const [showAll, setShowAll] = useState(false); // State to toggle "Load More" and "Show Less"
+    const [showAllStates, setShowAllStates] = useState<Record<string, boolean>>({}); // State to toggle "Load More" and "Show Less" per group
+
+    const toggleShowAll = (groupTitle: string) => {
+        setShowAllStates(prev => ({
+            ...prev,
+            [groupTitle]: !prev[groupTitle]
+        }));
+    };
 
     const containerVariants = {
         hidden: { opacity: 0, y: 20 },
@@ -31,7 +38,7 @@ const Skills = ({ day }: { day: boolean }) => {
                         animate="visible"
                     >
                         {skillGroup.skills
-                            .slice(0, showAll ? skillGroup.skills.length : 6) // Show limited skills on mobile
+                            .slice(0, showAllStates[skillGroup.title] ? skillGroup.skills.length : 6) // Show limited skills on mobile
                             .map((skill) => {
                                 const IconComponent = loadIcon(skill.library, skill.icon);
                                 return (
@@ -55,10 +62,10 @@ const Skills = ({ day }: { day: boolean }) => {
                     </motion.div>
                     {skillGroup.skills.length > 6 && (
                         <div className="mt-4 flex justify-end">
-                            {!showAll ? (
+                            {!showAllStates[skillGroup.title] ? (
                                 <button
                                     type="button"
-                                    onClick={() => setShowAll(true)}
+                                    onClick={() => toggleShowAll(skillGroup.title)}
                                     className="nes-btn is-primary"
                                 >
                                     Show More
@@ -66,7 +73,7 @@ const Skills = ({ day }: { day: boolean }) => {
                             ) : (
                                 <button
                                     type="button"
-                                    onClick={() => setShowAll(false)}
+                                    onClick={() => toggleShowAll(skillGroup.title)}
                                     className="nes-btn is-error"
                                 >
                                     Show Less

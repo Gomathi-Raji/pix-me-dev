@@ -1,5 +1,4 @@
 import { siteConfig } from '@/config/site'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 export default function Hero({ day }: { day: boolean }) {
@@ -14,14 +13,14 @@ export default function Hero({ day }: { day: boolean }) {
                 <div className="nes-badge">
                     <span className="is-primary">Full-Stack Developer</span>
                 </div>
-                <Image
-                    src="/avatar.png"
-                    width={96}
-                    height={96}
-                    className="pixelated nes-avatar"
-                    alt="Avatar"
-                    priority
-                />
+                <div className="relative flex justify-center">
+                    <div className="text-8xl">
+                        <i className="nes-mario block"></i>
+                    </div>
+                    <div className="absolute -bottom-2 -right-2">
+                        <i className="nes-icon coin"></i>
+                    </div>
+                </div>
                 <div className={`nes-balloon from-left ${day ? "" : "is-dark"}`}>
                     <p className="text-sm">{siteConfig.profile.summary}</p>
                 </div>

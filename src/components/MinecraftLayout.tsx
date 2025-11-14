@@ -145,9 +145,9 @@ export default function MinecraftLayout({ children, setDayOrNight }: { children:
                         </div>
 
                         {/* Copyright */}
-                        <div className="text-center mb-4">
+                        <div className="text-center mb-2 flex justify-center">
                             <div className="nes-badge">
-                                <span className="is-primary">&copy; 2025 DINESH S</span>
+                                <span className="is-primary px-4 py-1 block text-center whitespace-nowrap">&copy; 2025 DINESH S</span>
                             </div>
                         </div>
 

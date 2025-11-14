@@ -7,19 +7,32 @@ import WorkExperience from '@/components/WorkExprience';
 import Education from '@/components/Education';
 import Contact from '@/components/Contact';
 import MinecraftLayout from '@/components/MinecraftLayout';
+import Loading from '@/components/Loading';
 import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [day, setDay] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const hour = new Date().getHours();
     setDay(hour >= 6 && hour < 18);
+
+    // Simulate loading time to show the animation
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000); // Show loading for 3 seconds
+
+    return () => clearTimeout(timer);
   }, []);
 
   const handleDayChange = (isDay: boolean) => {
     setDay(isDay);
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <MinecraftLayout setDayOrNight={handleDayChange}>
@@ -95,8 +108,6 @@ export default function Home() {
         <section id="education" className="py-16 px-4 scroll-mt-20 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-500/5 to-transparent"></div>
           <div className="max-w-6xl mx-auto relative z-10">
-            <h2 className="text-4xl font-bold mb-8 text-center nes-text is-primary">🎓 Education</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-pink-500 mx-auto mb-8 rounded-full"></div>
             <Education />
           </div>
         </section>

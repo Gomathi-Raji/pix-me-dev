@@ -1,91 +1,100 @@
 import { siteConfig } from '@/config/site';
-import { motion } from 'framer-motion';
 
 const Education = () => {
   if (!siteConfig.education || siteConfig.education.length === 0) {
     return null;
   }
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { x: -50, opacity: 0 },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6
-      }
-    }
-  };
-
   return (
-    <motion.section
-      className="py-12 mb-12"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={containerVariants}
-    >
-      <motion.div
-        className="text-center mb-8"
-        variants={itemVariants}
-      >
-        <h3 className="text-3xl font-bold nes-text is-primary mb-4">🎓 Education Journey</h3>
-        <div className="w-16 h-1 bg-gradient-to-r from-blue-400 to-purple-500 mx-auto rounded-full"></div>
-      </motion.div>
+    <section className="py-12 mb-12 pixelated">
+      <div className="text-center mb-8">
+        {/* Main Header with Pixelated NES Container */}
+        <div className="nes-container is-rounded is-dark bg-gray-900 p-6 mb-4 max-w-2xl mx-auto education-header-container">
+          <div className="flex items-center justify-center gap-4 mb-2">
+            <i className="nes-icon trophy text-yellow-400 text-2xl"></i>
+            <h3 className="pixel-text text-yellow-400 text-2xl md:text-3xl font-bold">EDUCATION JOURNEY</h3>
+            <i className="nes-icon trophy text-yellow-400 text-2xl"></i>
+          </div>
+          <div className="flex justify-center gap-3">
+            <i className="nes-icon star text-blue-400"></i>
+            <i className="nes-icon heart text-red-400"></i>
+            <i className="nes-icon like text-green-400"></i>
+            <i className="nes-icon close text-purple-400"></i>
+          </div>
+        </div>
+      </div>
 
       <div className="relative">
-        {/* Timeline line */}
-        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-400 to-purple-500 hidden md:block"></div>
+        {/* Enhanced Pixelated Timeline */}
+        <div className="absolute left-8 top-0 bottom-0 w-3 bg-gradient-to-b from-yellow-400 via-blue-400 to-purple-400 hidden md:block education-timeline education-timeline-enhanced">
+          {/* Timeline markers */}
+          {siteConfig.education.map((_, index) => (
+            <div
+              key={index}
+              className="absolute w-full h-2 bg-yellow-400 education-timeline-marker"
+              style={{ top: `${(index * 100) / (siteConfig.education.length - 1)}%` }}
+            />
+          ))}
+        </div>
 
         <div className="space-y-8">
           {siteConfig.education.map((edu, index) => (
-            <motion.div
+            <div
               key={index}
               className="relative"
-              variants={itemVariants}
             >
-              {/* Timeline dot */}
-              <div className="absolute left-6 top-6 w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full border-4 border-white dark:border-gray-800 hidden md:block"></div>
+              {/* Enhanced Timeline Dot */}
+              <div className="absolute left-6 top-6 w-8 h-8 bg-yellow-400 rounded-full border-4 border-gray-800 hidden md:block education-timeline-dot">
+                <div className="w-full h-full bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full flex items-center justify-center">
+                  <span className="text-xs font-bold text-yellow-900">{index + 1}</span>
+                </div>
+              </div>
 
-              <div className="ml-0 md:ml-16">
-                <div className="nes-container with-title bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
-                  <p className="title flex items-center gap-2">
-                    <span className="text-2xl">🎓</span>
-                    {edu.degree}
+              <div className="ml-0 md:ml-20">
+                <div className="nes-container with-title is-rounded pixelated hover:shadow-2xl transition-all duration-300 education-card">
+                  <p className="title flex items-center gap-3 pixel-text text-lg bg-gray-800 p-3 rounded">
+                    <span className="text-3xl animate-bounce">🎓</span>
+                    <span className="text-yellow-400 font-bold text-xl">{edu.degree}</span>
+                    <div className="flex gap-1 ml-auto">
+                      <i className="nes-icon star is-small text-yellow-400"></i>
+                      <i className="nes-icon heart is-small text-red-400"></i>
+                    </div>
                   </p>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div className="nes-container is-rounded">
-                      <p className="nes-text">
-                        <strong className="text-blue-600">🏫 Institution:</strong><br />
-                        {edu.institution}
+                    <div className="nes-container is-rounded is-dark education-info-card">
+                      <p className="nes-text text-blue-200">
+                        <strong className="text-blue-400 flex items-center gap-2 pixel-text text-sm">
+                          <i className="nes-icon home"></i>
+                          INSTITUTION
+                        </strong><br />
+                        <span className="text-white font-bold text-lg pixel-text">{edu.institution}</span>
                       </p>
                     </div>
-                    <div className="nes-container is-rounded">
-                      <p className="nes-text">
-                        <strong className="text-green-600">📅 Year:</strong><br />
-                        {edu.year}
+                    <div className="nes-container is-rounded is-dark education-info-card">
+                      <p className="nes-text text-green-200">
+                        <strong className="text-green-400 flex items-center gap-2 pixel-text text-sm">
+                          <i className="nes-icon clock"></i>
+                          YEAR
+                        </strong><br />
+                        <span className="text-white font-bold text-lg pixel-text">{edu.year}</span>
                       </p>
                     </div>
                   </div>
 
                   {edu.gpa && (
-                    <div className="nes-container is-rounded mb-4 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20">
-                      <div className="flex items-center justify-between">
-                        <p className="nes-text">
-                          <strong className="text-yellow-600">⭐ GPA:</strong> {edu.gpa}
-                        </p>
-                        <div className="nes-progress w-32">
+                    <div className="nes-container is-rounded mb-4 education-gpa-card border-4 border-yellow-500">
+                      <div className="flex items-center justify-between p-2">
+                        <div>
+                          <p className="nes-text text-yellow-200 mb-1">
+                            <strong className="text-yellow-400 flex items-center gap-2 pixel-text">
+                              <i className="nes-icon star text-xl"></i>
+                              GPA SCORE
+                            </strong>
+                          </p>
+                          <span className="text-white font-bold text-2xl pixel-text">{edu.gpa}</span>
+                        </div>
+                        <div className="nes-progress w-40">
                           <progress
                             className="nes-progress"
                             value={parseFloat(edu.gpa) * 10}
@@ -97,20 +106,23 @@ const Education = () => {
                   )}
 
                   {edu.description && (
-                    <div className="nes-container is-rounded bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">
-                      <p className="nes-text">
-                        <strong className="text-purple-600">📖 Description:</strong><br />
-                        {edu.description}
+                    <div className="nes-container is-rounded education-desc-card border-4 border-purple-500">
+                      <p className="nes-text text-purple-200">
+                        <strong className="text-purple-400 flex items-center gap-2 pixel-text text-sm mb-2">
+                          <i className="nes-icon book text-lg"></i>
+                          DESCRIPTION
+                        </strong><br />
+                        <span className="text-white pixel-text leading-relaxed">{edu.description}</span>
                       </p>
                     </div>
                   )}
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 
