@@ -39,10 +39,30 @@ export default function Home() {
       <div className="min-h-screen pt-20 relative">
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-4 h-4 bg-blue-400 rounded-full opacity-20 animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-6 h-6 bg-green-400 rounded-full opacity-15 animate-bounce"></div>
-          <div className="absolute bottom-40 left-1/4 w-3 h-3 bg-purple-400 rounded-full opacity-25 animate-pulse"></div>
-          <div className="absolute bottom-60 right-1/3 w-5 h-5 bg-yellow-400 rounded-full opacity-20 animate-bounce"></div>
+          {day ? (
+            <>
+              <div className="absolute top-20 left-10 w-4 h-4 bg-blue-400 rounded-full opacity-20 animate-pulse"></div>
+              <div className="absolute top-40 right-20 w-6 h-6 bg-green-400 rounded-full opacity-15 animate-bounce"></div>
+              <div className="absolute bottom-40 left-1/4 w-3 h-3 bg-purple-400 rounded-full opacity-25 animate-pulse"></div>
+              <div className="absolute bottom-60 right-1/3 w-5 h-5 bg-yellow-400 rounded-full opacity-20 animate-bounce"></div>
+            </>
+          ) : (
+            <>
+              {/* Additional Stars for Night Mode */}
+              {[...Array(200)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute w-1 h-1 bg-white rounded-full opacity-70 animate-pulse"
+                  style={{
+                    top: `${Math.random() * 100}%`,
+                    left: `${Math.random() * 100}%`,
+                    animationDelay: `${Math.random() * 3}s`,
+                    animationDuration: `${2 + Math.random() * 2}s`,
+                  }}
+                />
+              ))}
+            </>
+          )}
         </div>
 
         <Hero day={day} />
@@ -142,16 +162,6 @@ export default function Home() {
 
         {/* Contact Section */}
         <Contact day={day} />
-
-        {/* Footer Message */}
-        <section className="py-8 px-4 text-center">
-          <div className={`nes-container is-rounded p-4 ${day ? 'bg-gray-100' : 'is-dark'}`}>
-            <p className="text-sm">
-              🎮 <strong>Thanks for exploring my portfolio!</strong> 🎮<br/>
-              <span className="opacity-75">Built with ❤️ using Next.js, React, and NES.css</span>
-            </p>
-          </div>
-        </section>
       </div>
     </MinecraftLayout>
   );

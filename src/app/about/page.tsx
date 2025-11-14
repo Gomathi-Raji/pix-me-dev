@@ -21,7 +21,6 @@ export default function AboutPage() {
   return (
     <MinecraftLayout setDayOrNight={handleDayChange}>
       <div className="min-h-screen pt-20">
-        <Hero day={day} />
 
         {/* Pixelated About Section */}
         <section className="py-20 px-4 relative">

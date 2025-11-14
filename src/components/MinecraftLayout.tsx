@@ -97,7 +97,8 @@ export default function MinecraftLayout({ children, setDayOrNight }: { children:
                         exit={{ opacity: 0 }}
                         transition={{ duration: 1 }}
                     >
-                        {[...Array(90)].map((_, i) => (
+                        {/* Static Twinkling Stars */}
+                        {[...Array(150)].map((_, i) => (
                             <motion.div
                                 key={i}
                                 className="absolute w-1.5 h-1.5 bg-white rounded-full"
@@ -110,6 +111,32 @@ export default function MinecraftLayout({ children, setDayOrNight }: { children:
                                 }}
                             />
                         ))}
+                        {/* Falling Stars */}
+                        {[...Array(12)].map((_, i) => (
+                            <motion.div
+                                key={`falling-${i}`}
+                                className="absolute"
+                                initial={{ 
+                                    top: `${Math.random() * 30}%`, 
+                                    left: `${Math.random() * 100}%`,
+                                    opacity: 0 
+                                }}
+                                animate={{ 
+                                    top: '120vh',
+                                    left: `${parseFloat(`${Math.random() * 100}`) + 20}%`,
+                                    opacity: [0, 1, 1, 0] 
+                                }}
+                                transition={{ 
+                                    duration: 1.5 + Math.random() * 1,
+                                    repeat: Infinity,
+                                    delay: Math.random() * 15,
+                                    ease: 'easeOut'
+                                }}
+                            >
+                                <div className="w-px h-20 bg-gradient-to-b from-white via-white/80 to-transparent blur-sm shadow-lg"
+                                     style={{ transform: 'rotate(45deg)' }} />
+                            </motion.div>
+                        ))}
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -117,8 +144,52 @@ export default function MinecraftLayout({ children, setDayOrNight }: { children:
                 <div className="relative z-20 pt-8">{children}</div>
             )}
             {isEntered && (
-                <footer className="p-4 text-white z-20 relative bg-black bg-opacity-50">
-                    <div className="max-w-4xl mx-auto">
+                <footer className={`p-4 text-white z-20 relative ${day ? 'bg-black bg-opacity-50' : ''}`}>
+                    {!day && (
+                        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                            {/* Footer Stars */}
+                            {[...Array(100)].map((_, i) => (
+                                <motion.div
+                                    key={`footer-star-${i}`}
+                                    className="absolute w-1 h-1 bg-white rounded-full"
+                                    initial={{ opacity: 0.5 }}
+                                    animate={{ opacity: [0.3, 1, 0.3] }}
+                                    transition={{ duration: 2 + Math.random(), repeat: Infinity }}
+                                    style={{
+                                        top: `${Math.random() * 100}%`,
+                                        left: `${Math.random() * 100}%`,
+                                    }}
+                                />
+                            ))}
+                            {/* Footer Shooting Stars */}
+                            {[...Array(5)].map((_, i) => (
+                                <motion.div
+                                    key={`footer-falling-${i}`}
+                                    className="absolute"
+                                    initial={{ 
+                                        top: `${Math.random() * 30}%`, 
+                                        left: `${Math.random() * 100}%`,
+                                        opacity: 0 
+                                    }}
+                                    animate={{ 
+                                        top: '100%',
+                                        left: `${parseFloat(`${Math.random() * 100}`) + 15}%`,
+                                        opacity: [0, 1, 1, 0] 
+                                    }}
+                                    transition={{ 
+                                        duration: 1 + Math.random() * 0.5,
+                                        repeat: Infinity,
+                                        delay: Math.random() * 12,
+                                        ease: 'easeOut'
+                                    }}
+                                >
+                                    <div className="w-px h-16 bg-gradient-to-b from-white via-white/80 to-transparent blur-sm shadow-lg"
+                                         style={{ transform: 'rotate(45deg)' }} />
+                                </motion.div>
+                            ))}
+                        </div>
+                    )}
+                    <div className="max-w-4xl mx-auto relative z-10">
                         {/* Social Links */}
                         <div className="flex justify-center gap-4 mb-4">
                             <a href={siteConfig.contact.linkedin} target="_blank" rel="noopener noreferrer" title="LinkedIn">
@@ -147,7 +218,7 @@ export default function MinecraftLayout({ children, setDayOrNight }: { children:
                         {/* Copyright */}
                         <div className="text-center mb-2 flex justify-center">
                             <div className="nes-badge">
-                                <span className="is-primary px-4 py-1 block text-center whitespace-nowrap">&copy; 2025 DINESH S</span>
+                                <span className="is-primary px-1 py-1 block text-center whitespace-nowrap">DINESH S</span>
                             </div>
                         </div>
 
