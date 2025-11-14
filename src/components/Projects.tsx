@@ -58,14 +58,25 @@ export default function Projects({ day }: { day: boolean; }) {
                                     <p className="text-sm mb-4">{p.description}</p>
                                     {p.technologies && (
                                         <div className="flex flex-wrap gap-2 mb-4">
-                                            {p.technologies.map((tech) => (
-                                                <span
-                                                    key={tech}
-                                                    className="nes-badge"
-                                                >
-                                                    <span className="is-dark">{tech}</span>
-                                                </span>
-                                            ))}
+                                            {p.technologies.map((tech, index) => {
+                                                const colors = [
+                                                    { bg: 'bg-blue-500', text: 'text-white' },
+                                                    { bg: 'bg-green-500', text: 'text-white' },
+                                                    { bg: 'bg-purple-500', text: 'text-white' },
+                                                    { bg: 'bg-red-500', text: 'text-white' },
+                                                    { bg: 'bg-yellow-500', text: 'text-black' }
+                                                ];
+                                                const colorClass = colors[index % colors.length];
+                                                return (
+                                                    <span
+                                                        key={tech}
+                                                        className={`inline-block px-2 py-1 text-xs font-bold rounded ${colorClass.bg} ${colorClass.text} border-2 border-black`}
+                                                        style={{ fontFamily: 'Press Start 2P, monospace', fontSize: '8px' }}
+                                                    >
+                                                        {tech}
+                                                    </span>
+                                                );
+                                            })}
                                         </div>
                                     )}
                                 </div>
