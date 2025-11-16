@@ -8,13 +8,13 @@
                 "library": "react-icons/tb"
             },
             {
-                "name": "C",
-                "icon": "TbBrandCpp",
+                "name": "JavaScript",
+                "icon": "TbBrandJavascript",
                 "library": "react-icons/tb"
             },
             {
-                "name": "JavaScript",
-                "icon": "TbBrandJavascript",
+                "name": "TypeScript",
+                "icon": "TbBrandTypescript",
                 "library": "react-icons/tb"
             },
             {
@@ -33,28 +33,38 @@
                 "library": "react-icons/tb"
             },
             {
-                "name": "MongoDB",
-                "icon": "SiMongodb",
+                "name": "C (Basics)",
+                "icon": "SiC",
                 "library": "react-icons/si"
-            },
-            {
-                "name": "Excel",
-                "icon": "TbFileSpreadsheet",
-                "library": "react-icons/tb"
             }
         ]
     },
     {
-        "title": "Frameworks & Libraries",
+        "title": "AI / ML / DL",
         "skills": [
             {
-                "name": "React",
-                "icon": "TbBrandReact",
-                "library": "react-icons/tb"
+                "name": "Scikit-learn",
+                "icon": "SiScikitlearn",
+                "library": "react-icons/si"
+            },
+            {
+                "name": "Pandas",
+                "icon": "SiPandas",
+                "library": "react-icons/si"
+            },
+            {
+                "name": "NumPy",
+                "icon": "SiNumpy",
+                "library": "react-icons/si"
             },
             {
                 "name": "TensorFlow",
                 "icon": "SiTensorflow",
+                "library": "react-icons/si"
+            },
+            {
+                "name": "Keras",
+                "icon": "SiKeras",
                 "library": "react-icons/si"
             },
             {
@@ -63,35 +73,160 @@
                 "library": "react-icons/si"
             },
             {
-                "name": "PyTorch",
-                "icon": "SiPytorch",
+                "name": "ARIMA / Statsmodels",
+                "icon": "TbChartDots3",
+                "library": "react-icons/tb"
+            },
+            {
+                "name": "TF-IDF / NLTK / SpaCy",
+                "icon": "SiSpacy",
                 "library": "react-icons/si"
             },
             {
-                "name": "Hugging Face",
+                "name": "Xenova Transformers",
+                "icon": "TbRobot",
+                "library": "react-icons/tb"
+            },
+            {
+                "name": "HuggingFace Transformers",
                 "icon": "SiHuggingface",
+                "library": "react-icons/si"
+            },
+            {
+                "name": "ChromaDB (RAG)",
+                "icon": "TbDatabaseSearch",
+                "library": "react-icons/tb"
+            }
+        ]
+    },
+    {
+        "title": "Web & App Development",
+        "skills": [
+            {
+                "name": "React",
+                "icon": "TbBrandReact",
+                "library": "react-icons/tb"
+            },
+            {
+                "name": "Next.js (Basic)",
+                "icon": "TbBrandNextjs",
+                "library": "react-icons/tb"
+            },
+            {
+                "name": "Streamlit",
+                "icon": "SiStreamlit",
+                "library": "react-icons/si"
+            },
+            {
+                "name": "Node.js",
+                "icon": "TbBrandNodejs",
+                "library": "react-icons/tb"
+            },
+            {
+                "name": "Express.js",
+                "icon": "SiExpress",
+                "library": "react-icons/si"
+            },
+            {
+                "name": "Tailwind CSS",
+                "icon": "TbBrandTailwind",
+                "library": "react-icons/tb"
+            },
+            {
+                "name": "Framer Motion",
+                "icon": "SiFramer",
+                "library": "react-icons/si"
+            },
+            {
+                "name": "React Native",
+                "icon": "SiReact",
                 "library": "react-icons/si"
             }
         ]
     },
     {
-        "title": "Tools & Platforms",
+        "title": "Blockchain",
         "skills": [
             {
-                "name": "GitHub",
-                "icon": "TbBrandGithub",
+                "name": "Hyperledger Fabric",
+                "icon": "TbCurrencyBitcoin",
                 "library": "react-icons/tb"
             },
             {
-                "name": "VS Code",
-                "icon": "TbBrandVscode",
-                "library": "react-icons/tb"
-            },
-            {
-                "name": "PyCharm",
-                "icon": "SiPycharm",
+                "name": "Solidity (Basics)",
+                "icon": "SiSolidity",
                 "library": "react-icons/si"
             },
+            {
+                "name": "IPFS",
+                "icon": "SiIpfs",
+                "library": "react-icons/si"
+            }
+        ]
+    },
+    {
+        "title": "Data Visualization",
+        "skills": [
+            {
+                "name": "Power BI",
+                "icon": "TbChartBar",
+                "library": "react-icons/tb"
+            },
+            {
+                "name": "Matplotlib",
+                "icon": "TbChartLine",
+                "library": "react-icons/tb"
+            },
+            {
+                "name": "Seaborn",
+                "icon": "TbChartArea",
+                "library": "react-icons/tb"
+            },
+            {
+                "name": "Plotly (Basic)",
+                "icon": "SiPlotly",
+                "library": "react-icons/si"
+            }
+        ]
+    },
+    {
+        "title": "Cloud & Deployments",
+        "skills": [
+            {
+                "name": "Supabase",
+                "icon": "SiSupabase",
+                "library": "react-icons/si"
+            },
+            {
+                "name": "Firebase",
+                "icon": "SiFirebase",
+                "library": "react-icons/si"
+            },
+            {
+                "name": "Netlify",
+                "icon": "SiNetlify",
+                "library": "react-icons/si"
+            },
+            {
+                "name": "Vercel",
+                "icon": "SiVercel",
+                "library": "react-icons/si"
+            },
+            {
+                "name": "GitHub Pages",
+                "icon": "SiGithubpages",
+                "library": "react-icons/si"
+            },
+            {
+                "name": "Google Cloud",
+                "icon": "SiGooglecloud",
+                "library": "react-icons/si"
+            }
+        ]
+    },
+    {
+        "title": "Model & Data Tools",
+        "skills": [
             {
                 "name": "Anaconda",
                 "icon": "SiAnaconda",
@@ -103,13 +238,43 @@
                 "library": "react-icons/si"
             },
             {
+                "name": "Kaggle",
+                "icon": "SiKaggle",
+                "library": "react-icons/si"
+            },
+            {
                 "name": "Google Colab",
                 "icon": "SiGooglecolab",
                 "library": "react-icons/si"
             },
             {
-                "name": "Kaggle",
-                "icon": "SiKaggle",
+                "name": "ChromaDB (Vector DB)",
+                "icon": "TbDatabase",
+                "library": "react-icons/tb"
+            },
+            {
+                "name": "LangChain (Basics)",
+                "icon": "TbWebhook",
+                "library": "react-icons/tb"
+            }
+        ]
+    },
+    {
+        "title": "Dev Tools & Platforms",
+        "skills": [
+            {
+                "name": "VS Code",
+                "icon": "TbBrandVscode",
+                "library": "react-icons/tb"
+            },
+            {
+                "name": "Git / GitHub",
+                "icon": "TbBrandGithub",
+                "library": "react-icons/tb"
+            },
+            {
+                "name": "Postman",
+                "icon": "SiPostman",
                 "library": "react-icons/si"
             },
             {
@@ -118,14 +283,14 @@
                 "library": "react-icons/tb"
             },
             {
-                "name": "Kubernetes",
-                "icon": "SiKubernetes",
+                "name": "Figma",
+                "icon": "SiFigma",
                 "library": "react-icons/si"
             },
             {
-                "name": "Power BI",
-                "icon": "TbChartBar",
-                "library": "react-icons/tb"
+                "name": "Notion",
+                "icon": "SiNotion",
+                "library": "react-icons/si"
             }
         ]
     }
