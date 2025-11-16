@@ -113,6 +113,70 @@ export default function AboutPage() {
     },
   ];
 
+  const programmingLanguages = [
+    'Python (primary — ML, AI, CV, automation)',
+    'JavaScript',
+    'TypeScript (beginner, actively learning)',
+    'HTML5 / CSS3',
+    'SQL',
+    'Java (basics)',
+    'C (basics)',
+    'R (intro level, data analysis)',
+    'Bash / Shell scripting (basic usage)',
+  ];
+
+  const frameworkStacks = [
+    {
+      title: 'AI / ML / DL',
+      items: [
+        'Scikit-learn',
+        'Pandas',
+        'NumPy',
+        'Matplotlib & Seaborn',
+        'TensorFlow (basic) & Keras (basic)',
+        'OpenCV for CV apps',
+        'ARIMA / Statsmodels',
+        'TF-IDF / NLTK / SpaCy',
+        'Xenova Transformers (JS inference)',
+        'HuggingFace Transformers',
+        'ChromaDB for vector embeddings & RAG',
+      ],
+    },
+    {
+      title: 'Web & App Development',
+      items: [
+        'React & Next.js (basic usage)',
+        'Streamlit dashboards',
+        'Node.js & Express.js',
+        'Tailwind CSS + Framer Motion',
+        'React Native (basic prototypes)',
+      ],
+    },
+    {
+      title: 'Blockchain Stack',
+      items: ['Hyperledger Fabric', 'Solidity (basics)', 'IPFS (file storage basics)'],
+    },
+    {
+      title: 'Data Visualization',
+      items: ['Power BI', 'Matplotlib', 'Seaborn', 'Plotly (basic)'],
+    },
+  ];
+
+  const toolsAndPlatforms = [
+    {
+      title: 'Cloud & Deployments',
+      items: ['Supabase', 'Firebase (auth + DB)', 'Netlify', 'Vercel', 'GitHub Pages', 'Google Cloud (basic usage)'],
+    },
+    {
+      title: 'Model & Data Tools',
+      items: ['Anaconda', 'Jupyter Notebook', 'Kaggle', 'Google Colab', 'ChromaDB', 'LangChain (basics)'],
+    },
+    {
+      title: 'Dev Tools & Ops',
+      items: ['VS Code', 'Git / GitHub', 'Postman', 'Docker (intro level)', 'Figma (UI basics)', 'Notion (project docs)'],
+    },
+  ];
+
   const quickStats = [
     {
       label: 'Projects shipped',
@@ -441,6 +505,58 @@ export default function AboutPage() {
                       ))}
                     </div>
                     <p className="text-xs mt-4 leading-relaxed">{aboutNarrative.belief}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className={`nes-container with-title mb-16 ${themeClass}`}>
+              <p className="title">💻 PROGRAMMING LANGUAGES</p>
+              <div className="flex flex-wrap gap-3">
+                {programmingLanguages.map((language) => (
+                  <span key={language} className="nes-badge">
+                    <span className="is-primary">{language}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+              <div className={`nes-container with-title ${themeClass}`}>
+                <p className="title">⚙️ FRAMEWORKS & LIBRARIES</p>
+                <div className="space-y-4">
+                  {frameworkStacks.map((stack) => (
+                    <div key={stack.title} className={`nes-container is-rounded ${themeClass}`}>
+                      <p className="pixel-text text-sm text-yellow-400 mb-2">{stack.title}</p>
+                      <ul className="nes-list is-disc pl-6 space-y-1 text-sm">
+                        {stack.items.map((item) => (
+                          <li key={`${stack.title}-${item}`}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className={`nes-container with-title ${themeClass}`}>
+                <p className="title">🛠️ TOOLS & PLATFORMS</p>
+                <div className="space-y-4">
+                  {toolsAndPlatforms.map((stack) => (
+                    <div key={stack.title} className={`nes-container is-rounded ${themeClass}`}>
+                      <p className="pixel-text text-sm text-green-400 mb-2">{stack.title}</p>
+                      <ul className="nes-list is-disc pl-6 space-y-1 text-sm">
+                        {stack.items.map((item) => (
+                          <li key={`${stack.title}-${item}`}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                  <div className={`nes-container is-rounded ${themeClass}`}>
+                    <p className="pixel-text text-center text-sm text-blue-400 mb-2">
+                      Explore everything in detail ↘
+                    </p>
+                    <Link href="/skills" className="nes-btn is-primary w-full justify-center flex">
+                      Continue to /skills
+                    </Link>
                   </div>
                 </div>
               </div>
