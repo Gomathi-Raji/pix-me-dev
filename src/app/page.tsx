@@ -1,14 +1,15 @@
 'use client';
 
+import React from 'react';
 import Hero from '@/components/Hero';
-import Projects from '@/components/Projects';
-import Skills from '@/components/Skills';
-import WorkExperience from '@/components/WorkExprience';
 import Education from '@/components/Education';
 import Contact from '@/components/Contact';
 import MinecraftLayout from '@/components/MinecraftLayout';
 import Loading from '@/components/Loading';
 import { useState, useEffect } from 'react';
+import { siteConfig } from '@/config/site';
+import Link from 'next/link';
+import { loadIcon } from '@/helpers/iconLoader';
 
 export default function Home() {
   const [day, setDay] = useState(true);
@@ -113,7 +114,86 @@ export default function Home() {
           <div className="max-w-6xl mx-auto relative z-10">
             <h2 className="text-4xl font-bold mb-8 text-center nes-text is-primary">🚀 Featured Projects</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8 rounded-full"></div>
-            <Projects day={day} />
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 mb-8">
+              {siteConfig.projects.slice(0, 4).map((p) => (
+                <div
+                  key={p.name}
+                  className={`nes-container is-rounded with-title p-3 sm:p-4 flex flex-col justify-between h-full hover:shadow-2xl active:scale-95 transition-all duration-300 touch-manipulation cursor-pointer ${day ? 'bg-white text-gray-900' : 'is-dark text-gray-100'}`}
+                >
+                  {p.image && (
+                    <img
+                      src={p.image}
+                      alt={`${p.name} Project Thumbnail`}
+                      className="w-full h-24 sm:h-32 object-cover rounded mb-3 sm:mb-4 pixelated hover:scale-105 transition-transform duration-200"
+                    />
+                  )}
+                  <div className="flex-grow">
+                    <p className="title mb-2 text-sm sm:text-base break-words">{p.name}</p>
+                    <p className="text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-3">{p.description}</p>
+                    {p.technologies && (
+                      <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4">
+                        {p.technologies.slice(0, 4).map((tech, index) => {
+                          const colors = [
+                            { bg: 'bg-blue-500', text: 'text-white' },
+                            { bg: 'bg-green-500', text: 'text-white' },
+                            { bg: 'bg-purple-500', text: 'text-white' },
+                            { bg: 'bg-red-500', text: 'text-white' },
+                            { bg: 'bg-yellow-500', text: 'text-black' }
+                          ];
+                          const colorClass = colors[index % colors.length];
+                          return (
+                            <span
+                              key={tech}
+                              className={`inline-block px-2 py-1 text-xs font-bold rounded hover:scale-110 active:scale-95 transition-transform duration-200 touch-manipulation ${colorClass.bg} ${colorClass.text} border-2 border-black`}
+                              style={{ fontFamily: 'Press Start 2P, monospace', fontSize: '6px' }}
+                            >
+                              {tech}
+                            </span>
+                          );
+                        })}
+                        {p.technologies.length > 4 && (
+                          <span className="inline-block px-2 py-1 text-xs font-bold rounded bg-gray-500 text-white border-2 border-black" style={{ fontFamily: 'Press Start 2P, monospace', fontSize: '6px' }}>
+                            +{p.technologies.length - 4}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex gap-2">
+                    {p.liveUrl && (
+                      <button
+                        onClick={() => window.open(p.liveUrl, '_blank')}
+                        className="nes-btn is-success is-small flex-1"
+                      >
+                        🌐 Live Demo
+                      </button>
+                    )}
+                    {p.repoUrl && (
+                      <button
+                        onClick={() => window.open(p.repoUrl, '_blank')}
+                        className="nes-btn is-primary is-small flex-1"
+                      >
+                        💻 GitHub
+                      </button>
+                    )}
+                    {p.playStoreUrl && (
+                      <button
+                        onClick={() => window.open(p.playStoreUrl, '_blank')}
+                        className="nes-btn is-warning is-small flex-1"
+                      >
+                        ⭐ View App
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="text-center">
+              <Link href="/projects" className="nes-btn is-primary text-lg px-8 py-3 hover:scale-105 transition-transform">
+                View All Projects
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -123,7 +203,34 @@ export default function Home() {
           <div className="max-w-6xl mx-auto relative z-10">
             <h2 className="text-4xl font-bold mb-8 text-center nes-text is-primary">⚡ Skills & Technologies</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-blue-500 mx-auto mb-8 rounded-full"></div>
-            <Skills day={day} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+              {siteConfig.skills.slice(0, 3).map((skillGroup) => (
+                <div key={skillGroup.title} className={`nes-container with-title is-rounded ${day ? '' : 'is-dark'}`}>
+                  <p className="title">
+                    <i className="nes-icon star"></i>
+                    {skillGroup.title}
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-4">
+                    {skillGroup.skills.slice(0, 6).map((skill) => {
+                      const IconComponent = loadIcon(skill.library, skill.icon);
+                      return (
+                        <div key={skill.name} className="relative group border rounded-lg p-4 text-center flex-shrink-0 transition-transform transform hover:scale-110">
+                          {IconComponent && React.createElement(IconComponent, { className: "w-12 h-12 mx-auto mb-2" })}
+                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-700 text-white text-xs rounded px-2 py-1">
+                            {skill.name}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="text-center">
+              <Link href="/skills" className="nes-btn is-primary text-lg px-8 py-3 hover:scale-105 transition-transform">
+                View All Skills
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -133,7 +240,33 @@ export default function Home() {
           <div className="max-w-6xl mx-auto relative z-10">
             <h2 className="text-4xl font-bold mb-8 text-center nes-text is-primary">💼 Work Experience</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-yellow-500 to-orange-500 mx-auto mb-8 rounded-full"></div>
-            <WorkExperience day={day} />
+            <div className="space-y-6 mb-8">
+              {siteConfig.work.slice(0, 2).map((experience, index) => (
+                <div key={experience.position} className={`nes-container is-rounded ${day ? '' : 'is-dark'}`}>
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="pixel-text text-sm text-yellow-400">
+                      #{String(index + 1).padStart(2, '0')}
+                    </p>
+                    <span className="nes-badge">
+                      <span className="is-warning">{experience.startDate} - {experience.endDate || 'Present'}</span>
+                    </span>
+                  </div>
+                  <h3 className="pixel-text text-lg text-green-400 mb-2">{experience.position}</h3>
+                  <p className="text-xs uppercase tracking-wide mb-2">{experience.company}</p>
+                  <p className="text-sm mb-3 leading-relaxed">{experience.summary}</p>
+                  <ul className="nes-list is-disc pl-6 space-y-1 text-xs">
+                    {experience.highlights.slice(0, 2).map((highlight, idx) => (
+                      <li key={idx}>{highlight}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <div className="text-center">
+              <Link href="/experience" className="nes-btn is-primary text-lg px-8 py-3 hover:scale-105 transition-transform">
+                View All Experience
+              </Link>
+            </div>
           </div>
         </section>
 

@@ -208,7 +208,7 @@ export default function AboutPage() {
     {
       title: 'AI & Data Science Explorer',
       location: 'DMI College of Engineering',
-      timeline: '2022 - Present',
+      timeline: '2023 - Present',
       summary:
         'Pursuing B.Tech in AI & Data Science while crafting ML prototypes that solve everyday campus challenges.',
       highlights: [
