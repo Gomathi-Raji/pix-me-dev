@@ -54,6 +54,17 @@ section::after {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
+/* Normalize spacing between light and dark modes */
+.nes-container {
+  margin: 0;
+  padding: 1rem;
+}
+
+.nes-container.is-dark {
+  margin: 0;
+  padding: 1rem;
+}
+
 /* Gradient Text Effect */
 .gradient-text {
   background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
@@ -714,26 +725,180 @@ img, [class*="icon"], svg {
         margin: 0.5rem;
         padding: 1rem !important;
     }
-    
+
+    .nes-container.is-dark {
+        margin: 0.5rem;
+        padding: 1rem !important;
+    }
+
     .nes-btn {
         min-height: 44px;
         min-width: 44px;
         padding: 0.75rem 1rem;
         font-size: 0.75rem;
     }
-    
+
     .education-card {
         margin-bottom: 1rem;
     }
-    
+
     .education-timeline-dot {
         transform: scale(0.8);
+    }
+
+    /* Home page mobile optimizations */
+    .home-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .home-project-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .home-project-card {
+        padding: 1rem !important;
+    }
+
+    .home-project-image {
+        height: 120px !important;
+    }
+
+    .home-tech-tag {
+        font-size: 8px !important;
+        padding: 0.25rem 0.5rem !important;
+    }
+
+    /* About page mobile optimizations */
+    .about-hero-title {
+        font-size: 1.5rem !important;
+        line-height: 1.2 !important;
+    }
+
+    .about-section-title {
+        font-size: 1.75rem !important;
+    }
+
+    .about-grid-2col {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+
+    .about-grid-3col {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    .about-container-padding {
+        padding: 1rem !important;
+    }
+
+    .about-text-sm {
+        font-size: 0.75rem !important;
+    }
+
+    .about-text-xs {
+        font-size: 0.65rem !important;
+    }
+
+    /* Experience page mobile optimizations */
+    .experience-timeline {
+        padding-left: 0.5rem !important;
+    }
+
+    .experience-timeline-line {
+        left: 0.25rem !important;
+    }
+
+    .experience-card {
+        padding: 0.5rem !important;
+        margin-left: 0rem !important;
+    }
+
+    .experience-card .nes-container {
+        padding: 0.75rem !important;
+    }
+
+    .experience-marker {
+        left: -0.125rem !important;
+        width: 0.75rem !important;
+        height: 0.75rem !important;
+    }
+
+    .experience-title {
+        font-size: 1rem !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.5rem !important;
+    }
+
+    .experience-summary {
+        font-size: 0.8rem !important;
+    }
+
+    .experience-tags {
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+    }
+
+    .experience-links {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+
+    .experience-links .nes-btn {
+        width: 100% !important;
+    }
+
+    /* Reduce container padding for broader content */
+    .experience-timeline .nes-container {
+        padding: 0.5rem !important;
+        margin: 0.25rem 0 !important;
+    }
+
+    /* General mobile text improvements */
+    .mobile-text-lg {
+        font-size: 1.125rem !important;
+    }
+
+    .mobile-text-base {
+        font-size: 1rem !important;
+    }
+
+    .mobile-text-sm {
+        font-size: 0.875rem !important;
+    }
+
+    .mobile-text-xs {
+        font-size: 0.75rem !important;
+    }
+
+    /* Mobile spacing improvements */
+    .mobile-spacing-y-4 > * + * {
+        margin-top: 1rem !important;
+    }
+
+    .mobile-spacing-y-6 > * + * {
+        margin-top: 1.5rem !important;
+    }
+
+    .mobile-gap-2 > * + * {
+        margin-left: 0.5rem !important;
+    }
+
+    .mobile-gap-3 > * + * {
+        margin-left: 0.75rem !important;
     }
 }
 
 /* Tablet optimizations */
 @media (min-width: 641px) and (max-width: 1024px) {
     .nes-container {
+        padding: 1.5rem !important;
+    }
+
+    .nes-container.is-dark {
         padding: 1.5rem !important;
     }
     
@@ -747,6 +912,11 @@ img, [class*="icon"], svg {
     .nes-container:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .nes-container.is-dark:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     }
 }
 

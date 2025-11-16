@@ -9,14 +9,14 @@ import { Work } from '@/types/work';
 
 export default function WorkExprience({ day }: { day: boolean }) {
     return (
-        <section className={`nes-container with-title is-rounded p-6 ${day ? 'bg-gray-100' : 'is-dark'}`}>
+        <section className={`experience-timeline nes-container with-title is-rounded p-4 md:p-6 ${day ? 'bg-gray-100' : 'is-dark'}`}>
             <p className="title mb-4">Experience Timeline</p>
-            <div className="relative pl-6 md:pl-10">
+            <div className="experience-timeline relative pl-6 md:pl-10">
                 <span
-                    className={`absolute left-3 md:left-4 top-6 bottom-6 w-1 ${day ? 'bg-gray-300' : 'bg-gray-700'}`}
+                    className={`experience-timeline-line absolute left-3 md:left-4 top-6 bottom-6 w-1 ${day ? 'bg-gray-300' : 'bg-gray-700'}`}
                     aria-hidden="true"
                 ></span>
-                <div className="space-y-10">
+                <div className="mobile-spacing-y-10 space-y-10">
                     {siteConfig.work.map((job, index) => (
                         <TimelineCard key={`${job.company}-${job.position}`} job={job} day={day} index={index} />
                     ))}
@@ -42,20 +42,20 @@ function TimelineCard({ job, day, index }: { job: Work; day: boolean; index: num
     const markerColor = accentPalette[index % accentPalette.length];
 
     return (
-        <motion.article layout className="relative pl-10">
-            <span className={`absolute left-0 top-8 w-5 h-5 rounded-full border-4 ${markerColor} bg-white`} aria-hidden="true"></span>
+        <motion.article layout className="experience-card relative pl-2 md:pl-10">
+            <span className={`experience-marker absolute left-0 top-8 w-5 h-5 rounded-full border-4 ${markerColor} bg-white`} aria-hidden="true"></span>
             <div className={`nes-container is-rounded with-title p-4 ${day ? 'bg-white text-gray-900' : 'is-dark text-gray-100'}`}>
                 <div className="flex flex-col gap-2">
-                    <h3 className="font-bold text-lg flex items-center gap-2">
+                    <h3 className="experience-title font-bold text-lg flex items-center gap-2">
                         <IconComponent size={22} />
-                        {job.position} <span className="text-sm text-gray-500">@</span> {job.company}
+                        {job.position} <span className="experience-summary text-sm text-gray-500">@</span> {job.company}
                     </h3>
-                    <p className="text-xs text-gray-500">
+                    <p className="experience-summary text-xs text-gray-500">
                         {job.startDate} &mdash; {job.endDate || 'Present'}
                     </p>
-                    <p className="text-sm leading-relaxed">{job.summary}</p>
+                    <p className="experience-summary text-sm leading-relaxed">{job.summary}</p>
                     {job.tags?.length ? (
-                        <div className="flex flex-wrap gap-2">
+                        <div className="experience-tags flex flex-wrap gap-2">
                             {job.tags.map((tag) => (
                                 <span key={tag} className="nes-badge">
                                     <span className="is-primary">{tag}</span>
@@ -75,7 +75,7 @@ function TimelineCard({ job, day, index }: { job: Work; day: boolean; index: num
                         {job.links?.length ? (
                             <div>
                                 <p className="text-sm font-bold mb-2">Links</p>
-                                <div className="flex flex-wrap gap-2">
+                                <div className="experience-links flex flex-wrap gap-2">
                                     {job.links.map((link) => (
                                         <a
                                             key={link.url}

@@ -353,14 +353,14 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-[1.4fr,0.6fr] gap-8 mb-16">
-              <div className={`nes-container with-title ${themeClass}`}>
+            <div className="about-grid-2col grid grid-cols-1 xl:grid-cols-[1.4fr,0.6fr] gap-8 mb-16">
+              <div className={`about-container-padding nes-container with-title ${themeClass}`}>
                 <p className="title">🧠 SKILLS & EXPERTISE</p>
-                <div className="space-y-4">
+                <div className="mobile-spacing-y-4 space-y-4">
                   {capabilitySections.map((section) => (
                     <div key={section.title} className={`nes-container is-rounded ${themeClass}`}>
-                      <p className="pixel-text text-sm text-yellow-400 mb-2">{section.title}</p>
-                      <ul className="nes-list is-disc pl-6 space-y-1 text-sm">
+                      <p className="pixel-text about-text-sm text-sm text-yellow-400 mb-2">{section.title}</p>
+                      <ul className="nes-list is-disc pl-6 space-y-1 about-text-sm text-sm">
                         {section.items.map((item) => (
                           <li key={`${section.title}-${item}`}>{item}</li>
                         ))}
@@ -370,17 +370,17 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              <div className={`nes-container with-title ${themeClass}`}>
+              <div className={`about-container-padding nes-container with-title ${themeClass}`}>
                 <p className="title">🚀 MISSION & IMPACT</p>
-                <div className="space-y-6">
+                <div className="mobile-spacing-y-6 space-y-6">
                   <div className={`nes-container is-rounded ${themeClass}`}>
-                    <p className="pixel-text text-sm text-green-400 mb-2">Mission Blueprint</p>
-                    <p className="text-sm leading-relaxed">{aboutNarrative.mission}</p>
-                    <p className="text-xs leading-relaxed mt-3 text-yellow-400">{aboutNarrative.missionDetail}</p>
+                    <p className="pixel-text about-text-sm text-sm text-green-400 mb-2">Mission Blueprint</p>
+                    <p className="about-text-sm text-sm leading-relaxed">{aboutNarrative.mission}</p>
+                    <p className="about-text-xs text-xs leading-relaxed mt-3 text-yellow-400">{aboutNarrative.missionDetail}</p>
                   </div>
                   <div className={`nes-container is-rounded ${themeClass}`}>
-                    <p className="pixel-text text-sm text-purple-400 mb-2">Impact Fields</p>
-                    <div className="flex flex-wrap gap-3">
+                    <p className="pixel-text about-text-sm text-sm text-purple-400 mb-2">Impact Fields</p>
+                    <div className="mobile-gap-3 flex flex-wrap gap-3">
                       {missionFields.map((field) => (
                         <span key={field} className="nes-badge">
                           <span className="is-success">{field}</span>
@@ -389,15 +389,15 @@ export default function AboutPage() {
                     </div>
                   </div>
                   <div className={`nes-container is-rounded ${themeClass}`}>
-                    <p className="pixel-text text-sm text-blue-400 mb-2">Innovation Tracks</p>
-                    <div className="flex flex-wrap gap-3">
+                    <p className="pixel-text about-text-sm text-sm text-blue-400 mb-2">Innovation Tracks</p>
+                    <div className="mobile-gap-3 flex flex-wrap gap-3">
                       {innovationTracks.map((track) => (
                         <span key={`mission-${track}`} className="nes-badge">
                           <span className="is-warning">{track}</span>
                         </span>
                       ))}
                     </div>
-                    <p className="text-xs mt-4 leading-relaxed">{aboutNarrative.belief}</p>
+                    <p className="about-text-xs text-xs mt-4 leading-relaxed">{aboutNarrative.belief}</p>
                   </div>
                 </div>
               </div>
@@ -414,14 +414,14 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-              <div className={`nes-container with-title ${themeClass}`}>
+            <div className="about-grid-2col grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+              <div className={`about-container-padding nes-container with-title ${themeClass}`}>
                 <p className="title">⚙️ FRAMEWORKS & LIBRARIES</p>
-                <div className="space-y-4">
+                <div className="mobile-spacing-y-4 space-y-4">
                   {frameworkStacks.map((stack) => (
                     <div key={stack.title} className={`nes-container is-rounded ${themeClass}`}>
-                      <p className="pixel-text text-sm text-yellow-400 mb-2">{stack.title}</p>
-                      <ul className="nes-list is-disc pl-6 space-y-1 text-sm">
+                      <p className="pixel-text about-text-sm text-sm text-yellow-400 mb-2">{stack.title}</p>
+                      <ul className="nes-list is-disc pl-6 space-y-1 about-text-sm text-sm">
                         {stack.items.map((item) => (
                           <li key={`${stack.title}-${item}`}>{item}</li>
                         ))}
@@ -430,13 +430,13 @@ export default function AboutPage() {
                   ))}
                 </div>
               </div>
-              <div className={`nes-container with-title ${themeClass}`}>
+              <div className={`about-container-padding nes-container with-title ${themeClass}`}>
                 <p className="title">🛠️ TOOLS & PLATFORMS</p>
-                <div className="space-y-4">
+                <div className="mobile-spacing-y-4 space-y-4">
                   {toolsAndPlatforms.map((stack) => (
                     <div key={stack.title} className={`nes-container is-rounded ${themeClass}`}>
-                      <p className="pixel-text text-sm text-green-400 mb-2">{stack.title}</p>
-                      <ul className="nes-list is-disc pl-6 space-y-1 text-sm">
+                      <p className="pixel-text about-text-sm text-sm text-green-400 mb-2">{stack.title}</p>
+                      <ul className="nes-list is-disc pl-6 space-y-1 about-text-sm text-sm">
                         {stack.items.map((item) => (
                           <li key={`${stack.title}-${item}`}>{item}</li>
                         ))}
@@ -444,7 +444,7 @@ export default function AboutPage() {
                     </div>
                   ))}
                   <div className={`nes-container is-rounded ${themeClass}`}>
-                    <p className="pixel-text text-center text-sm text-blue-400 mb-2">
+                    <p className="pixel-text text-center about-text-sm text-sm text-blue-400 mb-2">
                       Explore everything in detail ↘
                     </p>
                     <Link href="/skills" className="nes-btn is-primary w-full justify-center flex">

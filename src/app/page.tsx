@@ -84,26 +84,26 @@ export default function Home() {
         {/* Stats Section */}
         <section className="py-12 px-4 relative z-10">
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="home-stats-grid grid grid-cols-2 md:grid-cols-4 gap-6">
               <div className={`nes-container is-rounded text-center p-6 hover:scale-105 transition-transform duration-300 ${day ? 'bg-white' : 'is-dark'}`}>
                 <div className="text-4xl mb-3 animate-float-delay-1">🚀</div>
-                <div className="text-3xl font-bold nes-text is-primary mb-1">12+</div>
-                <div className="text-sm font-medium">Projects Completed</div>
+                <div className="mobile-text-3xl text-3xl font-bold nes-text is-primary mb-1">12+</div>
+                <div className="mobile-text-sm text-sm font-medium">Projects Completed</div>
               </div>
               <div className={`nes-container is-rounded text-center p-6 hover:scale-105 transition-transform duration-300 ${day ? 'bg-white' : 'is-dark'}`}>
                 <div className="text-4xl mb-3 animate-float-delay-2">⚡</div>
-                <div className="text-3xl font-bold nes-text is-success mb-1">15+</div>
-                <div className="text-sm font-medium">Technologies Mastered</div>
+                <div className="mobile-text-3xl text-3xl font-bold nes-text is-success mb-1">15+</div>
+                <div className="mobile-text-sm text-sm font-medium">Technologies Mastered</div>
               </div>
               <div className={`nes-container is-rounded text-center p-6 hover:scale-105 transition-transform duration-300 ${day ? 'bg-white' : 'is-dark'}`}>
                 <div className="text-4xl mb-3 animate-float-delay-3">🎓</div>
-                <div className="text-3xl font-bold nes-text is-warning mb-1">8.5</div>
-                <div className="text-sm font-medium">Academic GPA</div>
+                <div className="mobile-text-3xl text-3xl font-bold nes-text is-warning mb-1">8.5</div>
+                <div className="mobile-text-sm text-sm font-medium">Academic GPA</div>
               </div>
               <div className={`nes-container is-rounded text-center p-6 hover:scale-105 transition-transform duration-300 ${day ? 'bg-white' : 'is-dark'}`}>
                 <div className="text-4xl mb-3 animate-float-delay-4">💼</div>
-                <div className="text-3xl font-bold nes-text is-error mb-1">2+</div>
-                <div className="text-sm font-medium">Years Experience</div>
+                <div className="mobile-text-3xl text-3xl font-bold nes-text is-error mb-1">2+</div>
+                <div className="mobile-text-sm text-sm font-medium">Years Experience</div>
               </div>
             </div>
           </div>
@@ -114,22 +114,22 @@ export default function Home() {
           <div className="max-w-6xl mx-auto relative z-10">
             <h2 className="text-4xl font-bold mb-8 text-center nes-text is-primary">🚀 Featured Projects</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8 rounded-full"></div>
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 mb-8">
+            <div className="home-project-grid grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 mb-8">
               {siteConfig.projects.slice(0, 4).map((p) => (
                 <div
                   key={p.name}
-                  className={`nes-container is-rounded with-title p-3 sm:p-4 flex flex-col justify-between h-full hover:shadow-2xl active:scale-95 transition-all duration-300 touch-manipulation cursor-pointer ${day ? 'bg-white text-gray-900' : 'is-dark text-gray-100'}`}
+                  className={`home-project-card nes-container is-rounded with-title p-3 sm:p-4 flex flex-col justify-between h-full hover:shadow-2xl active:scale-95 transition-all duration-300 touch-manipulation cursor-pointer ${day ? 'bg-white text-gray-900' : 'is-dark text-gray-100'}`}
                 >
                   {p.image && (
                     <img
                       src={p.image}
                       alt={`${p.name} Project Thumbnail`}
-                      className="w-full h-24 sm:h-32 object-cover rounded mb-3 sm:mb-4 pixelated hover:scale-105 transition-transform duration-200"
+                      className="home-project-image w-full h-24 sm:h-32 object-cover rounded mb-3 sm:mb-4 pixelated hover:scale-105 transition-transform duration-200"
                     />
                   )}
                   <div className="flex-grow">
-                    <p className="title mb-2 text-sm sm:text-base break-words">{p.name}</p>
-                    <p className="text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-3">{p.description}</p>
+                    <p className="title mb-2 mobile-text-sm text-sm sm:text-base break-words">{p.name}</p>
+                    <p className="mobile-text-xs text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-3">{p.description}</p>
                     {p.technologies && (
                       <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4">
                         {p.technologies.slice(0, 4).map((tech, index) => {
@@ -144,7 +144,7 @@ export default function Home() {
                           return (
                             <span
                               key={tech}
-                              className={`inline-block px-2 py-1 text-xs font-bold rounded hover:scale-110 active:scale-95 transition-transform duration-200 touch-manipulation ${colorClass.bg} ${colorClass.text} border-2 border-black`}
+                              className={`home-tech-tag inline-block px-2 py-1 text-xs font-bold rounded hover:scale-110 active:scale-95 transition-transform duration-200 touch-manipulation ${colorClass.bg} ${colorClass.text} border-2 border-black`}
                               style={{ fontFamily: 'Press Start 2P, monospace', fontSize: '6px' }}
                             >
                               {tech}
@@ -152,7 +152,7 @@ export default function Home() {
                           );
                         })}
                         {p.technologies.length > 4 && (
-                          <span className="inline-block px-2 py-1 text-xs font-bold rounded bg-gray-500 text-white border-2 border-black" style={{ fontFamily: 'Press Start 2P, monospace', fontSize: '6px' }}>
+                          <span className="home-tech-tag inline-block px-2 py-1 text-xs font-bold rounded bg-gray-500 text-white border-2 border-black" style={{ fontFamily: 'Press Start 2P, monospace', fontSize: '6px' }}>
                             +{p.technologies.length - 4}
                           </span>
                         )}
@@ -160,7 +160,7 @@ export default function Home() {
                     )}
                   </div>
 
-                  <div className="flex gap-2">
+                  <div className="experience-links flex gap-2">
                     {p.liveUrl && (
                       <button
                         onClick={() => window.open(p.liveUrl, '_blank')}
