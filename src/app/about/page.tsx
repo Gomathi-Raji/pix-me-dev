@@ -204,53 +204,6 @@ export default function AboutPage() {
     },
   ];
 
-  const fallbackJourney = [
-    {
-      title: 'AI & Data Science Explorer',
-      location: 'DMI College of Engineering',
-      timeline: '2023 - Present',
-      summary:
-        'Pursuing B.Tech in AI & Data Science while crafting ML prototypes that solve everyday campus challenges.',
-      highlights: [
-        'Maintaining a strong GPA of 8.5 with practical capstones every semester',
-        'Leading peer study circles focused on Python, ML, and data storytelling',
-      ],
-    },
-    {
-      title: 'Community Builder',
-      location: 'Open-source & Hackathon floors',
-      timeline: '2023 - Present',
-      summary: 'Hosting workshops, sharing notebooks, and collaborating on AI-for-good concepts.',
-      highlights: [
-        'Facilitated fast-paced weekend sprints for budding ML engineers',
-        'Delivered talks about generative AI safety & creative coding',
-      ],
-    },
-    {
-      title: 'Creative Technologist',
-      location: 'Side quests & personal labs',
-      timeline: 'Ongoing',
-      summary: 'Experimenting with gaming-inspired UX, automation helpers, and storytelling through data.',
-      highlights: [
-        'Shipped playful interfaces like this Minecraft-inspired portfolio',
-        'Mixing Free Fire strategies with AI decision-making research',
-      ],
-    },
-  ];
-
-  const journeyEntries = (siteConfig.work && siteConfig.work.length > 0
-    ? siteConfig.work.map((experience) => ({
-        title: experience.position,
-        location: experience.company,
-        timeline: `${experience.startDate} - ${experience.endDate || 'Present'}`,
-        summary: experience.summary,
-        highlights:
-          experience.highlights && experience.highlights.length > 0
-            ? experience.highlights
-            : [experience.summary],
-      }))
-    : fallbackJourney);
-
   return (
     <MinecraftLayout setDayOrNight={handleDayChange}>
       <div className="min-h-screen pt-20">
@@ -395,66 +348,6 @@ export default function AboutPage() {
                         <p className="text-sm">{siteConfig.profile.focusAreas}</p>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Quest Log + Core Themes */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-              <div className={`nes-container with-title ${themeClass}`}>
-                <p className="title">📜 QUEST LOG</p>
-                <div className="space-y-6">
-                  {journeyEntries.map((entry, index) => (
-                    <div
-                      key={`${entry.title}-${index}`}
-                      className={`nes-container is-rounded ${themeClass}`}
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <p className="pixel-text text-sm text-yellow-400">
-                          #{String(index + 1).padStart(2, '0')}
-                        </p>
-                        <span className="nes-badge">
-                          <span className="is-warning">{entry.timeline}</span>
-                        </span>
-                      </div>
-                      <h3 className="pixel-text text-lg text-green-400 mb-2">{entry.title}</h3>
-                      <p className="text-xs uppercase tracking-wide mb-2">{entry.location}</p>
-                      <p className="text-sm mb-3 leading-relaxed">{entry.summary}</p>
-                      <ul className="nes-list is-disc pl-6 space-y-1 text-xs">
-                        {entry.highlights.map((highlight, idx) => (
-                          <li key={`${highlight}-${idx}`}>{highlight}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className={`nes-container with-title ${themeClass}`}>
-                <p className="title">💡 CORE THEMES</p>
-                <div className="space-y-6">
-                  <div className={`nes-container is-rounded ${themeClass}`}>
-                    <p className="pixel-text text-green-400 text-sm mb-3">Expertise Stack</p>
-                    <ul className="nes-list is-disc pl-6 space-y-2 text-sm">
-                      {expertiseTokens.map((token) => (
-                        <li key={token}>{token}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className={`nes-container is-rounded ${themeClass}`}>
-                    <p className="pixel-text text-blue-400 text-sm mb-3">Focus Missions</p>
-                    <div className="flex flex-wrap gap-3">
-                      {focusTokens.map((token) => (
-                        <span key={`focus-${token}`} className="nes-badge">
-                          <span className="is-success">{token}</span>
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className={`nes-container is-rounded ${themeClass}`}>
-                    <p className="pixel-text text-purple-400 text-sm mb-3">Hobbies + Recharge</p>
-                    <p className="text-sm leading-relaxed">{siteConfig.profile.hobbies}</p>
                   </div>
                 </div>
               </div>

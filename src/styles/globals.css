@@ -198,6 +198,31 @@ img, [class*="icon"], svg {
   color: white;
 }
 
+.nes-container.is-dark .nes-list.is-disc li:before {
+  color: white;
+}
+
+/* Custom bullet styling for dark mode */
+.nes-container.is-dark .nes-list.is-disc li:before,
+.nes-container.is-dark .nes-list.is-circle li:before,
+.nes-container.is-dark .nes-list li:before {
+  color: white !important;
+  background-color: white !important;
+  background-image: none !important;
+  border-color: white !important;
+  text-shadow: none !important;
+  filter: brightness(0) invert(1) !important;
+}
+
+/* Alternative approach - target the ul element */
+.nes-container.is-dark .nes-list.is-disc {
+  --bullet-color: white;
+}
+
+.nes-container.is-dark .nes-list.is-disc li:before {
+  background-color: white !important;
+}
+
 /* NES.css Dark Mode Text Fixes */
 .nes-balloon.is-dark {
   color: #ffffff !important;
