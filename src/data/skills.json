@@ -186,6 +186,11 @@
                 "name": "Plotly (Basic)",
                 "icon": "SiPlotly",
                 "library": "react-icons/si"
+            },
+            {
+                "name": "Tableau",
+                "icon": "SiTableau",
+                "library": "react-icons/si"
             }
         ]
     },
@@ -291,6 +296,41 @@
                 "name": "Notion",
                 "icon": "SiNotion",
                 "library": "react-icons/si"
+            },
+            {
+                "name": "Google Docs",
+                "icon": "SiGoogledocs",
+                "library": "react-icons/si"
+            },
+            {
+                "name": "Google Sheets",
+                "icon": "SiGooglesheets",
+                "library": "react-icons/si"
+            },
+            {
+                "name": "Google Slides",
+                "icon": "SiGoogleslides",
+                "library": "react-icons/si"
+            }
+        ]
+    },
+    {
+        "title": "Languages",
+        "skills": [
+            {
+                "name": "Hindi",
+                "icon": "TbLanguage",
+                "library": "react-icons/tb"
+            },
+            {
+                "name": "Tamil",
+                "icon": "TbLanguageKatakana",
+                "library": "react-icons/tb"
+            },
+            {
+                "name": "English",
+                "icon": "TbWorld",
+                "library": "react-icons/tb"
             }
         ]
     }

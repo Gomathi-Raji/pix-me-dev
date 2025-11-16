@@ -105,20 +105,26 @@ const Education = ({ day }: { day: boolean }) => {
                           </p>
                           <span className="text-white font-bold text-xl sm:text-2xl pixel-text">{edu.gpa}</span>
                         </div>
-                        <div className="nes-progress w-full sm:w-32 md:w-40">
-                          <progress
-                            className="nes-progress"
-                            value={parseFloat(edu.gpa.replace('%', '')) || parseFloat(edu.gpa) * 10}
-                            max="100"
-                          ></progress>
-                        </div>
+                        {(() => {
+                          const gpaValue = edu.gpa.replace('%', '');
+                          const numericValue = parseFloat(gpaValue);
+                          return !isNaN(numericValue) ? (
+                            <div className="nes-progress w-full sm:w-32 md:w-40">
+                              <progress
+                                className="nes-progress"
+                                value={numericValue}
+                                max="100"
+                              ></progress>
+                            </div>
+                          ) : null;
+                        })()}
                       </div>
                     </div>
                   )}
 
                   {edu.description && (
                     <div className={`nes-container is-rounded education-desc-card border-4 border-purple-500 ${day ? 'bg-white' : 'is-dark'}`}>
-                      <p className="nes-text text-purple-200">
+                      <div className="nes-text text-purple-200">
                         <strong className="text-purple-400 flex items-center gap-2 pixel-text text-sm mb-3">
                           <span className="text-lg">📚</span>
                           HIGHLIGHTS
@@ -131,7 +137,7 @@ const Education = ({ day }: { day: boolean }) => {
                             </div>
                           ))}
                         </div>
-                      </p>
+                      </div>
                     </div>
                   )}
                 </div>
