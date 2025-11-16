@@ -63,8 +63,7 @@ export default function MinecraftLayout({ children, setDayOrNight }: { children:
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }}
         >
-            {!showPortal && <Banner day={day} toggleDayNight={toggleDayNight} />}
-            {isEntered && showPortal && <Banner day={day} toggleDayNight={toggleDayNight} />}
+            <Banner day={day} toggleDayNight={toggleDayNight} />
             <AnimatePresence>
                 {showPortal && !isEntered && (
                     <PortalOverlay day={day} onEnter={() => {

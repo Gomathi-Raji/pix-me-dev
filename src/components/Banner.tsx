@@ -32,14 +32,17 @@ export default function Banner({ day, toggleDayNight }: { day: boolean; toggleDa
 
     const toggleMusic = () => {
         if (audioRef.current) {
-            if (isPlaying) {
+            if (audioRef.current.paused) {
+                audioRef.current.play().then(() => {
+                    setIsPlaying(true);
+                    localStorage.setItem('musicPlaying', 'true');
+                }).catch(() => {
+                    setIsPlaying(false);
+                });
+            } else {
                 audioRef.current.pause();
                 setIsPlaying(false);
                 localStorage.setItem('musicPlaying', 'false');
-            } else {
-                audioRef.current.play();
-                setIsPlaying(true);
-                localStorage.setItem('musicPlaying', 'true');
             }
         }
     };
@@ -48,30 +51,48 @@ export default function Banner({ day, toggleDayNight }: { day: boolean; toggleDa
     useEffect(() => {
         const newTrack = day ? lightModeTrack : darkModeTrack;
         
-        if (currentTrack !== newTrack) {
-            const wasPlaying = isPlaying;
-            const currentTime = audioRef.current?.currentTime || 0;
+        if (currentTrack !== newTrack && audioRef.current) {
+            const wasPlaying = !audioRef.current.paused;
+            const currentTime = audioRef.current.currentTime;
             
-            // Pause current track if playing
-            if (audioRef.current && isPlaying) {
-                audioRef.current.pause();
-            }
-            
+            // Update track
             setCurrentTrack(newTrack);
+            audioRef.current.src = newTrack;
+            audioRef.current.load();
             
-            // Small delay to ensure track change is processed
+            // Restore playing state after a short delay
             setTimeout(() => {
                 if (audioRef.current && wasPlaying) {
                     audioRef.current.currentTime = 0; // Start new track from beginning
-                    audioRef.current.play().then(() => {
-                        setIsPlaying(true);
-                    }).catch(() => {
+                    audioRef.current.play().catch(() => {
                         setIsPlaying(false);
                     });
                 }
             }, 100);
         }
-    }, [day, currentTrack, isPlaying]);
+    }, [day, currentTrack]);
+
+    // Effect to ensure audio stays playing if it should be
+    useEffect(() => {
+        const checkAudio = () => {
+            if (audioRef.current) {
+                const shouldBePlaying = localStorage.getItem('musicPlaying') === 'true';
+                if (shouldBePlaying && audioRef.current.paused && audioRef.current.readyState >= 2) {
+                    audioRef.current.play().catch(() => {
+                        // Ignore autoplay errors
+                    });
+                }
+            }
+        };
+
+        // Check immediately
+        checkAudio();
+
+        // Check periodically
+        const interval = setInterval(checkAudio, 1000);
+
+        return () => clearInterval(interval);
+    }, [currentTrack]);
 
     useEffect(() => {
         if (audioRef.current) {
@@ -81,25 +102,48 @@ export default function Banner({ day, toggleDayNight }: { day: boolean; toggleDa
             // Set initial track
             const initialTrack = day ? lightModeTrack : darkModeTrack;
             setCurrentTrack(initialTrack);
+            audioRef.current.src = initialTrack;
             
             // Restore music state from localStorage
             const wasMusicPlaying = localStorage.getItem('musicPlaying') === 'true';
+            const savedTime = localStorage.getItem('musicCurrentTime');
             
-            if (wasMusicPlaying) {
-                audioRef.current.play().then(() => {
-                    setIsPlaying(true);
-                }).catch(() => {
-                    // Auto-play might be blocked, user needs to interact first
-                    setIsPlaying(false);
-                });
-            }
+            // Set up event listener to restore time after audio loads
+            const handleLoadedMetadata = () => {
+                if (savedTime && audioRef.current) {
+                    audioRef.current.currentTime = parseFloat(savedTime);
+                }
+                
+                if (wasMusicPlaying && audioRef.current) {
+                    audioRef.current.play().then(() => {
+                        setIsPlaying(true);
+                    }).catch(() => {
+                        setIsPlaying(false);
+                    });
+                }
+            };
+            
+            audioRef.current.addEventListener('loadedmetadata', handleLoadedMetadata);
+            audioRef.current.load();
 
             // Save current time periodically
             const saveTimeInterval = setInterval(() => {
-                if (audioRef.current && isPlaying) {
+                if (audioRef.current && !audioRef.current.paused) {
                     localStorage.setItem('musicCurrentTime', audioRef.current.currentTime.toString());
                 }
             }, 1000);
+
+            // Handle page visibility changes to resume audio
+            const handleVisibilityChange = () => {
+                if (document.visibilityState === 'visible' && audioRef.current) {
+                    const shouldBePlaying = localStorage.getItem('musicPlaying') === 'true';
+                    if (shouldBePlaying && audioRef.current.paused) {
+                        audioRef.current.play().catch(() => {
+                            // Ignore autoplay errors
+                        });
+                    }
+                }
+            };
 
             // Save time before page unload
             const handleBeforeUnload = () => {
@@ -108,14 +152,19 @@ export default function Banner({ day, toggleDayNight }: { day: boolean; toggleDa
                 }
             };
 
+            document.addEventListener('visibilitychange', handleVisibilityChange);
             window.addEventListener('beforeunload', handleBeforeUnload);
 
             return () => {
                 clearInterval(saveTimeInterval);
                 window.removeEventListener('beforeunload', handleBeforeUnload);
+                document.removeEventListener('visibilitychange', handleVisibilityChange);
+                if (audioRef.current) {
+                    audioRef.current.removeEventListener('loadedmetadata', handleLoadedMetadata);
+                }
             };
         }
-    }, [isPlaying]);
+    }, []); // Only run once on mount
 
     const links = [
         { href: '/', label: 'Home' },
@@ -291,9 +340,7 @@ export default function Banner({ day, toggleDayNight }: { day: boolean; toggleDa
             </div>
             <audio
                 ref={audioRef}
-                src={currentTrack}
                 preload="auto"
-                key={currentTrack}
             />
         </div>
     );
