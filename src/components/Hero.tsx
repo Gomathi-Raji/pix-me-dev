@@ -1,15 +1,17 @@
 import { siteConfig } from '@/config/site'
 import { usePathname } from 'next/navigation'
+import { motion } from 'framer-motion'
 
 export default function Hero({ day }: { day: boolean }) {
     const pathname = usePathname()
     const isHomePage = pathname === '/'
 
     return (
-        <section id="hero" className={`nes-container with-title is-rounded bg-gray-200 ${day ? "" : "is-dark"}`
+        <section id="hero" className={`nes-container with-title is-rounded bg-gray-200 ${day ? "" : "is-dark"} relative overflow-hidden`
         }>
-            {isHomePage && <p className="title">🎮 Welcome to my pixel-perfect portfolio.</p>}
-            <div className='flex flex-col items-center space-y-4'>
+            {/* No falling stars in Hero component */}
+            {isHomePage && <p className="title relative z-10">🎮 Welcome to my pixel-perfect portfolio.</p>}
+            <div className='flex flex-col items-center space-y-4 relative z-10'>
                 <div className="nes-badge">
                     <span className="is-primary">Full-Stack Developer</span>
                 </div>

@@ -1,8 +1,28 @@
 [
     {
-        "degree": "B.Tech AI & Data Science",
+        "degree": "B.Tech in Artificial Intelligence & Data Science",
         "institution": "DMI College of Engineering",
-        "year": "2022–2027",
-        "description": "Currently pursuing Bachelor's degree in Artificial Intelligence and Data Science"
+        "year": "2023 – 2027",
+        "location": "Chennai, India",
+        "gpa": "Pursuing",
+        "description": "• Pursuing a degree focused on AI, Machine Learning, Data Science, and Software Development.\n• Working on real-world projects, internships, and hackathons.\n• Actively building practical skills in programming, analytics, and applied AI.",
+        "highlights": [
+            "Pursuing a degree focused on AI, Machine Learning, Data Science, and Software Development",
+            "Working on real-world projects, internships, and hackathons",
+            "Actively building practical skills in programming, analytics, and applied AI"
+        ]
+    },
+    {
+        "degree": "Higher Secondary Certificate (HSC) – Bio-Maths",
+        "institution": "Government Boys Higher Secondary School, Kovur",
+        "year": "Jul 2022 – Mar 2023",
+        "location": "Chennai, India",
+        "gpa": "82%",
+        "description": "• Studied Biology and Mathematics as core subjects.\n• Built foundational analytical and problem-solving skills.\n• Achieved consistent academic performance.",
+        "highlights": [
+            "Studied Biology and Mathematics as core subjects",
+            "Built foundational analytical and problem-solving skills",
+            "Achieved consistent academic performance"
+        ]
     }
 ]

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@fontsource/press-start-2p": "^5.2.7",
     "framer-motion": "^12.23.18",
     "install": "^0.13.0",

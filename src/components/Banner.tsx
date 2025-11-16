@@ -14,48 +14,136 @@ import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 export default function Banner({ day, toggleDayNight }: { day: boolean; toggleDayNight: () => void }) {
     const [isOpen, setIsOpen] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTrack, setCurrentTrack] = useState('');
     const audioRef = useRef<HTMLAudioElement>(null);
-    const navButtonClass = `header-nes-btn pixelated ${day ? '' : 'header-nes-btn-dark'}`;
+    const navButtonClass = `header-nes-btn pixelated touch-manipulation hover:scale-105 active:scale-95 transition-transform duration-200 ${day ? '' : 'header-nes-btn-dark'}`;
+    
+    // Music tracks for different modes
+    const lightModeTrack = '/Attack on Titan 8-bit.mp3';
+    const darkModeTrack = '/Kamado Tanjiro 8bit.mp3';
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const closeMenu = () => {
+        setIsOpen(false);
+    };
 
     const toggleMusic = () => {
         if (audioRef.current) {
-            if (isPlaying) {
+            if (audioRef.current.paused) {
+                audioRef.current.play().then(() => {
+                    setIsPlaying(true);
+                    localStorage.setItem('musicPlaying', 'true');
+                }).catch(() => {
+                    setIsPlaying(false);
+                });
+            } else {
                 audioRef.current.pause();
                 setIsPlaying(false);
                 localStorage.setItem('musicPlaying', 'false');
-            } else {
-                audioRef.current.play();
-                setIsPlaying(true);
-                localStorage.setItem('musicPlaying', 'true');
             }
         }
     };
+
+    // Effect to handle music track switching based on day/night mode
+    useEffect(() => {
+        const newTrack = day ? lightModeTrack : darkModeTrack;
+        
+        if (currentTrack !== newTrack && audioRef.current) {
+            const wasPlaying = !audioRef.current.paused;
+            const currentTime = audioRef.current.currentTime;
+            
+            // Update track
+            setCurrentTrack(newTrack);
+            audioRef.current.src = newTrack;
+            audioRef.current.load();
+            
+            // Restore playing state after a short delay
+            setTimeout(() => {
+                if (audioRef.current && wasPlaying) {
+                    audioRef.current.currentTime = 0; // Start new track from beginning
+                    audioRef.current.play().catch(() => {
+                        setIsPlaying(false);
+                    });
+                }
+            }, 100);
+        }
+    }, [day, currentTrack]);
+
+    // Effect to ensure audio stays playing if it should be
+    useEffect(() => {
+        const checkAudio = () => {
+            if (audioRef.current) {
+                const shouldBePlaying = localStorage.getItem('musicPlaying') === 'true';
+                if (shouldBePlaying && audioRef.current.paused && audioRef.current.readyState >= 2) {
+                    audioRef.current.play().catch(() => {
+                        // Ignore autoplay errors
+                    });
+                }
+            }
+        };
+
+        // Check immediately
+        checkAudio();
+
+        // Check periodically
+        const interval = setInterval(checkAudio, 1000);
+
+        return () => clearInterval(interval);
+    }, [currentTrack]);
 
     useEffect(() => {
         if (audioRef.current) {
             audioRef.current.loop = true;
             audioRef.current.volume = 0.3;
             
+            // Set initial track
+            const initialTrack = day ? lightModeTrack : darkModeTrack;
+            setCurrentTrack(initialTrack);
+            audioRef.current.src = initialTrack;
+            
             // Restore music state from localStorage
             const wasMusicPlaying = localStorage.getItem('musicPlaying') === 'true';
-            const savedTime = parseFloat(localStorage.getItem('musicCurrentTime') || '0');
+            const savedTime = localStorage.getItem('musicCurrentTime');
             
-            if (wasMusicPlaying) {
-                audioRef.current.currentTime = savedTime;
-                audioRef.current.play().then(() => {
-                    setIsPlaying(true);
-                }).catch(() => {
-                    // Auto-play might be blocked, user needs to interact first
-                    setIsPlaying(false);
-                });
-            }
+            // Set up event listener to restore time after audio loads
+            const handleLoadedMetadata = () => {
+                if (savedTime && audioRef.current) {
+                    audioRef.current.currentTime = parseFloat(savedTime);
+                }
+                
+                if (wasMusicPlaying && audioRef.current) {
+                    audioRef.current.play().then(() => {
+                        setIsPlaying(true);
+                    }).catch(() => {
+                        setIsPlaying(false);
+                    });
+                }
+            };
+            
+            audioRef.current.addEventListener('loadedmetadata', handleLoadedMetadata);
+            audioRef.current.load();
 
             // Save current time periodically
             const saveTimeInterval = setInterval(() => {
-                if (audioRef.current && isPlaying) {
+                if (audioRef.current && !audioRef.current.paused) {
                     localStorage.setItem('musicCurrentTime', audioRef.current.currentTime.toString());
                 }
             }, 1000);
+
+            // Handle page visibility changes to resume audio
+            const handleVisibilityChange = () => {
+                if (document.visibilityState === 'visible' && audioRef.current) {
+                    const shouldBePlaying = localStorage.getItem('musicPlaying') === 'true';
+                    if (shouldBePlaying && audioRef.current.paused) {
+                        audioRef.current.play().catch(() => {
+                            // Ignore autoplay errors
+                        });
+                    }
+                }
+            };
 
             // Save time before page unload
             const handleBeforeUnload = () => {
@@ -64,23 +152,26 @@ export default function Banner({ day, toggleDayNight }: { day: boolean; toggleDa
                 }
             };
 
+            document.addEventListener('visibilitychange', handleVisibilityChange);
             window.addEventListener('beforeunload', handleBeforeUnload);
 
             return () => {
                 clearInterval(saveTimeInterval);
                 window.removeEventListener('beforeunload', handleBeforeUnload);
+                document.removeEventListener('visibilitychange', handleVisibilityChange);
+                if (audioRef.current) {
+                    audioRef.current.removeEventListener('loadedmetadata', handleLoadedMetadata);
+                }
             };
         }
-    }, [isPlaying]);
+    }, []); // Only run once on mount
 
     const links = [
         { href: '/', label: 'Home' },
         { href: '/about', label: 'About' },
         { href: '/projects', label: 'Projects' },
         { href: '/skills', label: 'Skills' },
-        { href: '/experience', label: 'Experience' },
-        { href: '/#education', label: 'Education' },
-        { href: '/contact', label: 'Contact' },
+        { href: '/experience', label: 'Experience' }
     ];
 
     const socialComponent = () => {
@@ -249,7 +340,6 @@ export default function Banner({ day, toggleDayNight }: { day: boolean; toggleDa
             </div>
             <audio
                 ref={audioRef}
-                src="/Attack on Titan ED7「Akuma no Ko」8-bit.mp3"
                 preload="auto"
             />
         </div>

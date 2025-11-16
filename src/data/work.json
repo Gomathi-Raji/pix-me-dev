@@ -1,1 +1,145 @@
-[]
+[
+    {
+        "company": "ZAYMAZONE",
+        "position": "Chief Technology Officer (CTO)",
+        "startDate": "Sep 2025",
+        "endDate": "Present",
+        "summary": "Leading the entire technology vision of ZAYMAZONE, with a strong focus on AI integration, automation, system architecture, and technical strategy.",
+        "highlights": [
+            "Designed scalable system architecture across web & backend systems.",
+            "Led development of AI-driven product features improving automation efficiency.",
+            "Directed cross-functional engineering activities and technical decision-making.",
+            "Improved infrastructure reliability and reduced operational overhead through automation."
+        ],
+        "tags": ["AI", "Automation", "System Architecture", "Technical Strategy", "Leadership"],
+        "links": [
+            { "label": "Company Website", "url": "https://zaymazone.com" }
+        ]
+    },
+    {
+        "company": "Thenam Software Solutions",
+        "position": "AI & Automation Developer",
+        "startDate": "Sep 2025",
+        "endDate": "Present",
+        "summary": "Developing AI-powered applications, automation systems, and internal productivity tools for clients and enterprise systems.",
+        "highlights": [
+            "Built automation workflows reducing manual effort by 40–60% (process-dependent).",
+            "Integrated NLP, ML, and custom automation models into business operations.",
+            "Deployed AI assistants and intelligent automation for real-time decision-making.",
+            "Collaborated with cross-teams to convert requirements into deployable AI solutions."
+        ],
+                "tags": ["AI", "NLP", "ML", "Automation", "Enterprise Systems"],
+        "links": [
+            { "label": "Company Website", "url": "https://thenamsoft.com" }
+        ]
+    },
+    {
+        "company": "OneYes InfoTech Solutions",
+        "position": "AI Intern",
+        "startDate": "Jul 2025",
+        "endDate": "Sep 2025",
+        "summary": "Worked on model development, deployment readiness, and feature prototyping across AI modules.",
+        "highlights": [
+            "Implemented ML models to assist in data-driven insights.",
+            "Worked with APIs, vector processing, and backend integrations.",
+            "Improved AI inference workflows leading to more reliable model outputs.",
+            "Contributed to internal project documentation and testing pipelines."
+        ],
+        "tags": ["AI", "ML", "APIs", "Backend", "Prototyping"],
+        "links": [
+            { "label": "Company Website", "url": "https://oneyesinfotech.com" }
+        ]
+    },
+    {
+        "company": "Edunet Foundation / AICTE",
+        "position": "AI Intern – TechSaksham (Microsoft + SAP)",
+        "startDate": "Jan 2025",
+        "endDate": "Mar 2025",
+        "summary": "Trained under Microsoft & SAP experts in AI foundations, ML workflows, and applied data science.",
+        "highlights": [
+            "Completed 10+ hands-on assignments across ML and Python fundamentals.",
+            "Built ML models using TensorFlow basics & Scikit-learn workflows.",
+            "Worked with responsible AI principles and ethics-driven design.",
+            "Improved understanding of real-world ML pipelines through structured case studies."
+        ],
+        "tags": ["AI", "ML", "TensorFlow", "Scikit-learn", "Responsible AI"],
+        "links": [
+            { "label": "Edunet Foundation", "url": "https://edunetfoundation.org" },
+            { "label": "AICTE", "url": "https://www.aicte-india.org" }
+        ]
+    },
+    {
+        "company": "DataPlay (MSME Approved Program)",
+        "position": "Data Science Fellow",
+        "startDate": "Jan 2025",
+        "endDate": "Feb 2025",
+        "summary": "Completed an intensive fellowship focused on Excel analytics, statistics, ML, and dashboard development.",
+        "highlights": [
+            "DataPlay Reviews Analytics: WordCloud, TF-IDF, Python automation",
+            "Gender Prediction Model: Reached high accuracy with Naive Bayes + F1 optimization",
+            "Titanic ML Pipeline: Complete lifecycle (Cleaning → EDA → Features → Models)",
+            "Placement Dashboard: Excel + Polymer interactive visual dashboard",
+            "Delivered 4 structured end-to-end projects.",
+            "Improved statistical + visualization skills through real datasets.",
+            "Strengthened ML workflow understanding (EDA → Model → Deployable output)."
+        ],
+        "tags": ["Data Science", "ML", "Excel", "Statistics", "Dashboard"],
+        "links": [
+            { "label": "DataPlay School", "url": "https://dataplayschool.com" }
+        ]
+    },
+    {
+        "company": "Prodigy Infotech",
+        "position": "Data Science Intern",
+        "startDate": "Sep 2024",
+        "endDate": "Sep 2024",
+        "summary": "Worked on ML classification, EDA, and anomaly detection tasks.",
+        "highlights": [
+            "Twitter Sentiment Analysis: Cleaned & preprocessed 5,000+ tweets, Built classification model for sentiment patterns",
+            "Titanic Survival Analysis: Performed 20+ EDA plots, Improved model accuracy via engineered features",
+            "Credit Card Fraud Detection: Balanced imbalanced dataset (oversampling/undersampling), Built Logistic Regression achieving reliable fraud detection performance"
+        ],
+        "tags": ["Data Science", "ML", "EDA", "Sentiment Analysis", "Fraud Detection"],
+        "links": [
+            { "label": "Prodigy Infotech", "url": "https://prodigyinfotech.dev" }
+        ]
+    },
+    {
+        "company": "Cognifyz Technologies",
+        "position": "Data Science Intern",
+        "startDate": "Sep 2024",
+        "endDate": "Oct 2024",
+        "summary": "Completed analytics and feature engineering tasks across Phase 1 and Phase 2 industry datasets.",
+        "highlights": [
+            "Processed and cleaned 10,000+ records across different datasets.",
+            "Conducted descriptive analytics and statistical breakdowns.",
+            "Built geospatial visualizations using GeoPandas.",
+            "Engineered features for delivery, booking, and price segmentation models.",
+            "Generated insights improving understanding of customer behavior patterns."
+        ],
+        "tags": ["Data Science", "Analytics", "GeoPandas", "Feature Engineering"],
+        "links": [
+            { "label": "Cognifyz Technologies", "url": "https://cognifyz.com" }
+        ]
+    },
+    {
+        "company": "CodSoft",
+        "position": "Machine Learning Intern",
+        "startDate": "2024",
+        "endDate": "2024",
+        "summary": "Implemented classification, regression, and anomaly detection ML tasks.",
+        "highlights": [
+            "Titanic Prediction: Trained multiple models, optimized for accuracy",
+            "Movie Rating Prediction: Regression analysis",
+            "Iris Classification: KNN, SVM implementations",
+            "Credit Card Fraud Detection: Outlier-based ML",
+            "Sales Prediction: Feature engineering + regression model",
+            "Completed 5 machine learning projects.",
+            "Improved understanding of ML model selection and evaluation."
+        ],
+        "tags": ["ML", "Classification", "Regression", "KNN", "SVM"],
+        "links": [
+            { "label": "CodSoft", "url": "https://codsoft.in" }
+        ]
+    }
+]

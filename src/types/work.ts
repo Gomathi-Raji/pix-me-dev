@@ -5,4 +5,6 @@ export interface Work {
     endDate: string;
     summary: string;
     highlights: string[];
+    tags?: string[];
+    links?: { label: string; url: string }[];
 }

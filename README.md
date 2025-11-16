@@ -23,6 +23,42 @@ A playful, pixelated portfolio site built with Next.js, TypeScript, Tailwind CSS
 - **Projects Showcase**: Grid of project cards with fade-in, ‘Load More’ functionality, and animated reveal of tech tags.
 - **Pixel Fonts & Icons**: Uses NES.css components and React Icons (FiChevronDown / FiChevronUp) for a cohesive 8-bit look.
 - **Responsive & Accessible**: Mobile-first layout and ARIA-friendly semantics
+- **SEO Optimized**: Meta tags, structured data, sitemap, and Open Graph support
+
+---
+
+## 🔍 SEO Setup
+
+### 1. Update Domain URLs
+
+Replace `https://your-portfolio-domain.com` in the following files with your actual domain:
+
+- `src/app/layout.tsx` (metadata, Open Graph, Twitter cards)
+- `src/app/sitemap.ts` (sitemap URLs)
+- `src/app/robots.txt/route.ts` (robots.txt sitemap URL)
+- `src/components/StructuredData.tsx` (structured data URLs)
+
+### 2. Google Search Console
+
+1. Go to [Google Search Console](https://search.google.com/search-console)
+2. Add your property
+3. Get your verification code and replace `your-google-site-verification-code` in `src/app/layout.tsx`
+
+### 3. Social Media Setup
+
+Update the following in `src/app/layout.tsx`:
+- Twitter handle: Replace `@your_twitter_handle`
+- Social media URLs in `src/components/StructuredData.tsx`
+
+### 4. Open Graph Image
+
+The OG image is auto-generated at `/og-image`. You can also create a custom `public/og-image.jpg` (1200x630px).
+
+### 5. Submit to Search Engines
+
+- **Google**: Submit your sitemap at `https://your-domain.com/sitemap.xml`
+- **Bing**: Submit your sitemap at Bing Webmaster Tools
+- **Test Rich Results**: Use [Google's Rich Results Test](https://search.google.com/test/rich-results)
 
 ---
 
