@@ -22,6 +22,8 @@ import {
 } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import { motion, AnimatePresence } from 'framer-motion';
+import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
+import { MdSkipNext } from 'react-icons/md';
 import { gsap } from 'gsap';
 import solarProjects from '../data/solarProjects.json';
 
@@ -1311,6 +1313,7 @@ function LoadingScreen() {
 export default function SolarSystemSimulation() {
   const [loading, setLoading] = useState(true);
   const [isLanding, setIsLanding] = useState(false);
+  const [isMusicOn, setIsMusicOn] = useState<boolean>(typeof window !== 'undefined' ? localStorage.getItem('musicPlaying') === 'true' : false);
   const router = useRouter();
 
   useEffect(() => {
@@ -1321,6 +1324,32 @@ export default function SolarSystemSimulation() {
     
     return () => clearTimeout(timer);
   }, []);
+
+  const toggleMusic = useCallback(() => {
+    if (typeof window === 'undefined') return;
+
+    const audioEl = document.getElementById('global-audio') as HTMLAudioElement | null;
+    const currentlyPlaying = localStorage.getItem('musicPlaying') === 'true';
+
+    if (!audioEl) {
+      // nothing to control
+      return;
+    }
+
+    if (currentlyPlaying) {
+      audioEl.pause();
+      localStorage.setItem('musicPlaying', 'false');
+      setIsMusicOn(false);
+    } else {
+      audioEl.play().catch(() => {
+        // play may fail; still update state
+      });
+      localStorage.setItem('musicPlaying', 'true');
+      setIsMusicOn(true);
+    }
+  }, []);
+
+  // will be defined later once handleLandingComplete is in scope
 
   // Ensure background audio continues when entering /solar-system
   useEffect(() => {
@@ -1361,6 +1390,11 @@ export default function SolarSystemSimulation() {
     router.push('/');
   }, [router]);
 
+  const handleSkip = useCallback(() => {
+    // Immediately complete the landing & redirect back to home
+    handleLandingComplete();
+  }, [handleLandingComplete]);
+
   if (loading) {
     return <LoadingScreen />;
   }
@@ -1393,7 +1427,7 @@ export default function SolarSystemSimulation() {
       {/* Minimal UI Container - Bottom center */}
       <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-30 pointer-events-none">
         <motion.div 
-          className="bg-black bg-opacity-70 backdrop-blur-sm px-4 py-2 rounded-lg border border-cyan-500 border-opacity-40 shadow-lg"
+          className="bg-black bg-opacity-70 backdrop-blur-sm px-4 py-2 rounded-lg border border-cyan-500 border-opacity-40 shadow-lg pointer-events-auto"
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -1407,6 +1441,23 @@ export default function SolarSystemSimulation() {
               <span className="text-green-400" id="progress-display">0%</span>
               <span className="text-gray-500">•</span>
               <span className="text-orange-400" id="speed-display">0 km/s</span>
+              <span className="text-gray-500">•</span>
+              <button
+                aria-label={isMusicOn ? 'Mute audio' : 'Unmute audio'}
+                title={isMusicOn ? 'Mute audio' : 'Unmute audio'}
+                onClick={toggleMusic}
+                className="nes-btn is-small bg-transparent px-2 py-1"
+              >
+                {isMusicOn ? <HiVolumeUp size={16} /> : <HiVolumeOff size={16} />}
+              </button>
+              <button
+                aria-label="Skip journey"
+                title="Skip the journey"
+                onClick={handleSkip}
+                className="nes-btn is-error is-small bg-transparent px-2 py-1"
+              >
+                <MdSkipNext size={16} />
+              </button>
             </div>
           </div>
         </motion.div>
