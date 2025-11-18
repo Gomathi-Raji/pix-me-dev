@@ -124,16 +124,16 @@ interface SpaceshipRef {
 
 // Enhanced planetary data with horizontal scrolling layout (Sun -> Complete Solar System -> Earth finale)
 const PLANETS: Planet[] = [
-  { name: 'Sun', position: new THREE.Vector3(0, 0, 0), scale: 12, color: '#FDB813', info: '⭐ The heart of our solar system - Your journey begins here!' },
-  { name: 'Mercury', position: new THREE.Vector3(60, 0, 0), scale: 2, color: '#8C7853', info: '🌑 Closest to the Sun - Fast and hot orbital speed' },
-  { name: 'Venus', position: new THREE.Vector3(100, 0, 0), scale: 2.5, color: '#FFC649', info: '🌕 The hottest planet - Thick atmosphere traps heat' },
-  { name: 'Earth', position: new THREE.Vector3(140, 0, 0), scale: 2.8, color: '#6B93D6', info: '🌍 Our beautiful home planet - Perfect for life!' },
-  { name: 'Mars', position: new THREE.Vector3(180, 0, 0), scale: 2.2, color: '#CD5C5C', info: '🔴 The red planet - Future human destination' },
-  { name: 'Jupiter', position: new THREE.Vector3(240, 0, 0), scale: 8, color: '#D8CA9D', info: '🪐 Gas giant with the Great Red Spot storm' },
-  { name: 'Saturn', position: new THREE.Vector3(300, 0, 0), scale: 7, color: '#FAD5A5', info: '💍 Beautiful ringed planet - Made of ice and rock' },
-  { name: 'Uranus', position: new THREE.Vector3(360, 0, 0), scale: 4, color: '#4FD0E7', info: '❄️ Ice giant rotating on its side' },
-  { name: 'Neptune', position: new THREE.Vector3(420, 0, 0), scale: 4, color: '#4B70DD', info: '🌊 Windiest planet - Supersonic wind speeds' },
-  { name: 'Pluto', position: new THREE.Vector3(480, 0, 0), scale: 1.5, color: '#C4A484', info: '🏔️ Dwarf planet at the edge - Journey complete!' }
+  { name: 'Sun', position: new THREE.Vector3(0, 0, 0), scale: 12, color: '#FDB813', info: '⭐ My Core Passion - AI & Machine Learning powers everything I create!' },
+  { name: 'Mercury', position: new THREE.Vector3(60, 0, 0), scale: 2, color: '#8C7853', info: '🚀 Quick Learner - Like Mercury\'s fast orbit, I rapidly adapt to new technologies' },
+  { name: 'Venus', position: new THREE.Vector3(100, 0, 0), scale: 2.5, color: '#FFC649', info: '🔥 Data Science Passion - Hot with enthusiasm for analyzing complex datasets' },
+  { name: 'Earth', position: new THREE.Vector3(140, 0, 0), scale: 2.8, color: '#6B93D6', info: '🌍 My Home Base - B.Tech in AI & Data Science, DMI College (GPA: 8.5)' },
+  { name: 'Mars', position: new THREE.Vector3(180, 0, 0), scale: 2.2, color: '#CD5C5C', info: '🎯 Future Goals - Exploring AI in Healthcare, Education & Gaming frontiers' },
+  { name: 'Jupiter', position: new THREE.Vector3(240, 0, 0), scale: 8, color: '#D8CA9D', info: '💪 Massive Skillset - Deep Learning, ML algorithms, and advanced AI techniques' },
+  { name: 'Saturn', position: new THREE.Vector3(300, 0, 0), scale: 7, color: '#FAD5A5', info: '🎮 Well-Rounded - Pro Free Fire gamer with a ring of creative hobbies' },
+  { name: 'Uranus', position: new THREE.Vector3(360, 0, 0), scale: 4, color: '#4FD0E7', info: '💡 Unique Perspective - Thinking differently about AI-powered space exploration' },
+  { name: 'Neptune', position: new THREE.Vector3(420, 0, 0), scale: 4, color: '#4B70DD', info: '🌊 Deep Diver - Immersed in Python, JavaScript, TypeScript & data analysis' },
+  { name: 'Pluto', position: new THREE.Vector3(480, 0, 0), scale: 1.5, color: '#C4A484', info: '🤝 Always Growing - Open to collaborations, internships & open-source projects!' }
 ];
 
 // Spaceship component with horizontal path following and audio
@@ -182,11 +182,16 @@ const Spaceship = React.forwardRef<THREE.Group, SpaceshipProps>(({ scroll, path 
         // Update UI elements
         const planet = PLANETS[clampedIndex];
         const planetName = document.getElementById('planet-name');
+        const planetInfo = document.getElementById('planet-info');
         const progressDisplay = document.getElementById('progress-display');
         const speedDisplay = document.getElementById('speed-display');
         
         if (planetName && planet) {
-          planetName.textContent = `🪐 ${planet.name}`;
+          planetName.textContent = `${planet.name}`;
+        }
+        
+        if (planetInfo && planet) {
+          planetInfo.textContent = planet.info;
         }
         
         if (progressDisplay) {
@@ -342,17 +347,26 @@ function ChaseCamera({ target }: { target: React.RefObject<THREE.Group | null> }
     const shipPosition = target.current.position;
     
     // Calculate ideal camera position (behind and above ship)
-    const offset = new THREE.Vector3(0, 5, 10);
-    offset.applyQuaternion(target.current.quaternion);
+    const offset = new THREE.Vector3(0, 8, 15);
     idealPosition.current.copy(shipPosition).add(offset);
     
-    // Look at position (slightly ahead of ship)
-    const lookOffset = new THREE.Vector3(0, 0, -5);
-    lookOffset.applyQuaternion(target.current.quaternion);
-    idealLookAt.current.copy(shipPosition).add(lookOffset);
+    // Find nearest planet to look at
+    let nearestPlanet = PLANETS[0];
+    let minDistance = Infinity;
+    
+    PLANETS.forEach(planet => {
+      const distance = shipPosition.distanceTo(planet.position);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestPlanet = planet;
+      }
+    });
+    
+    // Look at the nearest planet position
+    idealLookAt.current.copy(nearestPlanet.position);
     
     // Smooth camera movement
-    camera.position.lerp(idealPosition.current, 0.05);
+    camera.position.lerp(idealPosition.current, 0.08);
     camera.lookAt(idealLookAt.current);
   });
   
@@ -492,19 +506,6 @@ function Planet({ planet, scroll, planetIndex }: { planet: Planet; scroll: any; 
           <meshStandardMaterial color="#C0C0C0" roughness={1} metalness={0} />
         </Sphere>
       )}
-      
-      {/* Enhanced Planet info overlay */}
-      <Html
-        position={[0, planet.scale + 3, 0]}
-        center
-        distanceFactor={8}
-        occlude
-      >
-        <div className="pixel-text bg-black bg-opacity-90 text-white p-3 rounded-lg border-2 border-yellow-400 text-sm max-w-xs">
-          <div className="font-bold text-yellow-400 text-base mb-1">{planet.name}</div>
-          <div className="text-gray-200 text-xs">{planet.info}</div>
-        </div>
-      </Html>
     </group>
   );
 }
@@ -610,6 +611,8 @@ function Starfield({ scroll }: { scroll: any }) {
         sizeAttenuation={true}
         transparent
         opacity={0.7}
+        alphaTest={0.01}
+        depthWrite={false}
       />
     </points>
   );
@@ -719,6 +722,8 @@ function WarpStars({ scroll }: { scroll: any }) {
         sizeAttenuation={true}
         transparent
         opacity={warpIntensity > 0 ? 0.9 : 0.5}
+        alphaTest={0.01}
+        depthWrite={false}
       />
     </points>
   );
@@ -1024,12 +1029,13 @@ export default function SolarSystemSimulation() {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <div id="current-planet-info" className="text-center">
-            <p className="text-cyan-400 text-xs font-bold">🚀 Scroll to explore</p>
-            <div className="flex items-center gap-3 mt-1 text-xs">
-              <span className="text-yellow-300" id="planet-name">Starting Journey</span>
-              <span className="text-gray-400">•</span>
+            <div className="mb-2">
+              <p className="text-cyan-300 text-base font-bold" id="planet-name">🚀 Starting Journey</p>
+              <p className="text-gray-300 text-xs mt-1 leading-relaxed max-w-md mx-auto" id="planet-info">Scroll down to explore the solar system</p>
+            </div>
+            <div className="flex items-center justify-center gap-3 text-xs border-t border-gray-700 pt-2">
               <span className="text-green-400" id="progress-display">0%</span>
-              <span className="text-gray-400">•</span>
+              <span className="text-gray-500">•</span>
               <span className="text-orange-400" id="speed-display">0 km/s</span>
             </div>
           </div>
