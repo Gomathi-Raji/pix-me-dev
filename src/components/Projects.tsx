@@ -28,7 +28,7 @@ export default function Projects({ day }: { day: boolean; }) {
             id="projects"
             className={`nes-container is-rounded with-title p-4 sm:p-6 touch-manipulation ${day ? 'bg-gray-200' : 'is-dark'}`}
         >
-            <p className="title mb-4 text-center sm:text-left">Projects</p>
+            <p className="title mb-4 text-center sm:text-left mobile-text-lg">Projects</p>
 
             <motion.div
                 className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6"
@@ -70,15 +70,14 @@ export default function Projects({ day }: { day: boolean; }) {
                                                 return (
                                                     <span
                                                         key={tech}
-                                                        className={`inline-block px-2 py-1 text-xs font-bold rounded hover:scale-110 active:scale-95 transition-transform duration-200 touch-manipulation ${colorClass.bg} ${colorClass.text} border-2 border-black`}
-                                                        style={{ fontFamily: 'Press Start 2P, monospace', fontSize: '6px' }}
+                                                        className={`home-tech-tag inline-block px-2 py-1 text-xs font-bold rounded hover:scale-110 active:scale-95 transition-transform duration-200 touch-manipulation ${colorClass.bg} ${colorClass.text} border-2 border-black`}
                                                     >
                                                         {tech}
                                                     </span>
                                                 );
                                             })}
                                             {p.technologies.length > 4 && (
-                                                <span className="inline-block px-2 py-1 text-xs font-bold rounded bg-gray-500 text-white border-2 border-black" style={{ fontFamily: 'Press Start 2P, monospace', fontSize: '6px' }}>
+                                                <span className="home-tech-tag inline-block px-2 py-1 text-xs font-bold rounded bg-gray-500 text-white border-2 border-black">
                                                     +{p.technologies.length - 4}
                                                 </span>
                                             )}
@@ -86,11 +85,11 @@ export default function Projects({ day }: { day: boolean; }) {
                                     )}
                                 </div>
 
-                                <div className="flex gap-2">
+                                <div className="flex flex-col sm:flex-row gap-2">
                                     {p.liveUrl && (
                                         <button
                                             onClick={() => window.open(p.liveUrl, '_blank')}
-                                            className="nes-btn is-success is-small flex-1"
+                                            className="nes-btn is-success is-small w-full sm:flex-1"
                                         >
                                             🌐 Live Demo
                                         </button>
@@ -98,7 +97,7 @@ export default function Projects({ day }: { day: boolean; }) {
                                     {p.repoUrl && (
                                         <button
                                             onClick={() => window.open(p.repoUrl, '_blank')}
-                                            className="nes-btn is-primary is-small flex-1"
+                                            className="nes-btn is-primary is-small w-full sm:flex-1"
                                         >
                                             💻 GitHub
                                         </button>
@@ -106,7 +105,7 @@ export default function Projects({ day }: { day: boolean; }) {
                                     {p.playStoreUrl && (
                                         <button
                                             onClick={() => window.open(p.playStoreUrl, '_blank')}
-                                            className="nes-btn is-warning is-small flex-1"
+                                            className="nes-btn is-warning is-small w-full sm:flex-1"
                                         >
                                             ⭐ View App
                                         </button>

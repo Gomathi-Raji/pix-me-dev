@@ -1315,6 +1315,7 @@ export default function SolarSystemSimulation() {
   const [isLanding, setIsLanding] = useState(false);
   const [isMusicOn, setIsMusicOn] = useState<boolean>(typeof window !== 'undefined' ? localStorage.getItem('musicPlaying') === 'true' : false);
   const router = useRouter();
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
     // Simulate loading time
@@ -1323,6 +1324,25 @@ export default function SolarSystemSimulation() {
     }, 2000);
     
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    // Detect simple mobile breakpoints and adapt simulation settings
+    const checkMobile = () => {
+      const mobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
+      setIsMobile(mobile);
+    };
+
+    checkMobile();
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', checkMobile);
+    }
+
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', checkMobile);
+      }
+    };
   }, []);
 
   const toggleMusic = useCallback(() => {
@@ -1399,6 +1419,11 @@ export default function SolarSystemSimulation() {
     return <LoadingScreen />;
   }
 
+  // Dynamic adjustments for mobile: lower pages, lower effect loads, smaller granularity
+  const scrollPages = isMobile ? 6 : 10;
+  const pixelation = isMobile ? 2 : 6;
+  const enablePostProcessing = !isMobile; // reduce GPU load on mobile
+
   return (
     <div className="fixed inset-0 overflow-hidden solar-system-container">
       {/* 3D Canvas */}
@@ -1411,21 +1436,23 @@ export default function SolarSystemSimulation() {
         style={{ background: '#000' }}
       >
         <Suspense fallback={null}>
-          <ScrollControls pages={10} damping={0.2} enabled={!isLanding}>
+          <ScrollControls pages={scrollPages} damping={isMobile ? 0.35 : 0.2} enabled={!isLanding}>
             <Scene onReturnComplete={handleReturnComplete} />
           </ScrollControls>
           
           {/* Enhanced post-processing for 8-bit aesthetic */}
-          <EffectComposer>
-            <Pixelation granularity={6} />
-            <ChromaticAberration offset={[0.001, 0.001]} />
-            <Noise opacity={0.05} />
-          </EffectComposer>
+          {enablePostProcessing && (
+            <EffectComposer>
+              <Pixelation granularity={pixelation} />
+              <ChromaticAberration offset={[0.001, 0.001]} />
+              <Noise opacity={0.05} />
+            </EffectComposer>
+          )}
         </Suspense>
       </Canvas>
       
       {/* Minimal UI Container - Bottom center */}
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-30 pointer-events-none">
+      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-30 pointer-events-none solar-system-controls">
         <motion.div 
           className="bg-black bg-opacity-70 backdrop-blur-sm px-4 py-2 rounded-lg border border-cyan-500 border-opacity-40 shadow-lg pointer-events-auto"
           initial={{ y: 100, opacity: 0 }}
@@ -1458,6 +1485,7 @@ export default function SolarSystemSimulation() {
               >
                 <MdSkipNext size={16} />
               </button>
+              {/* on mobile, show skip as large icon to the right */}
             </div>
           </div>
         </motion.div>

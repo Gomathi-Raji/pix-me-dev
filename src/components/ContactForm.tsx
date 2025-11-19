@@ -299,7 +299,7 @@ Reply directly to: ${formData.from_email}
                     <motion.button
                         type="submit"
                         disabled={isSubmitting}
-                        className={`nes-btn is-primary px-12 py-4 text-lg font-bold rounded-lg transform transition-all duration-300 ${
+                        className={`nes-btn contact-cta-btn ${day ? '' : 'dark'} w-full sm:w-auto sm:px-12 py-4 text-lg font-bold rounded-lg transform transition-all duration-300 ${
                             isSubmitting
                                 ? 'opacity-50 cursor-not-allowed'
                                 : 'hover:scale-105 active:scale-95 hover:shadow-lg'

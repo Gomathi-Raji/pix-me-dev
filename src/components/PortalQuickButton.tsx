@@ -8,7 +8,7 @@ export default function PortalQuickButton({ onOpen }: { onOpen: () => void }) {
       aria-label="Open portal"
       title="Open Portal"
       onClick={onOpen}
-      className="fixed bottom-6 right-6 z-[10000] w-12 h-12 rounded-sm bg-black bg-opacity-80 border-2 border-cyan-500 flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-transform"
+      className="fixed bottom-6 right-6 z-[10000] w-12 h-12 rounded-sm bg-black bg-opacity-80 border-2 border-cyan-500 flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-transform portal-quick-button"
       style={{ imageRendering: 'pixelated' }}
     >
       {/* Inline pixel-style planet icon */}

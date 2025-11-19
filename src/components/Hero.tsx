@@ -10,20 +10,20 @@ export default function Hero({ day }: { day: boolean }) {
         <section id="hero" className={`nes-container with-title is-rounded bg-gray-200 ${day ? "" : "is-dark"} relative overflow-hidden`
         }>
             {/* No falling stars in Hero component */}
-            {isHomePage && <p className="title relative z-10">🎮 Welcome to my pixel-perfect portfolio.</p>}
+            {isHomePage && <p className="title relative z-10 mobile-text-base">🎮 Welcome to my pixel-perfect portfolio.</p>}
             <div className='flex flex-col items-center space-y-4 relative z-10'>
                 <div className="nes-badge">
                     <span className="is-primary">Full-Stack Developer</span>
                 </div>
                 <div className="relative flex justify-center">
-                    <div className="text-8xl">
+                    <div className="text-6xl sm:text-8xl">
                         <i className="nes-mario block"></i>
                     </div>
-                    <div className="absolute -bottom-2 -right-2">
+                    <div className="absolute -bottom-2 -right-2" aria-hidden="true">
                         <i className="nes-icon coin"></i>
                     </div>
                 </div>
-                <div className={`nes-balloon from-left ${day ? "" : "is-dark"}`}>
+                    <div className={`nes-balloon from-left ${day ? "" : "is-dark"} mobile-text-sm`} role="region" aria-label="profile summary">
                     <p className="text-sm">{siteConfig.profile.summary}</p>
                 </div>
 

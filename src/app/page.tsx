@@ -4,7 +4,6 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import Hero from '@/components/Hero';
 import PortalOverlay from '@/components/PortalOverlay';
-import PortalToast from '@/components/PortalToast';
 import PortalQuickButton from '@/components/PortalQuickButton';
 import Education from '@/components/Education';
 import Contact from '@/components/Contact';
@@ -16,7 +15,7 @@ import Link from 'next/link';
 import { loadIcon } from '@/helpers/iconLoader';
 
 export default function Home() {
-  const [showPortalToast, setShowPortalToast] = useState(false);
+  // PortalToast removed — use the full-screen PortalOverlay instead
   const [day, setDay] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [showPortalOverlay, setShowPortalOverlay] = useState(false);
@@ -41,10 +40,8 @@ export default function Home() {
         }
       }
 
-      // No automatic portal/showing — use a toast instead.
-      // Show the portal toast on first visit or after TTL expiration, but
-      // respect the hidePortalUntil flag which hides the toast for 30 minutes
-      // after landing.
+      // No automatic portal/showing — use the full PortalOverlay instead.
+      // Show the PortalOverlay on first visit, or when TTL expired.
       const hidePortalUntil = Number(localStorage.getItem('hidePortalUntil') || 0);
       // If there is no portalEnterTime recorded (older state or lost timestamp),
       // treat it as expired so we can re-show the portal toast — this helps when
@@ -74,12 +71,12 @@ export default function Home() {
         // eslint-disable-next-line no-console
         console.debug('[Portal] first visit - show overlay');
         setShowPortalOverlay(true);
-        setShowPortalToast(false);
       } else if (Date.now() > hidePortalUntil && shouldShowBecauseExpired) {
-        // Debug state before showing toast
+        // If TTL expired, show the overlay again instead of the toast
+        // (user requested Portal overlay rather than the smaller toast)
         // eslint-disable-next-line no-console
-        console.debug('[Portal] will set toast visible');
-        setShowPortalToast(true);
+        console.debug('[Portal] TTL expired - showing overlay');
+        setShowPortalOverlay(true);
       }
     }
 
@@ -94,11 +91,7 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, [router]);
 
-  useEffect(() => {
-    // Debug when toast visibility changes
-    // eslint-disable-next-line no-console
-    console.debug('[Portal] showPortalToast toggled', showPortalToast);
-  }, [showPortalToast]);
+  
 
   const handleDayChange = (isDay: boolean) => {
     setDay(isDay);
@@ -115,10 +108,11 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (showPortalOverlay && showPortalToast) {
-      setShowPortalToast(false);
+    // If the overlay is shown, ensure no toast logic remains active
+    if (showPortalOverlay) {
+      // Nothing else — the overlay takes precedence
     }
-  }, [showPortalOverlay, showPortalToast]);
+  }, [showPortalOverlay]);
 
   const clearPortalState = () => {
     if (typeof window !== 'undefined') {
@@ -127,7 +121,7 @@ export default function Home() {
       localStorage.removeItem('hidePortalUntil');
       localStorage.removeItem('showPortalAfterLanding');
       // Show the toast again immediately so QA can test
-      setShowPortalToast(true);
+      setShowPortalOverlay(true);
     }
   };
 
@@ -190,13 +184,11 @@ export default function Home() {
         {/* Stats Section */}
         <section className="py-12 px-4 relative z-10">
           {/* Portal toast shown at the end of layout so it's above other elements */}
-          {showPortalToast && (
-            <PortalToast onOpenOverlay={() => { setShowPortalOverlay(true); setShowPortalToast(false); }} />
-          )}
+          {/* PortalToast removed — we prefer the full PortalOverlay */}
 
           {/* Small quick button for opening the portal overlay (planet) - hide when overlay is open */}
           {!showPortalOverlay && (
-            <PortalQuickButton onOpen={() => { setShowPortalOverlay(true); setShowPortalToast(false); }} />
+            <PortalQuickButton onOpen={() => { setShowPortalOverlay(true); }} />
           )}
           <div className="max-w-6xl mx-auto">
             <div className="home-stats-grid grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -416,7 +408,7 @@ export default function Home() {
                 Let's collaborate on your next project or discuss exciting opportunities!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-                <a href="#contact" className="nes-btn is-primary text-lg px-8 py-3 hover:scale-105 transition-transform">
+                <a href="#contact" className={`nes-btn contact-cta-btn ${day ? '' : 'dark'} text-lg px-8 py-3 hover:scale-105 transition-transform`}>
                   💬 Let's Connect
                 </a>
                 <a href="#projects" className="nes-btn is-success text-lg px-8 py-3 hover:scale-105 transition-transform">

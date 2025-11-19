@@ -175,6 +175,7 @@
 
 /* Planet card enhancements */
 .planet-card {
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   border: 2px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
@@ -237,4 +238,35 @@ canvas {
   image-rendering: -webkit-crisp-edges;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
+}
+
+/* Mobile-specific controls for solar system */
+@media (max-width: 768px) {
+  .solar-system-container {
+    background-position: center;
+  }
+
+  /* Make controls larger and reachable with thumbs */
+  .solar-system-controls {
+    bottom: 14px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    pointer-events: auto;
+  }
+
+  .solar-system-controls .nes-btn {
+    padding: 8px 10px;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 12px;
+  }
+
+  /* Put the quick planet button slightly higher to avoid overlap with mobile controls */
+  .portal-quick-button {
+    bottom: 76px; /* leave space for the control bar */
+    right: 8px;
+  }
 }

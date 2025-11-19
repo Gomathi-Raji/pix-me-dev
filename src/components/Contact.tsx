@@ -159,7 +159,7 @@ export default function Contact({ day }: { day: boolean }) {
                 viewport={{ once: true }}
                 transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
             >
-                <p className="nes-text is-primary">⭐️ Let's Innovate Together!</p>
+                <p className={`contact-cta ${day ? '' : 'dark'}`}>⭐️ Let's Innovate Together!</p>
                 <p className={`text-sm ${day ? 'text-gray-600' : 'text-gray-400'}`}>
                     Feel free to reach out for collaborations, projects, or a chat about tech and interactive fun.
                 </p>
