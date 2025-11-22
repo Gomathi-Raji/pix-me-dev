@@ -42,11 +42,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
     // Add dynamic project pages
-    ...siteConfig.projects.map((project) => ({
-      url: `${baseUrl}/projects/${project.id || project.title.toLowerCase().replace(/\s+/g, '-')}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    })),
+    ...siteConfig.projects.map((project) => {
+      // Use project.name to build a slug. Project objects don't have `id` or `title`.
+      const slug = (project.name || '')
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9\-]/g, '')
+        .replace(/\-+/g, '-');
+
+      return {
+        url: `${baseUrl}/projects/${slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.6,
+      };
+    }),
   ]
 }

@@ -55,13 +55,18 @@ export default function StructuredData() {
     },
     "project": siteConfig.projects.map(project => ({
       "@type": "SoftwareApplication",
-      "name": project.title,
+      "name": project.name,
       "description": project.description,
-      "url": project.github || project.demo,
+      // prefer the live URL and fallback to the repo URL if no liveUrl available
+      "url": project.liveUrl || project.repoUrl || "",
       "applicationCategory": "Web Application",
       "operatingSystem": "Web Browser"
     })),
-    "skill": siteConfig.skills.map(skill => skill.name),
+    // Flatten grouped skills into a single array of skill names
+    "skill": siteConfig.skills.reduce((acc, group) => {
+      acc.push(...group.skills.map(s => s.name));
+      return acc;
+    }, [] as string[]),
     "award": [
       "B.Tech in AI & Data Science - GPA: 8.5",
       "Pro Free Fire Gamer"
