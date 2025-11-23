@@ -1,0 +1,9 @@
+{
+  // Cloudflare Workers configuration for automatic asset uploads
+  // This file is used by wrangler when deploying Workers/Pages to upload the static assets
+  "name": "pix-me-dev",
+  "compatibility_date": "2025-11-23",
+  "assets": {
+    "directory": "./.next/static"
+  }
+}
