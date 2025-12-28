@@ -1,4 +1,14 @@
+export type ProjectCategory = 'AI' | 'ML/DL' | 'Full Stack' | 'DS' | 'Others';
+
+export type OthersTopic = 'Extension' | 'UI/UX';
+
 export interface Project {
+    /** High-level grouping for the Projects section */
+    category: ProjectCategory;
+
+    /** Optional sub-topic when category is 'Others' */
+    othersTopic?: OthersTopic;
+
     name: string;
     description: string;
     repoUrl?: string;

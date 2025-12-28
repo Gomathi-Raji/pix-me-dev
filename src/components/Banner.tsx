@@ -248,9 +248,9 @@ export default function Banner({ day, toggleDayNight }: { day: boolean; toggleDa
             </div>
             <div
                 className={`${isOpen ? 'translate-x-0 visible' : '-translate-x-full invisible'
-                    } transition-transform duration-500 ease-in-out flex flex-col gap-4 items-center bg-gray-900 w-full md:hidden p-4 border-t-4 border-yellow-400`}
+                    } transition-transform duration-500 ease-in-out flex flex-col gap-4 items-center w-full md:hidden p-4 border-t-4 border-yellow-400 ${day ? 'bg-gray-200 text-gray-900' : 'bg-gray-900 text-white'}`}
             >
-                <div className="nes-container is-rounded is-dark bg-gray-800 p-3 w-full max-w-xs">
+                <div className={`nes-container is-rounded p-3 w-full max-w-xs ${day ? 'bg-gray-100' : 'is-dark bg-gray-800'}`}>
                     <div className="flex flex-col gap-3">
                         {links.map((link) => (
                             <Link
@@ -291,7 +291,7 @@ export default function Banner({ day, toggleDayNight }: { day: boolean; toggleDa
                 </div>
             </div>
             <div className="hidden md:flex gap-2 items-center">
-                <div className="nes-container is-rounded is-dark bg-gray-800 p-2">
+                <div className={`nes-container is-rounded p-2 ${day ? 'bg-gray-100' : 'is-dark bg-gray-800'}`}>
                     <div className="flex gap-2 items-center">
                         {links.map((link) => (
                             <Link
@@ -304,7 +304,7 @@ export default function Banner({ day, toggleDayNight }: { day: boolean; toggleDa
                         ))}
                     </div>
                 </div>
-                <div className="nes-container is-rounded is-dark bg-gray-800 p-2">
+                <div className={`nes-container is-rounded p-2 ${day ? 'bg-gray-100' : 'is-dark bg-gray-800'}`}>
                     <div className="flex gap-2 items-center">
                         {socialComponent()}
                         {siteConfig.contact.blog && (

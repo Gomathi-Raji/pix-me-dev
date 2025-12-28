@@ -1,5 +1,6 @@
 [
     {
+        "category": "AI",
         "name": "Healthhub-ai",
         "description": "Experience personalized care through advanced AI that predicts health risks, coaches your workouts, plans your meals, and securely manages your records.",
         "repoUrl": "https://github.com/itzdineshx/HealthHub_Ai_v2",
@@ -37,6 +38,7 @@
         ]
     },
     {
+        "category": "AI",
         "name": "Herhealth-ai",
         "description": "HerHealth is your personalized wellness companion for every life stage. Track your cycle, monitor symptoms, connect with experts, and join a supportive community.",
         "repoUrl": "https://github.com/itzdineshx/HerHealth-V1",
@@ -74,6 +76,7 @@
         ]
     },
     {
+        "category": "AI",
         "name": "Edubuddy-ai",
         "description": "Transform your learning journey with EduBuddy.ai's revolutionary AI-powered tools. Upload documents, generate podcasts, create flashcards, and chat with your personal AI tutor.",
         "repoUrl": "https://github.com/itzdineshx/EduBuddy.Ai",
@@ -111,6 +114,7 @@
         ]
     },
     {
+        "category": "Full Stack",
         "name": "Zaymazone",
         "description": "Discover authentic handcrafted treasures that tell stories of tradition, heritage, and the skilled hands that create them.",
         "repoUrl": "https://github.com/itzdineshx/zaymazone",
@@ -148,6 +152,8 @@
         ]
     },
     {
+        "category": "Others",
+        "othersTopic": "UI/UX",
         "name": "Lokkesh Anime Themed Portfolio",
         "description": "This is a personal portfolio website for Lokkesh U P.The portfolio showcases his skills, projects, and love for anime, all styled in a fun and visually striking anime-inspired theme.",
         "repoUrl": "https://github.com/itzdineshx/lokkesh-portfolio-anime",
@@ -185,6 +191,7 @@
         ]
     },
     {
+        "category": "AI",
         "name": "Sugoi Pick - Anime Recommender",
         "description": "Get personalized anime recommendations based on your preferences. Filter by genre, type, and rating to find exactly what you're looking for.",
         "repoUrl": "https://github.com/itzdineshx/Sugoi_Pick",
@@ -222,6 +229,7 @@
         ]
     },
     {
+        "category": "ML/DL",
         "name": "PoseJi",
         "description": "Real‑time pose estimation web app using OpenCV & Streamlit.",
         "repoUrl": "https://github.com/itzdineshx/PoseJi",
@@ -267,6 +275,7 @@
         ]
     },
     {
+        "category": "ML/DL",
         "name": "Iris Flower Classification Web App",
         "description": "A web application for predicting Iris flower species using machine learning models with Gradio UI.",
         "repoUrl": "https://github.com/itzdineshx/Iris-Classifier-Gradio",
@@ -316,6 +325,7 @@
         ]
     },
     {
+        "category": "ML/DL",
         "name": "Gold Price Predictor Web App",
         "description": "This App is For calculating Gold Price in INR using USD/INR Exchange Rate.",
         "repoUrl": "https://github.com/itzdineshx/Gold-Price-Predictor-INR",
@@ -357,6 +367,8 @@
         ]
     },
     {
+        "category": "Others",
+        "othersTopic": "Extension",
         "name": "FOCXY Extension",
         "description": "Chrome extension for productivity via site blocking.",
         "repoUrl": "https://github.com/itzdineshx/FOCXY",
@@ -397,6 +409,7 @@
         ]
     },
     {
+        "category": "DS",
         "name": "Monkeypox Forecasting",
         "description": "Time series forecasting on mpox trends during internship.",
         "repoUrl": "https://github.com/itzdineshx/MPOX_Analysis_Forecasting",
@@ -433,6 +446,7 @@
         ]
     },
     {
+        "category": "AI",
         "name": "Tic Tac Toe with AI",
         "description": "Classic Tic Tac Toe game implemented with an unbeatable AI agent.",
         "repoUrl": "https://github.com/itzdineshx/Cs50ai_tic_tac_toe_AI",

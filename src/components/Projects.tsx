@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { siteConfig } from '@/config/site';
 import type { Project } from '@/types/project';
@@ -21,6 +21,8 @@ export default function Projects({ day }: { day: boolean; }) {
     const [visibleCount, setVisibleCount] = useState(4);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [activeCategory, setActiveCategory] = useState<Project['category']>('AI');
+    const [activeOthersTopic, setActiveOthersTopic] = useState<NonNullable<Project['othersTopic']> | 'All'>('All');
 
     const showMore = () => setVisibleCount((prev) => prev + 4);
 
@@ -35,12 +37,74 @@ export default function Projects({ day }: { day: boolean; }) {
         setTimeout(() => setSelectedProject(null), 200);
     }, []);
 
+    const categories = useMemo<Project['category'][]>(() => ['AI', 'ML/DL', 'Full Stack', 'DS', 'Others'], []);
+
+    const filteredProjects = useMemo(() => {
+        const base = siteConfig.projects.filter((p) => p.category === activeCategory);
+        if (activeCategory !== 'Others') return base;
+
+        if (activeOthersTopic === 'All') return base;
+        return base.filter((p) => p.othersTopic === activeOthersTopic);
+    }, [activeCategory, activeOthersTopic]);
+
+    const visibleProjects = useMemo(
+        () => filteredProjects.slice(0, visibleCount),
+        [filteredProjects, visibleCount]
+    );
+
+    const canLoadMore = visibleCount < filteredProjects.length;
+
+    const setTab = useCallback((category: Project['category']) => {
+        setActiveCategory(category);
+        setVisibleCount(4);
+        if (category !== 'Others') setActiveOthersTopic('All');
+    }, []);
+
     return (
         <section
             id="projects"
             className={`nes-container is-rounded with-title p-4 sm:p-6 touch-manipulation ${day ? 'bg-gray-200' : 'is-dark'}`}
         >
             <p className="title mb-4 text-center sm:text-left mobile-text-lg">Projects</p>
+
+            {/* Category Tabs */}
+            <div className="flex flex-wrap gap-2 mb-4">
+                {categories.map((category) => {
+                    const isActive = category === activeCategory;
+                    return (
+                        <button
+                            key={category}
+                            type="button"
+                            onClick={() => setTab(category)}
+                            className={`nes-btn is-small ${isActive ? 'is-primary' : ''}`}
+                        >
+                            {category}
+                        </button>
+                    );
+                })}
+            </div>
+
+            {/* Others sub-tabs */}
+            {activeCategory === 'Others' && (
+                <div className="flex flex-wrap gap-2 mb-5">
+                    {(['All', 'Extension', 'UI/UX'] as const).map((t) => {
+                        const isActive = t === activeOthersTopic;
+                        return (
+                            <button
+                                key={t}
+                                type="button"
+                                onClick={() => {
+                                    setActiveOthersTopic(t);
+                                    setVisibleCount(4);
+                                }}
+                                className={`nes-btn is-small ${isActive ? 'is-success' : ''}`}
+                            >
+                                {t}
+                            </button>
+                        );
+                    })}
+                </div>
+            )}
 
             <motion.div
                 className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6"
@@ -49,19 +113,14 @@ export default function Projects({ day }: { day: boolean; }) {
                 variants={listVariants}
             >
                 <AnimatePresence>
-                    {siteConfig.projects.slice(0, visibleCount).map((p: Project) => (
+                    {visibleProjects.map((p: Project) => (
                         <motion.div
                             key={p.name}
                             variants={cardVariants}
                             exit={{ opacity: 0, y: 20 }}
                         >
                             <div
-                                role="button"
-                                tabIndex={0}
                                 onClick={() => openProject(p)}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter' || e.key === ' ') openProject(p);
-                                }}
                                 className={`nes-container is-rounded with-title p-3 sm:p-4 flex flex-col justify-between h-full hover:shadow-2xl active:scale-95 transition-all duration-300 touch-manipulation cursor-pointer ${day ? 'bg-white text-gray-900' : 'is-dark text-gray-100'}`}
                             >
                                 {p.image && (
@@ -147,7 +206,7 @@ export default function Projects({ day }: { day: boolean; }) {
             <ProjectModal open={isModalOpen} project={selectedProject} day={day} onClose={closeProject} />
 
             <AnimatePresence>
-                {visibleCount < siteConfig.projects.length && (
+                {canLoadMore && (
                     <motion.div
                         className="flex justify-center mt-6"
                         initial={{ opacity: 0 }}
