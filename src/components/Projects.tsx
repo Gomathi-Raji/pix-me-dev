@@ -1,10 +1,10 @@
-`use client`
+"use client";
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { siteConfig } from '@/config/site';
 import type { Project } from '@/types/project';
-import { useRouter } from 'next/navigation';
+import ProjectModal from '@/components/ProjectModal';
 
 
 const cardVariants = {
@@ -18,10 +18,22 @@ const listVariants = {
 };
 
 export default function Projects({ day }: { day: boolean; }) {
-    const router = useRouter();
     const [visibleCount, setVisibleCount] = useState(4);
+    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const showMore = () => setVisibleCount((prev) => prev + 4);
+
+    const openProject = useCallback((project: Project) => {
+        setSelectedProject(project);
+        setIsModalOpen(true);
+    }, []);
+
+    const closeProject = useCallback(() => {
+        setIsModalOpen(false);
+        // keep selectedProject so modal can animate out cleanly
+        setTimeout(() => setSelectedProject(null), 200);
+    }, []);
 
     return (
         <section
@@ -44,6 +56,12 @@ export default function Projects({ day }: { day: boolean; }) {
                             exit={{ opacity: 0, y: 20 }}
                         >
                             <div
+                                role="button"
+                                tabIndex={0}
+                                onClick={() => openProject(p)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') openProject(p);
+                                }}
                                 className={`nes-container is-rounded with-title p-3 sm:p-4 flex flex-col justify-between h-full hover:shadow-2xl active:scale-95 transition-all duration-300 touch-manipulation cursor-pointer ${day ? 'bg-white text-gray-900' : 'is-dark text-gray-100'}`}
                             >
                                 {p.image && (
@@ -88,7 +106,10 @@ export default function Projects({ day }: { day: boolean; }) {
                                 <div className="flex flex-col sm:flex-row gap-2">
                                     {p.liveUrl && (
                                         <button
-                                            onClick={() => window.open(p.liveUrl, '_blank')}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                window.open(p.liveUrl, '_blank');
+                                            }}
                                             className="nes-btn is-success is-small w-full sm:flex-1"
                                         >
                                             🌐 Live Demo
@@ -96,7 +117,10 @@ export default function Projects({ day }: { day: boolean; }) {
                                     )}
                                     {p.repoUrl && (
                                         <button
-                                            onClick={() => window.open(p.repoUrl, '_blank')}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                window.open(p.repoUrl, '_blank');
+                                            }}
                                             className="nes-btn is-primary is-small w-full sm:flex-1"
                                         >
                                             💻 GitHub
@@ -104,7 +128,10 @@ export default function Projects({ day }: { day: boolean; }) {
                                     )}
                                     {p.playStoreUrl && (
                                         <button
-                                            onClick={() => window.open(p.playStoreUrl, '_blank')}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                window.open(p.playStoreUrl, '_blank');
+                                            }}
                                             className="nes-btn is-warning is-small w-full sm:flex-1"
                                         >
                                             ⭐ View App
@@ -116,6 +143,8 @@ export default function Projects({ day }: { day: boolean; }) {
                     ))}
                 </AnimatePresence>
             </motion.div>
+
+            <ProjectModal open={isModalOpen} project={selectedProject} day={day} onClose={closeProject} />
 
             <AnimatePresence>
                 {visibleCount < siteConfig.projects.length && (

@@ -54,15 +54,27 @@ section::after {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* Normalize spacing between light and dark modes */
-.nes-container {
-  margin: 0;
-  padding: 1rem;
+/* Disable hover-lift inside project modal (prevents modal content shifting on hover) */
+.project-modal :where(.nes-container:hover) {
+  transform: none !important;
+  box-shadow: none !important;
 }
 
-.nes-container.is-dark {
+/* Extra safety: prevent any nested NES container from shifting the modal layout */
+.project-modal :where(.nes-container) {
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Normalize spacing between light and dark modes */
+:where(.nes-container) {
   margin: 0;
-  padding: 1rem;
+  padding: 0.5rem;
+}
+
+:where(.nes-container.is-dark) {
+  margin: 0;
+  padding: 0.5rem;
 }
 
 /* Gradient Text Effect */
@@ -334,95 +346,6 @@ img, [class*="icon"], svg {
   font-family: 'Press Start 2P', monospace;
   text-shadow: 2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000;
   image-rendering: pixelated;
-}
-
-/* Pixelated Logo Styles */
-.pixel-logo-container {
-  background: linear-gradient(45deg, #8b5a2b 25%, transparent 25%),
-              linear-gradient(-45deg, #8b5a2b 25%, transparent 25%),
-              linear-gradient(45deg, transparent 75%, #8b5a2b 75%),
-              linear-gradient(-45deg, transparent 75%, #8b5a2b 75%);
-  background-size: 16px 16px;
-  background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
-  border: 3px solid #654321;
-  box-shadow: 0 0 0 3px #000, inset 0 0 0 3px #daa520;
-  position: relative;
-}
-
-.pixel-logo-container::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 2px,
-    rgba(218, 165, 32, 0.3) 2px,
-    rgba(218, 165, 32, 0.3) 4px
-  );
-  pointer-events: none;
-  z-index: -1;
-}
-
-.logo-icon-grid {
-  display: flex;
-  gap: 2px;
-  align-items: center;
-}
-
-.logo-icon-box {
-  background: #2a2a2a;
-  border: 2px solid #000;
-  box-shadow: inset -1px -1px 0px #666, inset 1px 1px 0px #000;
-  padding: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.1s ease;
-}
-
-.logo-icon-box:hover {
-  box-shadow: inset 1px 1px 0px #666, inset -1px -1px 0px #000;
-  transform: translate(-1px, -1px);
-  animation: pulse 0.3s ease-in-out;
-}
-
-.logo-icon-box:active {
-  box-shadow: inset 2px 2px 0px #000, inset -2px -2px 0px #666;
-  transform: translate(1px, 1px);
-}
-
-/* Logo glow effect on hover */
-.pixel-logo-container:hover {
-  box-shadow: 0 0 0 3px #000, inset 0 0 0 3px #daa520, 0 0 20px rgba(218, 165, 32, 0.5);
-  transition: all 0.3s ease;
-}
-
-/* Pixelated logo animation */
-@keyframes logo-glow {
-  0%, 100% { box-shadow: 0 0 0 3px #000, inset 0 0 0 3px #daa520; }
-  50% { box-shadow: 0 0 0 3px #000, inset 0 0 0 3px #daa520, 0 0 15px rgba(218, 165, 32, 0.8); }
-}
-
-.pixel-logo-container:hover {
-  animation: logo-glow 2s ease-in-out infinite;
-}
-
-.pixel-logo-text {
-  font-family: 'Press Start 2P', monospace;
-  text-shadow: 2px 2px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000;
-  image-rendering: pixelated;
-  letter-spacing: 1px;
-}
-
-.pixel-logo-tagline {
-  font-family: 'Press Start 2P', monospace;
-  text-shadow: 1px 1px 0px #000;
-  image-rendering: pixelated;
-  font-size: 0.6rem;
 }
 
 /* Education Timeline Styles */
@@ -735,12 +658,12 @@ img, [class*="icon"], svg {
 @media (max-width: 640px) {
     .nes-container {
         margin: 0.5rem;
-        padding: 1rem !important;
+    padding: 0.5rem;
     }
 
     .nes-container.is-dark {
         margin: 0.5rem;
-        padding: 1rem !important;
+    padding: 0.5rem;
     }
 
     .nes-btn {
@@ -907,11 +830,11 @@ img, [class*="icon"], svg {
 /* Tablet optimizations */
 @media (min-width: 641px) and (max-width: 1024px) {
     .nes-container {
-        padding: 1.5rem !important;
+    padding: 0.5rem;
     }
 
     .nes-container.is-dark {
-        padding: 1.5rem !important;
+    padding: 0.5rem;
     }
     
     .education-timeline-dot {
@@ -929,6 +852,19 @@ img, [class*="icon"], svg {
     .nes-container.is-dark:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Keep modal stable on hover even on hover-capable devices */
+    .project-modal :where(.nes-container:hover),
+    .project-modal :where(.nes-container.is-dark:hover) {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .project-modal :where(.nes-container),
+    .project-modal :where(.nes-container.is-dark) {
+      transform: none !important;
+      transition: none !important;
     }
 }
 

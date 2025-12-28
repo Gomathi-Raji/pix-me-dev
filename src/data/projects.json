@@ -5,6 +5,31 @@
         "repoUrl": "https://github.com/itzdineshx/HealthHub_Ai_v2",
         "liveUrl": "https://healthhub-ai.netlify.app/",
         "image": "/assets/healthhub-ai-v2.png",
+        "longDescription": "Healthhub-ai is an AI-driven health companion focused on practical, day-to-day wellness. It brings multiple health utilities into one place: risk awareness, fitness guidance, meal planning, and secure record handling.",
+        "highlights": [
+            "AI-assisted health risk awareness",
+            "Workout and meal planning utilities",
+            "Centralized health record handling"
+        ],
+        "media": [
+            { "type": "image", "src": "/assets/healthhub-ai-v2.png", "alt": "Healthhub-ai preview" },
+            { "type": "image", "src": "/assets/healthhub-ai-v2.png", "alt": "Healthhub-ai screen 2" }
+        ],
+        "badges": [
+            { "label": "AI", "variant": "primary" },
+            { "label": "Health", "variant": "success" },
+            { "label": "Web App", "variant": "warning" }
+        ],
+        "metrics": [
+            { "label": "Platform", "value": "Web", "variant": "primary" },
+            { "label": "Status", "value": "Demo", "variant": "warning" },
+            { "label": "Focus", "value": "Wellness", "variant": "success" },
+            { "label": "UI", "value": "Responsive", "variant": "default" }
+        ],
+        "links": [
+            { "label": "Live Demo", "url": "https://healthhub-ai.netlify.app/" },
+            { "label": "GitHub Repo", "url": "https://github.com/itzdineshx/HealthHub_Ai_v2" }
+        ],
         "technologies": [
             "React",
             "OpenCV",
@@ -17,6 +42,31 @@
         "repoUrl": "https://github.com/itzdineshx/HerHealth-V1",
         "liveUrl": "https://herhealth-ai.netlify.app/",
         "image": "/assets/herhealth-ai-v2.png",
+        "longDescription": "Herhealth-ai focuses on women's wellness with cycle tracking, symptom insights, and supportive resources. The goal is a simple, friendly experience that helps users track patterns and take informed next steps.",
+        "highlights": [
+            "Cycle tracking and symptom monitoring",
+            "Wellness-focused UX and guidance",
+            "Community-oriented experience"
+        ],
+        "media": [
+            { "type": "image", "src": "/assets/herhealth-ai-v2.png", "alt": "Herhealth-ai preview" },
+            { "type": "image", "src": "/assets/herhealth-ai-v2.png", "alt": "Herhealth-ai screen 2" }
+        ],
+        "badges": [
+            { "label": "AI", "variant": "primary" },
+            { "label": "Wellness", "variant": "success" },
+            { "label": "Web App", "variant": "warning" }
+        ],
+        "metrics": [
+            { "label": "Platform", "value": "Web", "variant": "primary" },
+            { "label": "Status", "value": "Demo", "variant": "warning" },
+            { "label": "Focus", "value": "Tracking", "variant": "success" },
+            { "label": "UI", "value": "Responsive", "variant": "default" }
+        ],
+        "links": [
+            { "label": "Live Demo", "url": "https://herhealth-ai.netlify.app/" },
+            { "label": "GitHub Repo", "url": "https://github.com/itzdineshx/HerHealth-V1" }
+        ],
         "technologies": [
             "React",
             "AI",
@@ -29,6 +79,31 @@
         "repoUrl": "https://github.com/itzdineshx/EduBuddy.Ai",
         "liveUrl": "https://edubuddy-ai.netlify.app/",
         "image": "/assets/edubuddy-ai.png",
+        "longDescription": "Edubuddy-ai is an AI learning assistant designed to turn study material into multiple learning formats. It supports document workflows and interactive learning tools to make revision faster and more engaging.",
+        "highlights": [
+            "Document-to-learning workflow",
+            "Flashcards and interactive tutoring",
+            "AI-assisted study acceleration"
+        ],
+        "media": [
+            { "type": "image", "src": "/assets/edubuddy-ai.png", "alt": "Edubuddy-ai preview" },
+            { "type": "image", "src": "/assets/edubuddy-ai.png", "alt": "Edubuddy-ai screen 2" }
+        ],
+        "badges": [
+            { "label": "AI", "variant": "primary" },
+            { "label": "Education", "variant": "success" },
+            { "label": "Web App", "variant": "warning" }
+        ],
+        "metrics": [
+            { "label": "Platform", "value": "Web", "variant": "primary" },
+            { "label": "Status", "value": "Demo", "variant": "warning" },
+            { "label": "Mode", "value": "Tutor", "variant": "success" },
+            { "label": "UI", "value": "Responsive", "variant": "default" }
+        ],
+        "links": [
+            { "label": "Live Demo", "url": "https://edubuddy-ai.netlify.app/" },
+            { "label": "GitHub Repo", "url": "https://github.com/itzdineshx/EduBuddy.Ai" }
+        ],
         "technologies": [
             "React",
             "AI",
@@ -41,6 +116,31 @@
         "repoUrl": "https://github.com/itzdineshx/zaymazone",
         "liveUrl": "https://zaymazone.netlify.app/",
         "image": "/assets/zaymazone-v1.png",
+        "longDescription": "Zaymazone is a storefront experience focused on showcasing handcrafted products with strong storytelling. It emphasizes discovery, product browsing, and a clean purchase journey.",
+        "highlights": [
+            "Product storytelling and browsing",
+            "E-commerce oriented UI",
+            "Clean, responsive layout"
+        ],
+        "media": [
+            { "type": "image", "src": "/assets/zaymazone-v1.png", "alt": "Zaymazone preview" },
+            { "type": "image", "src": "/assets/zaymazone-v1.png", "alt": "Zaymazone screen 2" }
+        ],
+        "badges": [
+            { "label": "E-Commerce", "variant": "primary" },
+            { "label": "Storefront", "variant": "success" },
+            { "label": "Web App", "variant": "warning" }
+        ],
+        "metrics": [
+            { "label": "Platform", "value": "Web", "variant": "primary" },
+            { "label": "Status", "value": "Demo", "variant": "warning" },
+            { "label": "Focus", "value": "Catalog", "variant": "success" },
+            { "label": "UI", "value": "Responsive", "variant": "default" }
+        ],
+        "links": [
+            { "label": "Live Demo", "url": "https://zaymazone.netlify.app/" },
+            { "label": "GitHub Repo", "url": "https://github.com/itzdineshx/zaymazone" }
+        ],
         "technologies": [
             "React",
             "E-Commerce",
@@ -53,6 +153,31 @@
         "repoUrl": "https://github.com/itzdineshx/lokkesh-portfolio-anime",
         "liveUrl": "https://lokkesh-portfolio.vercel.app/",
         "image": "/assets/lokkesh_portfolio.png",
+        "longDescription": "A client portfolio with an anime-inspired visual language, built to present skills and projects in a memorable, themed format while staying responsive and easy to navigate.",
+        "highlights": [
+            "Anime-inspired UI styling",
+            "Client-focused content structure",
+            "Responsive sections for skills and projects"
+        ],
+        "media": [
+            { "type": "image", "src": "/assets/lokkesh_portfolio.png", "alt": "Lokkesh portfolio preview" },
+            { "type": "image", "src": "/assets/lokkesh_portfolio.png", "alt": "Lokkesh portfolio screen 2" }
+        ],
+        "badges": [
+            { "label": "Portfolio", "variant": "primary" },
+            { "label": "Client", "variant": "success" },
+            { "label": "Web", "variant": "warning" }
+        ],
+        "metrics": [
+            { "label": "Platform", "value": "Web", "variant": "primary" },
+            { "label": "Status", "value": "Live", "variant": "success" },
+            { "label": "Theme", "value": "Anime", "variant": "warning" },
+            { "label": "UI", "value": "Responsive", "variant": "default" }
+        ],
+        "links": [
+            { "label": "Live Demo", "url": "https://lokkesh-portfolio.vercel.app/" },
+            { "label": "GitHub Repo", "url": "https://github.com/itzdineshx/lokkesh-portfolio-anime" }
+        ],
         "technologies": [
             "Portfolio",
             "Anime",
@@ -65,6 +190,31 @@
         "repoUrl": "https://github.com/itzdineshx/Sugoi_Pick",
         "liveUrl": "https://sugoi-pick.netlify.app/",
         "image": "/assets/sugoi-pick.png",
+        "longDescription": "Sugoi Pick is a recommendation interface for anime discovery. It focuses on filter-based exploration so users can quickly narrow down content by preferences.",
+        "highlights": [
+            "Filter-first discovery flow",
+            "Clean recommendation presentation",
+            "Client-friendly themed UI"
+        ],
+        "media": [
+            { "type": "image", "src": "/assets/sugoi-pick.png", "alt": "Sugoi Pick preview" },
+            { "type": "image", "src": "/assets/sugoi-pick.png", "alt": "Sugoi Pick screen 2" }
+        ],
+        "badges": [
+            { "label": "Recommender", "variant": "primary" },
+            { "label": "Anime", "variant": "success" },
+            { "label": "Web", "variant": "warning" }
+        ],
+        "metrics": [
+            { "label": "Platform", "value": "Web", "variant": "primary" },
+            { "label": "Status", "value": "Demo", "variant": "warning" },
+            { "label": "Mode", "value": "Filters", "variant": "success" },
+            { "label": "UI", "value": "Responsive", "variant": "default" }
+        ],
+        "links": [
+            { "label": "Live Demo", "url": "https://sugoi-pick.netlify.app/" },
+            { "label": "GitHub Repo", "url": "https://github.com/itzdineshx/Sugoi_Pick" }
+        ],
         "technologies": [
             "Recommender",
             "Anime",
@@ -77,6 +227,39 @@
         "repoUrl": "https://github.com/itzdineshx/PoseJi",
         "liveUrl": "https://posejiv2.streamlit.app",
         "image": "/assets/posejiv2.streamlit.app_interferace.png",
+        "longDescription": "PoseJi demonstrates real-time pose estimation using computer vision. It wraps the workflow in a simple Streamlit UI for quick experimentation and demos.",
+        "highlights": [
+            "Real-time pose estimation demo",
+            "OpenCV-based computer vision workflow",
+            "Streamlit deployment for quick sharing"
+        ],
+        "media": [
+            {
+                "type": "image",
+                "src": "/assets/posejiv2.streamlit.app_interferace.png",
+                "alt": "PoseJi interface preview"
+            },
+            {
+                "type": "image",
+                "src": "/assets/posejiv2.streamlit.app_interferace.png",
+                "alt": "PoseJi screen 2"
+            }
+        ],
+        "badges": [
+            { "label": "Computer Vision", "variant": "primary" },
+            { "label": "OpenCV", "variant": "success" },
+            { "label": "Streamlit", "variant": "warning" }
+        ],
+        "metrics": [
+            { "label": "Platform", "value": "Web", "variant": "primary" },
+            { "label": "Host", "value": "Streamlit", "variant": "warning" },
+            { "label": "Mode", "value": "Realtime", "variant": "success" },
+            { "label": "Status", "value": "Demo", "variant": "default" }
+        ],
+        "links": [
+            { "label": "Live Demo", "url": "https://posejiv2.streamlit.app" },
+            { "label": "GitHub Repo", "url": "https://github.com/itzdineshx/PoseJi" }
+        ],
         "technologies": [
             "Python",
             "OpenCV",
@@ -89,6 +272,42 @@
         "repoUrl": "https://github.com/itzdineshx/Iris-Classifier-Gradio",
         "liveUrl": "https://huggingface.co/spaces/DINESH-X/Iris-Flower-classifier",
         "image": "/assets/Iris-Flower-Classifier-a-Hugging-Face-Space.png",
+        "longDescription": "A simple ML classification demo packaged with a Gradio UI and hosted on Hugging Face Spaces. Built to show end-to-end model-to-UI deployment.",
+        "highlights": [
+            "Classic Iris classification ML demo",
+            "Gradio UI for fast interaction",
+            "Hosted on Hugging Face Spaces"
+        ],
+        "media": [
+            {
+                "type": "image",
+                "src": "/assets/Iris-Flower-Classifier-a-Hugging-Face-Space.png",
+                "alt": "Iris classifier preview"
+            },
+            {
+                "type": "image",
+                "src": "/assets/Iris-Flower-Classifier-a-Hugging-Face-Space.png",
+                "alt": "Iris classifier screen 2"
+            }
+        ],
+        "badges": [
+            { "label": "ML", "variant": "primary" },
+            { "label": "Gradio", "variant": "success" },
+            { "label": "HF Spaces", "variant": "warning" }
+        ],
+        "metrics": [
+            { "label": "Platform", "value": "Web", "variant": "primary" },
+            { "label": "Host", "value": "Hugging Face", "variant": "warning" },
+            { "label": "Model", "value": "Classifier", "variant": "success" },
+            { "label": "Status", "value": "Demo", "variant": "default" }
+        ],
+        "links": [
+            {
+                "label": "Live Demo",
+                "url": "https://huggingface.co/spaces/DINESH-X/Iris-Flower-classifier"
+            },
+            { "label": "GitHub Repo", "url": "https://github.com/itzdineshx/Iris-Classifier-Gradio" }
+        ],
         "technologies": [
             "Python",
             "Scikit-learn",
@@ -102,6 +321,34 @@
         "repoUrl": "https://github.com/itzdineshx/Gold-Price-Predictor-INR",
         "liveUrl": "https://huggingface.co/spaces/DINESH-X/gold-price-predictor-INR",
         "image": "/assets/gold_app.png",
+        "longDescription": "A small regression-style demo app that estimates gold price in INR using exchange rate context. Designed as a quick interactive ML application hosted on Hugging Face.",
+        "highlights": [
+            "Interactive prediction UI",
+            "Streamlit-based workflow",
+            "Hosted on Hugging Face Spaces"
+        ],
+        "media": [
+            { "type": "image", "src": "/assets/gold_app.png", "alt": "Gold price predictor preview" },
+            { "type": "image", "src": "/assets/gold_app.png", "alt": "Gold app screen 2" }
+        ],
+        "badges": [
+            { "label": "ML", "variant": "primary" },
+            { "label": "Streamlit", "variant": "success" },
+            { "label": "HF Spaces", "variant": "warning" }
+        ],
+        "metrics": [
+            { "label": "Platform", "value": "Web", "variant": "primary" },
+            { "label": "Host", "value": "Hugging Face", "variant": "warning" },
+            { "label": "Model", "value": "Regression", "variant": "success" },
+            { "label": "Status", "value": "Demo", "variant": "default" }
+        ],
+        "links": [
+            {
+                "label": "Live Demo",
+                "url": "https://huggingface.co/spaces/DINESH-X/gold-price-predictor-INR"
+            },
+            { "label": "GitHub Repo", "url": "https://github.com/itzdineshx/Gold-Price-Predictor-INR" }
+        ],
         "technologies": [
             "Python",
             "Streamlit",
@@ -115,6 +362,34 @@
         "repoUrl": "https://github.com/itzdineshx/FOCXY",
         "liveUrl": "https://drive.google.com/file/d/1NAQXavZItxu38Lxo8zu6TCVJPWxIQfha/view",
         "image": "/assets/foxcy_ext.png",
+        "longDescription": "FOCXY is a lightweight productivity extension focused on reducing distractions by blocking selected sites. It’s built as a straightforward browser extension with a clear UX.",
+        "highlights": [
+            "Site blocking for focus",
+            "Simple extension UX",
+            "Shareable demo/download link"
+        ],
+        "media": [
+            { "type": "image", "src": "/assets/foxcy_ext.png", "alt": "FOCXY extension preview" },
+            { "type": "image", "src": "/assets/foxcy_ext.png", "alt": "FOCXY screen 2" }
+        ],
+        "badges": [
+            { "label": "Extension", "variant": "primary" },
+            { "label": "Productivity", "variant": "success" },
+            { "label": "Chrome", "variant": "warning" }
+        ],
+        "metrics": [
+            { "label": "Platform", "value": "Browser", "variant": "primary" },
+            { "label": "Type", "value": "Extension", "variant": "warning" },
+            { "label": "Mode", "value": "Blocklist", "variant": "success" },
+            { "label": "Status", "value": "Demo", "variant": "default" }
+        ],
+        "links": [
+            {
+                "label": "Download / Demo",
+                "url": "https://drive.google.com/file/d/1NAQXavZItxu38Lxo8zu6TCVJPWxIQfha/view"
+            },
+            { "label": "GitHub Repo", "url": "https://github.com/itzdineshx/FOCXY" }
+        ],
         "technologies": [
             "JavaScript",
             "HTML/CSS",
@@ -126,6 +401,30 @@
         "description": "Time series forecasting on mpox trends during internship.",
         "repoUrl": "https://github.com/itzdineshx/MPOX_Analysis_Forecasting",
         "image": "/assets/mpox.jpg",
+        "longDescription": "A time-series forecasting project analyzing mpox trends. Focuses on data cleaning, exploratory analysis, and forecasting techniques to understand temporal patterns.",
+        "highlights": [
+            "Time-series analysis workflow",
+            "Forecasting-focused research",
+            "Data exploration and reporting"
+        ],
+        "media": [
+            { "type": "image", "src": "/assets/mpox.jpg", "alt": "Monkeypox forecasting preview" },
+            { "type": "image", "src": "/assets/mpox.jpg", "alt": "Mpox analysis screen 2" }
+        ],
+        "badges": [
+            { "label": "Time Series", "variant": "primary" },
+            { "label": "Research", "variant": "success" },
+            { "label": "Python", "variant": "warning" }
+        ],
+        "metrics": [
+            { "label": "Type", "value": "Analysis", "variant": "primary" },
+            { "label": "Focus", "value": "Forecasting", "variant": "success" },
+            { "label": "Status", "value": "Repo", "variant": "warning" },
+            { "label": "Data", "value": "Time Series", "variant": "default" }
+        ],
+        "links": [
+            { "label": "GitHub Repo", "url": "https://github.com/itzdineshx/MPOX_Analysis_Forecasting" }
+        ],
         "technologies": [
             "Python",
             "Time Series",
@@ -139,6 +438,31 @@
         "repoUrl": "https://github.com/itzdineshx/Cs50ai_tic_tac_toe_AI",
         "liveUrl": "https://itzdineshx.github.io/Cs50ai_tic_tac_toe_AI/",
         "image": "/assets/tat.png",
+        "longDescription": "A classic Tic Tac Toe implementation featuring an unbeatable AI agent. Built to demonstrate decision-making via the minimax algorithm in a fun, interactive way.",
+        "highlights": [
+            "Unbeatable minimax AI",
+            "Playable web demo",
+            "Clean game loop + decision logic"
+        ],
+        "media": [
+            { "type": "image", "src": "/assets/tat.png", "alt": "Tic Tac Toe AI preview" },
+            { "type": "image", "src": "/assets/tat.png", "alt": "Tic Tac Toe screen 2" }
+        ],
+        "badges": [
+            { "label": "AI", "variant": "primary" },
+            { "label": "Game", "variant": "success" },
+            { "label": "Minimax", "variant": "warning" }
+        ],
+        "metrics": [
+            { "label": "Platform", "value": "Web", "variant": "primary" },
+            { "label": "Mode", "value": "Single Player", "variant": "success" },
+            { "label": "AI", "value": "Unbeatable", "variant": "warning" },
+            { "label": "Status", "value": "Live", "variant": "default" }
+        ],
+        "links": [
+            { "label": "Live Demo", "url": "https://itzdineshx.github.io/Cs50ai_tic_tac_toe_AI/" },
+            { "label": "GitHub Repo", "url": "https://github.com/itzdineshx/Cs50ai_tic_tac_toe_AI" }
+        ],
         "technologies": [
             "Python",
             "Minimax",

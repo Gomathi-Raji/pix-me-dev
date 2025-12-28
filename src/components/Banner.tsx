@@ -214,42 +214,27 @@ export default function Banner({ day, toggleDayNight }: { day: boolean; toggleDa
         >
             <div className="flex justify-between items-center w-full md:w-auto">
                 <div className="content-start flex items-center gap-3">
-                    <div className="pixel-logo-container p-3">
-                        {/* Pixelated AI/ML Logo */}
-                        <div className="flex items-center gap-2">
-                            {/* Name with Trophy */}
-                            <div className="flex items-center gap-1">
-                                <i className="nes-icon trophy is-small text-yellow-400"></i>
-                                <span className="pixel-logo-text text-yellow-400 text-sm md:text-lg font-bold">DINESH</span>
-                            </div>
-
-                            {/* AI/ML Icon Grid */}
-                            <div className="logo-icon-grid ml-2">
-                                {/* AI Brain/Circuit */}
-                                <div className="logo-icon-box">
-                                    <i className="nes-icon heart is-small text-red-400" title="AI & Neural Networks"></i>
-                                </div>
-                                {/* ML Algorithm */}
-                                <div className="logo-icon-box">
-                                    <i className="nes-icon star is-small text-blue-400" title="Machine Learning"></i>
-                                </div>
-                                {/* Data Analytics */}
-                                <div className="logo-icon-box">
-                                    <i className="nes-icon trophy is-small text-green-400" title="Data Science & Analytics"></i>
-                                </div>
-                            </div>
+                    <Link href="/" className="group flex items-center gap-4 no-underline">
+                        {/* Logo Symbol */}
+                        <div className="relative w-12 h-12 bg-gray-900 border-4 border-white shadow-[4px_4px_0px_rgba(0,0,0,0.5)] flex items-center justify-center group-hover:translate-y-[-2px] transition-transform">
+                            <span className="text-2xl font-bold text-yellow-400 pixel-text drop-shadow-[2px_2px_0px_rgba(180,83,9,1)]">DK</span>
+                            {/* Corner accents */}
+                            <div className="absolute top-0 left-0 w-1 h-1 bg-white"></div>
+                            <div className="absolute top-0 right-0 w-1 h-1 bg-white"></div>
+                            <div className="absolute bottom-0 left-0 w-1 h-1 bg-white"></div>
+                            <div className="absolute bottom-0 right-0 w-1 h-1 bg-white"></div>
                         </div>
 
-                        {/* Tagline with Tech Icons */}
-                        <div className="flex items-center gap-2 mt-1">
-                            <i className="nes-icon star is-small text-yellow-300"></i>
-                            <div className="flex items-center gap-1">
-                                <span className="pixel-logo-tagline text-green-400">AI • ML • DATA</span>
-                                <i className="nes-icon close is-small text-purple-400"></i>
-                                <span className="pixel-logo-tagline text-blue-400">INNOVATOR</span>
-                            </div>
+                        {/* Logo Text */}
+                        <div className="flex flex-col justify-center">
+                            <h1 className="text-2xl font-bold text-white pixel-text tracking-widest drop-shadow-[3px_3px_0px_rgba(0,0,0,1)] group-hover:text-yellow-400 transition-colors leading-none">
+                                DINESH S
+                            </h1>
+                            <span className="text-[10px] text-gray-400 pixel-text tracking-[0.2em] mt-1 group-hover:text-white transition-colors">
+                                Ai/ML + FULLSTACK DEVELOPER
+                            </span>
                         </div>
-                    </div>
+                    </Link>
                 </div>
                 <div className="content-end flex gap-2 md:hidden">
                     <ToggleDayNight day={day} toggle={toggleDayNight} />
