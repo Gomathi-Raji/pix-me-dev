@@ -1,6 +1,5 @@
 'use client';
 
-import { siteConfig } from '@/config/site';
 import WorkExprience from '@/components/WorkExprience';
 import MinecraftLayout from '@/components/MinecraftLayout';
 import { useState, useEffect } from 'react';
@@ -19,13 +18,17 @@ export default function ExperiencePage() {
 
   return (
     <MinecraftLayout setDayOrNight={handleDayChange}>
-      <div className="min-h-screen pt-20">
-        <section className="py-16 px-4">
-          <div className="max-w-6xl mx-auto">
-            <h1 className="text-4xl font-bold mb-12 text-center nes-text is-primary">Work Experience</h1>
-            <WorkExprience day={day} />
-          </div>
-        </section>
+      <div className="min-h-screen pt-24 pb-16 px-4">
+        <div className="max-w-6xl mx-auto">
+          <header className="mb-10">
+            <h1 className="text-4xl font-bold text-center nes-text is-primary">Work Experience</h1>
+            <p className="mt-3 text-center text-sm text-gray-600">
+              Roles, responsibilities, and highlights from my journey.
+            </p>
+          </header>
+
+          <WorkExprience day={day} />
+        </div>
       </div>
     </MinecraftLayout>
   );

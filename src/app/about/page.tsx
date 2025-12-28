@@ -224,14 +224,14 @@ export default function AboutPage() {
 
             {/* Hero + Stat Grid */}
             <div className="grid gap-8 lg:grid-cols-[1.6fr,1fr] mb-16">
-              <div className={`nes-container with-title relative overflow-hidden ${themeClass}`}>
+              <div className={`nes-container is-rounded with-title relative overflow-hidden ${themeClass}`}>
                 <p className="title">🚀 MAIN QUEST</p>
                 <div className="absolute inset-0 opacity-20 bg-gradient-to-br from-yellow-200/70 to-transparent pointer-events-none"></div>
                 <div className="relative space-y-6">
                   <p className="pixel-text text-2xl text-yellow-400 leading-relaxed">
                     {siteConfig.profile.tagline}
                   </p>
-                  <p className="text-base md:text-lg leading-relaxed pixel-text">
+                  <p className="text-base md:text-lg leading-relaxed">
                     {siteConfig.profile.summary}
                   </p>
                   <div className="grid gap-3 md:grid-cols-2">
@@ -265,7 +265,7 @@ export default function AboutPage() {
               <div className="grid gap-4">
                 {quickStats.map((stat) => (
                   <div key={stat.label} className={`nes-container is-rounded ${themeClass}`}>
-                    <p className={`pixel-text text-sm ${stat.accent}`}>{stat.label}</p>
+                    <p className={`text-xs font-semibold uppercase tracking-wide ${stat.accent}`}>{stat.label}</p>
                     <div className="flex items-baseline justify-between">
                       <p className="pixel-text text-3xl">{stat.value}</p>
                       <i className="nes-icon coin is-large"></i>
@@ -276,91 +276,14 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Profile Overview */}
-            <div className={`nes-container with-title is-centered mb-16 ${themeClass}`}>
-              <p className="title">👋 PROFILE OVERVIEW</p>
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
-                <div className="lg:col-span-2 space-y-6">
-                  <p className="text-lg leading-relaxed pixel-text">
-                    {aboutNarrative.intro}
-                  </p>
-                  <p className="text-base leading-relaxed">
-                    {aboutNarrative.experiments}
-                  </p>
-                  <p className="text-base leading-relaxed">
-                    {aboutNarrative.mission}
-                  </p>
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div className={`nes-container is-rounded ${themeClass} education-info-card`}>
-                      <p className="pixel-text text-center text-lg text-green-400">
-                        Mission in action
-                      </p>
-                      <p className="text-sm leading-relaxed">{aboutNarrative.missionDetail}</p>
-                    </div>
-                    <div className={`nes-container is-rounded ${themeClass} education-gpa-card`}>
-                      <p className="pixel-text text-center text-lg text-yellow-400">
-                        Guiding belief
-                      </p>
-                      <p className="text-sm leading-relaxed">{aboutNarrative.belief}</p>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-3">
-                    {innovationTracks.map((track) => (
-                      <span key={`overview-${track}`} className="nes-badge">
-                        <span className="is-primary">{track}</span>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 gap-4">
-                  <div className={`nes-container is-rounded ${themeClass} education-info-card`}>
-                    <div className="flex items-center space-x-4">
-                      <div className="logo-icon-box">
-                        <i className="nes-icon trophy is-large text-yellow-400"></i>
-                      </div>
-                      <div>
-                        <p className="pixel-text text-yellow-400 font-bold">EDUCATION</p>
-                        <p className="text-sm">{siteConfig.profile.education}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className={`nes-container is-rounded ${themeClass} education-gpa-card`}>
-                    <div className="flex items-center space-x-4">
-                      <div className="logo-icon-box">
-                        <i className="nes-icon heart is-large text-red-400"></i>
-                      </div>
-                      <div>
-                        <p className="pixel-text text-green-400 font-bold">EXPERTISE</p>
-                        <p className="text-sm">{siteConfig.profile.expertise}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className={`nes-container is-rounded ${themeClass} education-desc-card`}>
-                    <div className="flex items-center space-x-4">
-                      <div className="logo-icon-box">
-                        <i className="nes-icon star is-large text-blue-400"></i>
-                      </div>
-                      <div>
-                        <p className="pixel-text text-purple-400 font-bold">FOCUS AREAS</p>
-                        <p className="text-sm">{siteConfig.profile.focusAreas}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <div className="about-grid-2col grid grid-cols-1 xl:grid-cols-[1.4fr,0.6fr] gap-8 mb-16">
-              <div className={`about-container-padding nes-container with-title ${themeClass}`}>
+              <div className={`about-container-padding nes-container is-rounded with-title ${themeClass}`}>
                 <p className="title">🧠 SKILLS & EXPERTISE</p>
                 <div className="mobile-spacing-y-4 space-y-4">
                   {capabilitySections.map((section) => (
                     <div key={section.title} className={`nes-container is-rounded ${themeClass}`}>
                       <p className="pixel-text about-text-sm text-sm text-yellow-400 mb-2">{section.title}</p>
-                      <ul className="nes-list is-disc pl-6 space-y-1 about-text-sm text-sm">
+                      <ul className="nes-list is-disc pl-6 space-y-1 about-text-sm text-sm md:columns-2 md:gap-8">
                         {section.items.map((item) => (
                           <li key={`${section.title}-${item}`}>{item}</li>
                         ))}
@@ -370,7 +293,7 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              <div className={`about-container-padding nes-container with-title ${themeClass}`}>
+              <div className={`about-container-padding nes-container is-rounded with-title ${themeClass}`}>
                 <p className="title">🚀 MISSION & IMPACT</p>
                 <div className="mobile-spacing-y-6 space-y-6">
                   <div className={`nes-container is-rounded ${themeClass}`}>
@@ -415,13 +338,13 @@ export default function AboutPage() {
             </div>
 
             <div className="about-grid-2col grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-              <div className={`about-container-padding nes-container with-title ${themeClass}`}>
+              <div className={`about-container-padding nes-container is-rounded with-title ${themeClass}`}>
                 <p className="title">⚙️ FRAMEWORKS & LIBRARIES</p>
                 <div className="mobile-spacing-y-4 space-y-4">
                   {frameworkStacks.map((stack) => (
                     <div key={stack.title} className={`nes-container is-rounded ${themeClass}`}>
                       <p className="pixel-text about-text-sm text-sm text-yellow-400 mb-2">{stack.title}</p>
-                      <ul className="nes-list is-disc pl-6 space-y-1 about-text-sm text-sm">
+                      <ul className="nes-list is-disc pl-6 space-y-1 about-text-sm text-sm md:columns-2 md:gap-8">
                         {stack.items.map((item) => (
                           <li key={`${stack.title}-${item}`}>{item}</li>
                         ))}
@@ -430,13 +353,13 @@ export default function AboutPage() {
                   ))}
                 </div>
               </div>
-              <div className={`about-container-padding nes-container with-title ${themeClass}`}>
+              <div className={`about-container-padding nes-container is-rounded with-title ${themeClass}`}>
                 <p className="title">🛠️ TOOLS & PLATFORMS</p>
                 <div className="mobile-spacing-y-4 space-y-4">
                   {toolsAndPlatforms.map((stack) => (
                     <div key={stack.title} className={`nes-container is-rounded ${themeClass}`}>
                       <p className="pixel-text about-text-sm text-sm text-green-400 mb-2">{stack.title}</p>
-                      <ul className="nes-list is-disc pl-6 space-y-1 about-text-sm text-sm">
+                      <ul className="nes-list is-disc pl-6 space-y-1 about-text-sm text-sm md:columns-2 md:gap-8">
                         {stack.items.map((item) => (
                           <li key={`${stack.title}-${item}`}>{item}</li>
                         ))}
@@ -460,10 +383,10 @@ export default function AboutPage() {
               <div className={`nes-container with-title ${themeClass}`}>
                 <p className="title">🤝 COLLABORATIONS</p>
                 <div className="space-y-4">
-                  <p className="pixel-text">{siteConfig.profile.collaborations}</p>
+                  <p className="text-sm leading-relaxed">{siteConfig.profile.collaborations}</p>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <span className="pixel-text text-sm">Project Openness</span>
+                      <span className="text-sm font-semibold">Project Openness</span>
                       <span className="pixel-text text-sm text-green-400">90%</span>
                     </div>
                     <div className="nes-progress">
@@ -476,7 +399,7 @@ export default function AboutPage() {
               <div className={`nes-container with-title ${themeClass}`}>
                 <p className="title">🎮 HOBBIES & INTERESTS</p>
                 <div className="space-y-4">
-                  <p className="pixel-text">{siteConfig.profile.hobbies}</p>
+                  <p className="text-sm leading-relaxed">{siteConfig.profile.hobbies}</p>
                   <div className="flex flex-wrap gap-2">
                     <span className="nes-badge">
                       <span className="is-primary">🎮 Gaming</span>
@@ -499,7 +422,7 @@ export default function AboutPage() {
                 <div className="space-y-4">
                   <div>
                     <div className="flex justify-between items-center mb-1">
-                      <p className="pixel-text text-sm">AI & Machine Learning</p>
+                      <p className="text-sm font-semibold">AI & Machine Learning</p>
                       <span className="pixel-text text-sm text-blue-400">95%</span>
                     </div>
                     <div className="nes-progress">
@@ -508,7 +431,7 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <div className="flex justify-between items-center mb-1">
-                      <p className="pixel-text text-sm">Data Science & Analytics</p>
+                      <p className="text-sm font-semibold">Data Science & Analytics</p>
                       <span className="pixel-text text-sm text-green-400">90%</span>
                     </div>
                     <div className="nes-progress">
@@ -517,7 +440,7 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <div className="flex justify-between items-center mb-1">
-                      <p className="pixel-text text-sm">Innovation & Creativity</p>
+                      <p className="text-sm font-semibold">Innovation & Creativity</p>
                       <span className="pixel-text text-sm text-purple-400">88%</span>
                     </div>
                     <div className="nes-progress">
@@ -532,7 +455,7 @@ export default function AboutPage() {
               <Education day={day} />
             </div>
 
-            <div className={`nes-container with-title is-centered ${themeClass}`}>
+            <div className={`nes-container is-rounded with-title is-centered ${themeClass}`}>
               <p className="title">🎯 FUN FACTS & BEYOND</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {siteConfig.profile.funFacts.map((fact, index) => (
@@ -540,7 +463,7 @@ export default function AboutPage() {
                     key={fact}
                     className={`nes-container is-rounded ${themeClass} education-gpa-card`}
                   >
-                    <p className="pixel-text text-center font-medium">{fact}</p>
+                    <p className="text-sm text-center font-medium">{fact}</p>
                   </div>
                 ))}
               </div>
@@ -551,7 +474,7 @@ export default function AboutPage() {
                     <p className="pixel-text text-2xl text-yellow-400">
                       🌟 LET'S CONNECT & BUILD SOMETHING AMAZING!
                     </p>
-                    <p className="pixel-text text-lg">
+                    <p className="text-base md:text-lg leading-relaxed">
                       Whether it's AI projects, gaming innovations, or just a friendly chat about technology!
                     </p>
                     <div className="flex justify-center gap-4 mt-6">
