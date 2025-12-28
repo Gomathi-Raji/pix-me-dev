@@ -53,6 +53,11 @@ function TimelineCard({ job, day, index }: { job: Work; day: boolean; index: num
                     <p className="experience-summary text-xs text-gray-500">
                         {job.startDate} &mdash; {job.endDate || 'Present'}
                     </p>
+                    {(job.employmentType || job.workMode || job.location) && (
+                        <p className="experience-summary text-xs text-gray-500">
+                            {[job.employmentType, job.workMode, job.location].filter(Boolean).join(' · ')}
+                        </p>
+                    )}
                     <p className="experience-summary text-sm leading-relaxed">{job.summary}</p>
                     {job.tags?.length ? (
                         <div className="experience-tags flex flex-wrap gap-2">

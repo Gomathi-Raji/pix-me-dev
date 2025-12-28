@@ -66,15 +66,10 @@ section::after {
   transition: none !important;
 }
 
-/* Normalize spacing between light and dark modes */
-:where(.nes-container) {
+/* Prevent layout jump when toggling dark mode.
+   NES.css adds margin to .nes-container.is-dark; we keep spacing consistent across modes. */
+.nes-container.is-dark {
   margin: 0;
-  padding: 0.5rem;
-}
-
-:where(.nes-container.is-dark) {
-  margin: 0;
-  padding: 0.5rem;
 }
 
 /* Gradient Text Effect */

@@ -1,15 +1,18 @@
 [
     {
         "company": "ZAYMAZONE",
-        "position": "Chief Technology Officer (CTO)",
+        "position": "AI & Full Stack Developer",
         "startDate": "Sep 2025",
         "endDate": "Present",
-        "summary": "Leading the entire technology vision of ZAYMAZONE, with a strong focus on AI integration, automation, system architecture, and technical strategy.",
+        "employmentType": "Full-time",
+        "workMode": "On-site",
+        "location": "Chennai, Tamil Nadu, India",
+        "summary": "Building and shipping AI-enabled full stack features for ZAYMAZONE, focusing on scalable frontend experiences and reliable backend integrations.",
         "highlights": [
-            "Designed scalable system architecture across web & backend systems.",
-            "Led development of AI-driven product features improving automation efficiency.",
-            "Directed cross-functional engineering activities and technical decision-making.",
-            "Improved infrastructure reliability and reduced operational overhead through automation."
+            "Built and maintained end-to-end product features across frontend and backend.",
+            "Integrated AI/automation capabilities into workflows where applicable.",
+            "Improved performance and reliability through clean architecture and reusable components.",
+            "Collaborated closely with stakeholders to deliver production-ready releases."
         ],
         "tags": ["AI", "Automation", "System Architecture", "Technical Strategy", "Leadership"],
         "links": [
@@ -18,17 +21,20 @@
     },
     {
         "company": "Thenam Software Solutions",
-        "position": "AI & Automation Developer",
+        "position": "Chief Technology Officer",
         "startDate": "Sep 2025",
         "endDate": "Present",
-        "summary": "Developing AI-powered applications, automation systems, and internal productivity tools for clients and enterprise systems.",
+        "employmentType": "Full-time",
+        "workMode": "Hybrid",
+        "location": "Chennai, Tamil Nadu, India",
+        "summary": "Leading technology direction at Thenam Software Solutions, driving engineering execution, architecture decisions, and delivery quality.",
         "highlights": [
-            "Built automation workflows reducing manual effort by 40–60% (process-dependent).",
-            "Integrated NLP, ML, and custom automation models into business operations.",
-            "Deployed AI assistants and intelligent automation for real-time decision-making.",
-            "Collaborated with cross-teams to convert requirements into deployable AI solutions."
+            "Owned technical strategy and architecture across client and internal systems.",
+            "Guided teams on engineering best practices, delivery, and technical decision-making.",
+            "Reviewed designs and implementations to maintain scalability and reliability.",
+            "Aligned product requirements with feasible, maintainable technical solutions."
         ],
-                "tags": ["AI", "NLP", "ML", "Automation", "Enterprise Systems"],
+        "tags": ["Technology Leadership"],
         "links": [
             { "label": "Company Website", "url": "https://thenamsoft.com" }
         ]
