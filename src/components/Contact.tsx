@@ -8,7 +8,7 @@ export default function Contact({ day }: { day: boolean }) {
     return (
         <section 
             id="contact" 
-            className={`nes-container is-rounded with-title ${day ? "bg-gray-200" : "bg-gray-900 is-dark"} relative overflow-hidden`}
+            className={`nes-container is-rounded with-title ${day ? "bg-gray-200" : "via-blue-500/5 is-dark"} relative overflow-hidden`}
         >
             <p className="title">💬 CONNECT WITH ME</p>
 

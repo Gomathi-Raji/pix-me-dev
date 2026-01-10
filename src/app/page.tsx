@@ -396,9 +396,9 @@ export default function Home() {
 
         {/* Call to Action Section */}
         <section className="py-20 px-4 relative z-10">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10 rounded-lg"></div>
+          <div className="absolute inset-0 bg-gradient-to-r via-blue-500/5 rounded-lg"></div>
           <div className="max-w-4xl mx-auto text-center relative z-10">
-            <div className={`nes-container is-rounded p-8 shadow-2xl ${day ? 'bg-gradient-to-r from-blue-50 to-purple-50' : 'is-dark bg-gradient-to-r from-gray-800 to-gray-700'}`}>
+            <div className={`nes-container is-rounded p-8 shadow-2xl ${day ? 'bg-gradient-to-r from-blue-50 to-purple-50' : 'is-dark bg-gradient-to-r via-blue-500/5'}`}>
               <div className="mb-6">
                 <span className="text-6xl animate-bounce">🚀</span>
               </div>

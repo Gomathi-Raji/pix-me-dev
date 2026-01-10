@@ -134,7 +134,7 @@ Reply directly to: ${formData.from_email}
                 className="text-center mb-8"
                 variants={sectionVariants}
             >
-                <h3 className={`text-2xl font-bold mb-2 flex items-center justify-center gap-2 ${day ? 'text-gray-800' : 'text-white'}`}>
+                <h3 className={`text-2xl font-bold mb-2 flex items-center justify-center gap-2 ${day ? 'text-gray-800' : 'text-gray-200'}`}>
                     <i className="nes-icon user animate-bounce"></i>
                     📬 Let's Connect!
                 </h3>

@@ -79,6 +79,16 @@ export const metadata: Metadata = {
     google: 'your-google-site-verification-code', // Replace with your Google verification code
   },
   manifest: '/site.webmanifest',
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
+    ],
+    apple: [{ url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' }],
+    shortcut: ['/favicon.ico'],
+  },
 };
 
 const pressStart2P = Press_Start_2P({

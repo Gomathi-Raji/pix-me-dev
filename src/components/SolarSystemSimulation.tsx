@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect, Suspense, useCallback } from 'react';
+import React, { useMemo, useRef, useState, useEffect, Suspense, useCallback } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useRouter } from 'next/navigation';
 import { 
@@ -18,7 +18,8 @@ import {
   Pixelation,
   ChromaticAberration,
   Glitch,
-  Noise
+  Noise,
+  Bloom
 } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -26,6 +27,52 @@ import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 import { MdSkipNext } from 'react-icons/md';
 import { gsap } from 'gsap';
 import solarProjects from '../data/solarProjects.json';
+
+import {
+  detectDeviceCapabilities,
+  getSettingsForTier,
+  PerformanceMonitor,
+  type DeviceCapabilities,
+  type GraphicsSettings,
+} from '../helpers/deviceCapabilities';
+
+import {
+  generatePlanetTextures,
+  generateRingTexture,
+  generateAsteroidTexture,
+  PLANET_PALETTES,
+} from '../helpers/planetTextures';
+
+function InvalidateLoop({ active, fps }: { active: boolean; fps: number }) {
+  const invalidate = useThree((s) => s.invalidate);
+  const activeRef = useRef(active);
+
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
+
+  useEffect(() => {
+    let raf = 0;
+    let last = 0;
+    const frameMs = Math.max(16, Math.floor(1000 / Math.max(1, fps)));
+
+    const tick = (t: number) => {
+      if (!activeRef.current) return;
+      if (t - last >= frameMs) {
+        last = t;
+        invalidate();
+      }
+      raf = requestAnimationFrame(tick);
+    };
+
+    if (active) raf = requestAnimationFrame(tick);
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [active, fps, invalidate]);
+
+  return null;
+}
 
 // Audio system for 8-bit sounds
 class AudioSystem {
@@ -385,37 +432,35 @@ function ChaseCamera({ target, isReturning }: { target: React.RefObject<THREE.Gr
 }
 
 // Individual planet component with enhanced animations
-function Planet({ planet, scroll, planetIndex }: { planet: Planet; scroll: any; planetIndex: number }) {
+function Planet({ planet, scroll, planetIndex, quality }: { planet: Planet; scroll: any; planetIndex: number; quality: GraphicsSettings }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const glowRef = useRef<THREE.Mesh>(null);
-  const [texture] = useState(() => {
-    const canvas = document.createElement('canvas');
-    canvas.width = 64;
-    canvas.height = 64;
-    const ctx = canvas.getContext('2d')!;
-    
-    // Create pixelated planet texture
-    const imageData = ctx.createImageData(64, 64);
-    const color = new THREE.Color(planet.color);
-    
-    for (let i = 0; i < imageData.data.length; i += 4) {
-      const variation = (Math.random() - 0.5) * 0.3;
-      imageData.data[i] = Math.floor((color.r + variation) * 255);
-      imageData.data[i + 1] = Math.floor((color.g + variation) * 255);
-      imageData.data[i + 2] = Math.floor((color.b + variation) * 255);
-      imageData.data[i + 3] = 255;
-    }
-    
-    ctx.putImageData(imageData, 0, 0);
-    
-    const tex = new THREE.CanvasTexture(canvas);
-    tex.magFilter = THREE.NearestFilter;
-    tex.minFilter = THREE.NearestFilter;
-    tex.wrapS = THREE.RepeatWrapping;
-    tex.wrapT = THREE.RepeatWrapping;
-    
-    return tex;
-  });
+  const textures = useMemo(() => {
+    return generatePlanetTextures(planet.name, quality.planetTextureSize, quality.enableBumpMap);
+  }, [planet.name, quality.planetTextureSize, quality.enableBumpMap]);
+
+  const ringTexture = useMemo(() => {
+    if (!quality.enableRings) return null;
+    const size = Math.max(128, Math.min(512, quality.planetTextureSize));
+    return generateRingTexture(size);
+  }, [quality.enableRings, quality.planetTextureSize]);
+
+  const moonTexture = useMemo(() => {
+    if (!quality.enableMoons || planet.name !== 'Earth') return null;
+    const size = Math.max(64, Math.min(256, Math.floor(quality.planetTextureSize / 2)));
+    return generatePlanetTextures('Moon', size, false).diffuse;
+  }, [planet.name, quality.enableMoons, quality.planetTextureSize]);
+
+  useEffect(() => {
+    return () => {
+      textures.diffuse.dispose();
+      textures.bump?.dispose();
+      textures.emissive?.dispose();
+      textures.specular?.dispose();
+      ringTexture?.dispose();
+      moonTexture?.dispose();
+    };
+  }, [textures, ringTexture, moonTexture]);
   
   useFrame((state) => {
     if (!meshRef.current) return;
@@ -450,7 +495,14 @@ function Planet({ planet, scroll, planetIndex }: { planet: Planet; scroll: any; 
   return (
     <group position={planet.position}>
       {/* Atmospheric glow layer */}
-      <Sphere ref={glowRef} args={[planet.scale * 1.15, 32, 32]}>
+      <Sphere
+        ref={glowRef}
+        args={[
+          planet.scale * 1.15,
+          Math.max(16, Math.floor(quality.planetSegments / 2)),
+          Math.max(16, Math.floor(quality.planetSegments / 2)),
+        ]}
+      >
         <meshBasicMaterial 
           color={planet.color}
           transparent
@@ -458,6 +510,25 @@ function Planet({ planet, scroll, planetIndex }: { planet: Planet; scroll: any; 
           side={THREE.BackSide}
         />
       </Sphere>
+
+      {/* Subtle atmosphere shell (pixel aesthetic, more realistic depth) */}
+      {quality.enableAtmosphere && PLANET_PALETTES[planet.name]?.atmosphere && planet.name !== 'Sun' && (
+        <Sphere
+          args={[
+            planet.scale * 1.06,
+            Math.max(16, Math.floor(quality.planetSegments / 2)),
+            Math.max(16, Math.floor(quality.planetSegments / 2)),
+          ]}
+        >
+          <meshBasicMaterial
+            color={PLANET_PALETTES[planet.name].atmosphere}
+            transparent
+            opacity={0.08}
+            depthWrite={false}
+            side={THREE.DoubleSide}
+          />
+        </Sphere>
+      )}
       
       {/* Extra glow for Sun */}
       {planet.name === 'Sun' && (
@@ -474,16 +545,20 @@ function Planet({ planet, scroll, planetIndex }: { planet: Planet; scroll: any; 
       {/* Main planet */}
       <Sphere 
         ref={meshRef} 
-        args={[planet.scale, 48, 48]}
-        onPointerEnter={() => console.log(`Approaching ${planet.name}`)}
-        onPointerLeave={() => console.log(`Leaving ${planet.name}`)}
+        args={[planet.scale, quality.planetSegments, quality.planetSegments]}
       >
-        <meshStandardMaterial 
-          map={texture}
-          roughness={planet.name === 'Sun' ? 0.7 : 0.95}
-          metalness={planet.name === 'Sun' ? 0 : 0.1}
+        <meshPhysicalMaterial 
+          map={textures.diffuse}
+          bumpMap={quality.enableBumpMap ? textures.bump : undefined}
+          bumpScale={quality.enableBumpMap ? (planet.name === 'Earth' ? 0.22 : 0.18) : 0}
+          roughnessMap={textures.specular}
+          roughness={planet.name === 'Sun' ? 0.8 : planet.name === 'Earth' ? 0.86 : 0.92}
+          metalness={planet.name === 'Sun' ? 0 : 0.02}
+          clearcoat={planet.name === 'Earth' ? 0.35 : 0.05}
+          clearcoatRoughness={planet.name === 'Earth' ? 0.22 : 0.8}
           emissive={planet.name === 'Sun' ? planet.color : '#000000'}
-          emissiveIntensity={planet.name === 'Sun' ? 0.6 : 0}
+          emissiveMap={planet.name === 'Sun' ? textures.emissive : undefined}
+          emissiveIntensity={planet.name === 'Sun' ? 1.15 : 0}
         />
       </Sphere>
       
@@ -494,8 +569,9 @@ function Planet({ planet, scroll, planetIndex }: { planet: Planet; scroll: any; 
             <ringGeometry args={[planet.scale * 1.3, planet.scale * 1.8, 32]} />
             <meshStandardMaterial 
               color="#FAD5A5" 
+              map={ringTexture ?? undefined}
               transparent 
-              opacity={0.7}
+              opacity={0.8}
               side={THREE.DoubleSide}
             />
           </mesh>
@@ -503,8 +579,9 @@ function Planet({ planet, scroll, planetIndex }: { planet: Planet; scroll: any; 
             <ringGeometry args={[planet.scale * 2.0, planet.scale * 2.4, 32]} />
             <meshStandardMaterial 
               color="#E6C48A" 
+              map={ringTexture ?? undefined}
               transparent 
-              opacity={0.4}
+              opacity={0.45}
               side={THREE.DoubleSide}
             />
           </mesh>
@@ -512,21 +589,94 @@ function Planet({ planet, scroll, planetIndex }: { planet: Planet; scroll: any; 
       )}
       
       {/* Earth's moon */}
-      {planet.name === 'Earth' && (
+      {quality.enableMoons && planet.name === 'Earth' && (
         <Sphere args={[0.8, 16, 16]} position={[planet.scale * 2, 0, 0]}>
-          <meshStandardMaterial color="#C0C0C0" roughness={1} metalness={0} />
+          <meshStandardMaterial
+            map={moonTexture ?? undefined}
+            roughness={0.98}
+            metalness={0}
+          />
         </Sphere>
       )}
     </group>
   );
 }
 
+function AsteroidBelt({ quality }: { quality: GraphicsSettings }) {
+  const instancedRef = useRef<THREE.InstancedMesh>(null);
+  const dummy = useMemo(() => new THREE.Object3D(), []);
+  const texture = useMemo(() => generateAsteroidTexture(64), []);
+
+  const count = Math.max(0, quality.asteroidCount);
+
+  const beltData = useMemo(() => {
+    const items: Array<{ angle: number; radius: number; y: number; scale: number; rot: THREE.Euler; speed: number }> = [];
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const radius = 210 + (Math.random() - 0.5) * 35;
+      const y = (Math.random() - 0.5) * 8;
+      const scale = 0.35 + Math.random() * 1.25;
+      const rot = new THREE.Euler(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+      const speed = 0.0006 + Math.random() * 0.0012;
+      items.push({ angle, radius, y, scale, rot, speed });
+    }
+    return items;
+  }, [count]);
+
+  useEffect(() => {
+    if (!instancedRef.current) return;
+    for (let i = 0; i < beltData.length; i++) {
+      const d = beltData[i];
+      const x = Math.cos(d.angle) * d.radius;
+      const z = Math.sin(d.angle) * d.radius;
+      dummy.position.set(x, d.y, z);
+      dummy.rotation.copy(d.rot);
+      dummy.scale.setScalar(d.scale);
+      dummy.updateMatrix();
+      instancedRef.current.setMatrixAt(i, dummy.matrix);
+    }
+    instancedRef.current.instanceMatrix.needsUpdate = true;
+  }, [beltData, dummy]);
+
+  useFrame(() => {
+    if (!instancedRef.current) return;
+    const t = performance.now();
+    for (let i = 0; i < beltData.length; i++) {
+      const d = beltData[i];
+      const angle = d.angle + t * d.speed;
+      const x = Math.cos(angle) * d.radius;
+      const z = Math.sin(angle) * d.radius;
+      dummy.position.set(x, d.y, z);
+      dummy.rotation.set(d.rot.x + t * 0.0002, d.rot.y + t * 0.0003, d.rot.z);
+      dummy.scale.setScalar(d.scale);
+      dummy.updateMatrix();
+      instancedRef.current.setMatrixAt(i, dummy.matrix);
+    }
+    instancedRef.current.instanceMatrix.needsUpdate = true;
+  });
+
+  useEffect(() => {
+    return () => {
+      texture.dispose();
+    };
+  }, [texture]);
+
+  if (count <= 0) return null;
+
+  return (
+    <instancedMesh ref={instancedRef} args={[undefined as any, undefined as any, count]} frustumCulled={quality.frustumCulling}>
+      <dodecahedronGeometry args={[1, 0]} />
+      <meshStandardMaterial map={texture} roughness={0.95} metalness={0.05} />
+    </instancedMesh>
+  );
+}
+
 // Shooting stars for dynamic effects
-function ShootingStars() {
+function ShootingStars({ count = 5 }: { count?: number }) {
   const starsRef = useRef<THREE.Group>(null);
   const [stars] = useState(() => {
     const starData = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < count; i++) {
       starData.push({
         startPos: new THREE.Vector3(
           Math.random() * 200,
@@ -580,17 +730,17 @@ function ShootingStars() {
 }
 
 // 8-bit pixelated starfield background optimized for horizontal scrolling
-function Starfield({ scroll }: { scroll: any }) {
+function Starfield({ scroll, count = 2000 }: { scroll: any; count?: number }) {
   const pointsRef = useRef<THREE.Points>(null);
   const [starPositions] = useState(() => {
-    const positions = new Float32Array(2000 * 3);
+    const positions = new Float32Array(count * 3);
     
-    for (let i = 0; i < 2000; i++) {
+    for (let i = 0; i < count; i++) {
       // More even distribution across the journey
       const angle = Math.random() * Math.PI * 2;
       const radius = Math.sqrt(Math.random()) * 150;
       
-      positions[i * 3] = (Math.random() - 0.5) * 600 + (i / 2000) * 200; // X spread along path
+      positions[i * 3] = (Math.random() - 0.5) * 600 + (i / Math.max(1, count)) * 200; // X spread along path
       positions[i * 3 + 1] = Math.cos(angle) * radius; // Y spread
       positions[i * 3 + 2] = Math.sin(angle) * radius; // Z spread
     }
@@ -630,11 +780,11 @@ function Starfield({ scroll }: { scroll: any }) {
 }
 
 // Floating space debris for atmosphere
-function SpaceDebris({ scroll }: { scroll: any }) {
+function SpaceDebris({ scroll, count = 50 }: { scroll: any; count?: number }) {
   const debrisRef = useRef<THREE.Group>(null);
   const [debris] = useState(() => {
     const items = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < count; i++) {
       items.push({
         position: new THREE.Vector3(
           Math.random() * 500 - 50,
@@ -681,11 +831,11 @@ function SpaceDebris({ scroll }: { scroll: any }) {
 }
 
 // Warp speed star streaks
-function WarpStars({ scroll }: { scroll: any }) {
+function WarpStars({ scroll, count = 1000 }: { scroll: any; count?: number }) {
   const pointsRef = useRef<THREE.Points>(null);
   const [starPositions] = useState(() => {
-    const positions = new Float32Array(1000 * 3);
-    for (let i = 0; i < 1000; i++) {
+    const positions = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
       // Cylinder distribution for cleaner warp effect
       const angle = Math.random() * Math.PI * 2;
       const radius = Math.sqrt(Math.random()) * 40;
@@ -964,10 +1114,17 @@ function LandingOverlay({ onComplete }: { onComplete: () => void }) {
 }
 
 // Main 3D scene with horizontal scrolling
-function Scene({ onReturnComplete }: { onReturnComplete: () => void }) {
+function Scene({
+  onReturnComplete,
+  quality,
+}: {
+  onReturnComplete: () => void;
+  quality: { tier: DeviceCapabilities['tier']; settings: GraphicsSettings };
+}) {
   const scroll = useScroll();
   const shipRef = useRef<THREE.Group | null>(null);
   const { camera } = useThree();
+  const sunLightRef = useRef<THREE.PointLight>(null);
   const [isReturning, setIsReturning] = useState(false);
   const [returnProgress, setReturnProgress] = useState(0);
   const [canReturn, setCanReturn] = useState(false);
@@ -1004,6 +1161,12 @@ function Scene({ onReturnComplete }: { onReturnComplete: () => void }) {
   
   // Enhanced camera effects for warp speed and smooth following
   useFrame((state, delta) => {
+    // Subtle solar flicker (keeps pixel vibe but feels more alive)
+    if (sunLightRef.current) {
+      const t = state.clock.elapsedTime;
+      sunLightRef.current.intensity = 2.8 + Math.sin(t * 0.7) * 0.25;
+    }
+
     const scrollProgress = scroll.offset;
 
     // Mark as started when user is at the beginning
@@ -1166,18 +1329,38 @@ function Scene({ onReturnComplete }: { onReturnComplete: () => void }) {
   return (
     <>
       {/* Enhanced Lighting setup */}
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.05} />
+
+      <hemisphereLight
+        intensity={0.18}
+        color={new THREE.Color('#bfe7ff')}
+        groundColor={new THREE.Color('#0b1020')}
+      />
       
       {/* Pulsating sun light */}
       <pointLight 
+        ref={sunLightRef}
         position={[0, 0, 0]} 
-        intensity={3 + Math.sin(Date.now() * 0.001) * 0.5} 
+        intensity={3.4} 
         color="#FDB813" 
-        distance={200} 
-        decay={0.5} 
+        distance={300} 
+        decay={2} 
       />
       
-      <directionalLight position={[100, 100, 100]} intensity={0.8} color="#ffffff" />
+      <directionalLight
+        position={[120, 100, 80]}
+        intensity={0.85}
+        color="#ffffff"
+        castShadow
+        shadow-mapSize-width={quality.settings.shadowMapSize}
+        shadow-mapSize-height={quality.settings.shadowMapSize}
+        shadow-camera-near={1}
+        shadow-camera-far={600}
+        shadow-camera-left={-300}
+        shadow-camera-right={300}
+        shadow-camera-top={300}
+        shadow-camera-bottom={-300}
+      />
       <spotLight 
         position={[0, 50, 0]} 
         angle={Math.PI / 4} 
@@ -1185,19 +1368,24 @@ function Scene({ onReturnComplete }: { onReturnComplete: () => void }) {
         intensity={0.5}
         color="#4A90E2"
         castShadow
+        shadow-mapSize-width={Math.max(256, Math.floor(quality.settings.shadowMapSize / 2))}
+        shadow-mapSize-height={Math.max(256, Math.floor(quality.settings.shadowMapSize / 2))}
       />
       
       {/* Background starfield */}
-      <Starfield scroll={scroll} />
+      <Starfield scroll={scroll} count={quality.settings.starCount} />
       
       {/* Shooting stars */}
-      <ShootingStars />
+      <ShootingStars count={quality.settings.shootingStarCount} />
       
       {/* Warp speed stars for final sequence */}
-      <WarpStars scroll={scroll} />
+      <WarpStars scroll={scroll} count={Math.max(300, Math.floor(quality.settings.starCount / 4))} />
       
       {/* Floating space debris */}
-      <SpaceDebris scroll={scroll} />
+      <SpaceDebris scroll={scroll} count={quality.settings.debrisCount} />
+
+      {/* Asteroid belt */}
+      <AsteroidBelt quality={quality.settings} />
       
       {/* Spaceship */}
       <Spaceship scroll={scroll} path={path} ref={shipRef} />
@@ -1220,7 +1408,7 @@ function Scene({ onReturnComplete }: { onReturnComplete: () => void }) {
 
       {/* Planets */}
       {PLANETS.map((planet, index) => (
-        <Planet key={planet.name} planet={planet} scroll={scroll} planetIndex={index} />
+        <Planet key={planet.name} planet={planet} scroll={scroll} planetIndex={index} quality={quality.settings} />
       ))}
       
       {/* Distance markers */}
@@ -1292,6 +1480,14 @@ function Scene({ onReturnComplete }: { onReturnComplete: () => void }) {
   );
 }
 
+function PerformanceController({ monitor }: { monitor: React.MutableRefObject<PerformanceMonitor | null> }) {
+  useFrame(() => {
+    if (!monitor.current) return;
+    monitor.current.recordFrame(performance.now());
+  });
+  return null;
+}
+
 // Loading screen component
 function LoadingScreen() {
   return (
@@ -1315,7 +1511,79 @@ export default function SolarSystemSimulation() {
   const [isLanding, setIsLanding] = useState(false);
   const [isMusicOn, setIsMusicOn] = useState<boolean>(typeof window !== 'undefined' ? localStorage.getItem('musicPlaying') === 'true' : false);
   const router = useRouter();
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [capabilities, setCapabilities] = useState<DeviceCapabilities | null>(null);
+  const [qualityTier, setQualityTier] = useState<DeviceCapabilities['tier']>('medium');
+  const [qualitySettings, setQualitySettings] = useState<GraphicsSettings>(() => {
+    try {
+      return detectDeviceCapabilities().settings;
+    } catch {
+      // Very safe fallback (keeps the scene usable)
+      return {
+        pixelRatio: 1,
+        shadowMapSize: 512,
+        antialias: false,
+        planetSegments: 48,
+        planetTextureSize: 256,
+        enableBumpMap: false,
+        enableAtmosphere: true,
+        enableRings: true,
+        enableMoons: true,
+        enableBloom: false,
+        enableSSAO: false,
+        bloomIntensity: 0,
+        enableLensFlare: false,
+        enableVolumetricLighting: false,
+        starCount: 2000,
+        asteroidCount: 50,
+        debrisCount: 25,
+        cometCount: 2,
+        shootingStarCount: 5,
+        enablePixelation: true,
+        pixelationLevel: 6,
+        enableChromaticAberration: true,
+        enableNoise: true,
+        noiseIntensity: 0.05,
+        enableSmoothCamera: true,
+        cameraLerpSpeed: 0.06,
+        enableParticleTrails: false,
+        maxLodDistance: 300,
+        frustumCulling: true,
+        instancedRendering: true,
+      };
+    }
+  });
+
+  const perfMonitorRef = useRef<PerformanceMonitor | null>(null);
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isOnScreen, setIsOnScreen] = useState(true);
+  const [isTabVisible, setIsTabVisible] = useState(true);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+
+    const onVis = () => setIsTabVisible(document.visibilityState === 'visible');
+    document.addEventListener('visibilitychange', onVis);
+    onVis();
+
+    return () => document.removeEventListener('visibilitychange', onVis);
+  }, []);
+
+  useEffect(() => {
+    if (!containerRef.current || typeof IntersectionObserver === 'undefined') return;
+
+    const el = containerRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        setIsOnScreen(!!entry?.isIntersecting);
+      },
+      { root: null, threshold: 0.01 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     // Simulate loading time
@@ -1327,21 +1595,48 @@ export default function SolarSystemSimulation() {
   }, []);
 
   useEffect(() => {
-    // Detect simple mobile breakpoints and adapt simulation settings
-    const checkMobile = () => {
-      const mobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
-      setIsMobile(mobile);
+    if (typeof window === 'undefined') return;
+
+    const caps = detectDeviceCapabilities();
+    setCapabilities(caps);
+    setQualityTier(caps.tier);
+    setQualitySettings(caps.settings);
+
+    perfMonitorRef.current = new PerformanceMonitor(caps.tier, (newTier) => {
+      setQualityTier(newTier);
+      setCapabilities((prev) => {
+        if (!prev) return prev;
+        const nextSettings = getSettingsForTier(newTier, prev.features, prev.display);
+        setQualitySettings(nextSettings);
+        return { ...prev, tier: newTier, settings: nextSettings };
+      });
+    });
+
+    const onResize = () => {
+      setCapabilities((prev) => {
+        if (!prev) {
+          const nextCaps = detectDeviceCapabilities();
+          setQualityTier(nextCaps.tier);
+          setQualitySettings(nextCaps.settings);
+          return nextCaps;
+        }
+
+        const nextDisplay = {
+          ...prev.display,
+          width: window.innerWidth,
+          height: window.innerHeight,
+          pixelRatio: window.devicePixelRatio || 1,
+          isRetina: (window.devicePixelRatio || 1) > 1,
+        };
+        const nextSettings = getSettingsForTier(prev.tier, prev.features, nextDisplay);
+        setQualitySettings(nextSettings);
+        return { ...prev, display: nextDisplay, settings: nextSettings };
+      });
     };
 
-    checkMobile();
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', checkMobile);
-    }
-
+    window.addEventListener('resize', onResize);
     return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('resize', checkMobile);
-      }
+      window.removeEventListener('resize', onResize);
     };
   }, []);
 
@@ -1419,33 +1714,63 @@ export default function SolarSystemSimulation() {
     return <LoadingScreen />;
   }
 
-  // Dynamic adjustments for mobile: lower pages, lower effect loads, smaller granularity
+  const isMobile = capabilities?.display.isMobile ?? false;
+  const tier = capabilities?.tier ?? qualityTier;
+  const settings = qualitySettings;
+
+  // Keep the same UX, but scale render cost automatically
   const scrollPages = isMobile ? 6 : 10;
-  const pixelation = isMobile ? 2 : 6;
-  const enablePostProcessing = !isMobile; // reduce GPU load on mobile
+  const pixelation = settings.pixelationLevel;
+  const enablePostProcessing = settings.enablePixelation || settings.enableBloom || settings.enableChromaticAberration || settings.enableNoise;
+  const powerPreference = tier === 'ultra' || tier === 'high' ? 'high-performance' : 'low-power';
+
+  const isActive = isOnScreen && isTabVisible;
+  const targetFps = tier === 'ultra' ? 60 : tier === 'high' ? 45 : tier === 'medium' ? 30 : 24;
 
   return (
-    <div className="fixed inset-0 overflow-hidden solar-system-container">
+    <div ref={containerRef} className="fixed inset-0 overflow-hidden solar-system-container">
       {/* 3D Canvas */}
       <Canvas
         camera={{ position: [0, 5, 20], fov: 75 }}
         gl={{ 
-          antialias: false, // Disable for pixelated look
-          powerPreference: "high-performance" 
+          antialias: settings.antialias,
+          powerPreference,
         }}
+        dpr={settings.pixelRatio}
+        shadows={settings.shadowMapSize >= 256}
+        frameloop="demand"
         style={{ background: '#000' }}
+        onCreated={({ gl }) => {
+          // Three r15x+ uses `useLegacyLights`; disable to get physically-correct lighting.
+          if ('useLegacyLights' in gl) {
+            (gl as any).useLegacyLights = false;
+          }
+          gl.outputColorSpace = THREE.SRGBColorSpace;
+          gl.toneMapping = THREE.ACESFilmicToneMapping;
+          gl.toneMappingExposure = tier === 'ultra' ? 1.1 : tier === 'high' ? 1.05 : 1.0;
+          gl.shadowMap.enabled = settings.shadowMapSize >= 256;
+          gl.shadowMap.type = THREE.PCFSoftShadowMap;
+        }}
       >
         <Suspense fallback={null}>
+          <InvalidateLoop active={isActive} fps={targetFps} />
           <ScrollControls pages={scrollPages} damping={isMobile ? 0.35 : 0.2} enabled={!isLanding}>
-            <Scene onReturnComplete={handleReturnComplete} />
+            <Scene onReturnComplete={handleReturnComplete} quality={{ tier, settings }} />
           </ScrollControls>
+
+          <PerformanceController monitor={perfMonitorRef} />
           
           {/* Enhanced post-processing for 8-bit aesthetic */}
           {enablePostProcessing && (
             <EffectComposer>
-              <Pixelation granularity={pixelation} />
-              <ChromaticAberration offset={[0.001, 0.001]} />
-              <Noise opacity={0.05} />
+              <Pixelation granularity={settings.enablePixelation ? pixelation : 1} />
+              <Bloom
+                intensity={settings.enableBloom ? settings.bloomIntensity : 0}
+                luminanceThreshold={0.35}
+                luminanceSmoothing={0.2}
+              />
+              <ChromaticAberration offset={settings.enableChromaticAberration ? [0.001, 0.001] : [0, 0]} />
+              <Noise opacity={settings.enableNoise ? settings.noiseIntensity : 0} />
             </EffectComposer>
           )}
         </Suspense>

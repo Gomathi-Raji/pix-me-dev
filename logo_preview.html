@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DK Logo Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Scale factor: 5x the original size */
+            --scale: 5;
+            --base-size: 48px; /* w-12 */
+            --border-width: 4px; /* border-4 */
+            --font-size: 24px; /* text-2xl approx */
+            
+            --bg-color: #111827; /* gray-900 */
+            --border-color: #ffffff;
+            --text-color: #facc15; /* yellow-400 */
+            --shadow-color-box: rgba(0,0,0,0.5);
+            --shadow-color-text: rgba(180,83,9,1);
+        }
+
+        body {
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #333; /* Contrast background */
+        }
+
+        .logo-badge {
+            position: relative;
+            /* Scaled dimensions */
+            width: calc(var(--base-size) * var(--scale));
+            height: calc(var(--base-size) * var(--scale));
+            background-color: var(--bg-color);
+            border: calc(var(--border-width) * var(--scale)) solid var(--border-color);
+            
+            /* Box Shadow: 4px 4px 0px scaled */
+            box-shadow: calc(4px * var(--scale)) calc(4px * var(--scale)) 0px var(--shadow-color-box);
+            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box; /* Important for border size */
+        }
+
+        .dk-text {
+            font-family: 'Press Start 2P', monospace;
+            font-size: calc(var(--font-size) * var(--scale));
+            font-weight: 700;
+            color: var(--text-color);
+            line-height: 1;
+            
+            /* Pixel Text Outline - Scaled 2px */
+            text-shadow: 
+                calc(2px * var(--scale)) calc(2px * var(--scale)) 0px #000, 
+                calc(-2px * var(--scale)) calc(-2px * var(--scale)) 0px #000, 
+                calc(2px * var(--scale)) calc(-2px * var(--scale)) 0px #000, 
+                calc(-2px * var(--scale)) calc(2px * var(--scale)) 0px #000;
+            
+            image-rendering: pixelated;
+            
+            /* Drop Shadow Filter - Scaled 2px 2px */
+            filter: drop-shadow(calc(2px * var(--scale)) calc(2px * var(--scale)) 0px var(--shadow-color-text));
+        }
+
+        .corner {
+            position: absolute;
+            background-color: white;
+            /* w-1 h-1 is 4px */
+            width: calc(4px * var(--scale));
+            height: calc(4px * var(--scale));
+            z-index: 10;
+        }
+        
+        .top-left { top: 0; left: 0; }
+        .top-right { top: 0; right: 0; }
+        .bottom-left { bottom: 0; left: 0; }
+        .bottom-right { bottom: 0; right: 0; }
+
+    </style>
+</head>
+<body>
+    <div class="logo-badge">
+        <span class="dk-text">DK</span>
+        
+        <!-- Corner Accents -->
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+    </div>
+</body>
+</html>
