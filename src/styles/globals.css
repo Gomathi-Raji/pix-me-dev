@@ -925,3 +925,37 @@ body {
   color: #e5e7eb;
   border-color: #111827;
 }
+
+/* Infinite marquee (testimonials / logos) */
+.marquee {
+  overflow: hidden;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  will-change: transform;
+  animation: marquee 35s linear infinite;
+}
+
+.marquee-item {
+  flex: 0 0 auto;
+  min-width: 260px;
+  max-width: 360px;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}

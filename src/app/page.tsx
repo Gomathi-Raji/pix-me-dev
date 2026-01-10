@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useMemo, useState } from 'react';
 import Hero from '@/components/Hero';
 import PortalOverlay from '@/components/PortalOverlay';
 import PortalQuickButton from '@/components/PortalQuickButton';
@@ -9,17 +8,55 @@ import Education from '@/components/Education';
 import Contact from '@/components/Contact';
 import MinecraftLayout from '@/components/MinecraftLayout';
 import Loading from '@/components/Loading';
-import { useState, useEffect } from 'react';
 import { siteConfig } from '@/config/site';
 import Link from 'next/link';
 import { loadIcon } from '@/helpers/iconLoader';
+import TestimonialsMarquee from '../components/TestimonialsMarquee';
 
 export default function Home() {
   // PortalToast removed — use the full-screen PortalOverlay instead
   const [day, setDay] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [showPortalOverlay, setShowPortalOverlay] = useState(false);
-  const router = useRouter();
+
+  const portalDebug = (...args: unknown[]) => {
+    if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line no-console
+      console.debug(...args);
+    }
+  };
+
+  const backgroundStars = useMemo(
+    () =>
+      Array.from({ length: 80 }, () => {
+        const sizeClass =
+          Math.random() > 0.7
+            ? 'w-1 h-1 opacity-30'
+            : Math.random() > 0.4
+              ? 'w-0.5 h-0.5 opacity-20'
+              : 'w-px h-px opacity-15';
+
+        return {
+          top: `${Math.random() * 100}%`,
+          left: `${Math.random() * 100}%`,
+          sizeClass,
+          animationDelay: `${Math.random() * 5}s`,
+          animationDuration: `${3 + Math.random() * 4}s`,
+        };
+      }),
+    []
+  );
+
+  const twinkleStars = useMemo(
+    () =>
+      Array.from({ length: 15 }, () => ({
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
+        duration: `${2 + Math.random() * 3}s`,
+        delay: `${Math.random() * 4}s`,
+      })),
+    []
+  );
 
   useEffect(() => {
     // Check if this is first visit or if cache expired
@@ -51,8 +88,7 @@ export default function Home() {
       const shouldShowBecauseExpired = lastEnterTimeNum === 0 || (currentTime - lastEnterTimeNum >= CACHE_DURATION);
       // Debug information to help trace why toast may not appear
       // (useful during development and tests)
-      // eslint-disable-next-line no-console
-      console.debug('[Portal] show candidates', {
+      portalDebug('[Portal] show candidates', {
         hasEnteredPortal,
         lastEnterTime,
         currentTime,
@@ -68,14 +104,12 @@ export default function Home() {
       if (Date.now() > hidePortalUntil && shouldShowBecauseNotEntered) {
         // Show overlay for first-time visitors as a welcome.
         // Do not mark portal as entered until user taps "EXPLORE MY WORK".
-        // eslint-disable-next-line no-console
-        console.debug('[Portal] first visit - show overlay');
+        portalDebug('[Portal] first visit - show overlay');
         setShowPortalOverlay(true);
       } else if (Date.now() > hidePortalUntil && shouldShowBecauseExpired) {
         // If TTL expired, show the overlay again instead of the toast
         // (user requested Portal overlay rather than the smaller toast)
-        // eslint-disable-next-line no-console
-        console.debug('[Portal] TTL expired - showing overlay');
+        portalDebug('[Portal] TTL expired - showing overlay');
         setShowPortalOverlay(true);
       }
     }
@@ -89,7 +123,7 @@ export default function Home() {
     }, 3000); // Show loading for 3 seconds
 
     return () => clearTimeout(timer);
-  }, [router]);
+  }, []);
 
   
 
@@ -140,32 +174,28 @@ export default function Home() {
           ) : (
             <>
               {/* Subtle Background Stars for Night Mode */}
-              {[...Array(80)].map((_, i) => (
+              {backgroundStars.map((s, i) => (
                 <div
                   key={i}
-                  className={`absolute bg-white rounded-full ${
-                    Math.random() > 0.7 ? 'w-1 h-1 opacity-30' :
-                    Math.random() > 0.4 ? 'w-0.5 h-0.5 opacity-20' :
-                    'w-px h-px opacity-15'
-                  } animate-pulse`}
+                  className={`absolute bg-white rounded-full ${s.sizeClass} animate-pulse`}
                   style={{
-                    top: `${Math.random() * 100}%`,
-                    left: `${Math.random() * 100}%`,
-                    animationDelay: `${Math.random() * 5}s`,
-                    animationDuration: `${3 + Math.random() * 4}s`,
+                    top: s.top,
+                    left: s.left,
+                    animationDelay: s.animationDelay,
+                    animationDuration: s.animationDuration,
                   }}
                 />
               ))}
               {/* Twinkling stars with different sizes */}
-              {[...Array(15)].map((_, i) => (
+              {twinkleStars.map((t, i) => (
                 <div
                   key={`twinkle-${i}`}
                   className="absolute w-1 h-1 bg-white rounded-full opacity-40"
                   style={{
-                    top: `${Math.random() * 100}%`,
-                    left: `${Math.random() * 100}%`,
-                    animation: `twinkle ${2 + Math.random() * 3}s ease-in-out infinite`,
-                    animationDelay: `${Math.random() * 4}s`,
+                    top: t.top,
+                    left: t.left,
+                    animation: `twinkle ${t.duration} ease-in-out infinite`,
+                    animationDelay: t.delay,
                   }}
                 />
               ))}
@@ -269,28 +299,34 @@ export default function Home() {
 
                   <div className="experience-links flex gap-2">
                     {p.liveUrl && (
-                      <button
-                        onClick={() => window.open(p.liveUrl, '_blank')}
-                        className="nes-btn is-success is-small flex-1"
+                      <a
+                        href={p.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="nes-btn is-success is-small flex-1 text-center"
                       >
                         🌐 Live Demo
-                      </button>
+                      </a>
                     )}
                     {p.repoUrl && (
-                      <button
-                        onClick={() => window.open(p.repoUrl, '_blank')}
-                        className="nes-btn is-primary is-small flex-1"
+                      <a
+                        href={p.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="nes-btn is-primary is-small flex-1 text-center"
                       >
                         💻 GitHub
-                      </button>
+                      </a>
                     )}
                     {p.playStoreUrl && (
-                      <button
-                        onClick={() => window.open(p.playStoreUrl, '_blank')}
-                        className="nes-btn is-warning is-small flex-1"
+                      <a
+                        href={p.playStoreUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="nes-btn is-warning is-small flex-1 text-center"
                       >
                         ⭐ View App
-                      </button>
+                      </a>
                     )}
                   </div>
                 </div>
@@ -421,6 +457,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <TestimonialsMarquee day={day} testimonials={siteConfig.testimonials} />
 
         {/* Contact Section */}
         <div className="relative z-10"><Contact day={day} /></div>
